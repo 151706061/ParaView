@@ -31,9 +31,8 @@
 class vtkSMViewProxy;
 class vtkSMNewWidgetRepresentationObserver;
 class vtkAbstractWidget;
-//BTX
+
 struct vtkSMNewWidgetRepresentationInternals;
-//ETX
 
 class VTKPVSERVERMANAGERRENDERING_EXPORT vtkSMNewWidgetRepresentationProxy : public vtkSMProxy
 {
@@ -60,7 +59,6 @@ public:
   bool LinkProperties(vtkSMProxy* controlledProxy, vtkSMPropertyGroup* controlledPropertyGroup);
   bool UnlinkProperties(vtkSMProxy* controlledProxy);
 
-//BTX
 protected:
   vtkSMNewWidgetRepresentationProxy();
   ~vtkSMNewWidgetRepresentationProxy();
@@ -87,9 +85,9 @@ protected:
   void ProcessLinkedPropertyEvent(vtkSMProperty* controlledProperty, unsigned long event);
 private:
 
-  vtkSMNewWidgetRepresentationProxy(const vtkSMNewWidgetRepresentationProxy&); // Not implemented
-  void operator=(const vtkSMNewWidgetRepresentationProxy&); // Not implemented
-//ETX
+  vtkSMNewWidgetRepresentationProxy(const vtkSMNewWidgetRepresentationProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMNewWidgetRepresentationProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

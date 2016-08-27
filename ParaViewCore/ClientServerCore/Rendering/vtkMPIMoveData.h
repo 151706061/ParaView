@@ -110,16 +110,13 @@ public:
   vtkSetMacro(SkipDataServerGatherToZero, bool);
   vtkGetMacro(SkipDataServerGatherToZero, bool);
 
-//BTX
   enum MoveModes {
     PASS_THROUGH=0,
     COLLECT=1,
     CLONE=2,
     COLLECT_AND_PASS_THROUGH=3
   };
-//ETX
 
-//ETX
 protected:
   vtkMPIMoveData();
   ~vtkMPIMoveData();
@@ -161,13 +158,12 @@ protected:
   int Server;
 
   bool SkipDataServerGatherToZero;
-//BTX
+
   enum Servers {
     CLIENT=0,
     DATA_SERVER=1,
     RENDER_SERVER=2
   };
-//ETX
 
   int OutputDataType;
 
@@ -175,8 +171,8 @@ private:
   int UpdateNumberOfPieces;
   int UpdatePiece;
 
-  vtkMPIMoveData(const vtkMPIMoveData&); // Not implemented
-  void operator=(const vtkMPIMoveData&); // Not implemented
+  vtkMPIMoveData(const vtkMPIMoveData&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkMPIMoveData&) VTK_DELETE_FUNCTION;
 
   static bool UseZLibCompression;
 };

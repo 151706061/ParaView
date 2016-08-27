@@ -78,7 +78,6 @@ protected:
   std::string RegionName;
   vtkIdType NextRegionId;
 
-  // BTX
   std::vector<std::string> VolumeArrays;
 
   std::vector<std::vector <vtkSmartPointer<vtkIdTypeArray> > > BoundaryArrays;
@@ -114,9 +113,9 @@ protected:
                                   vtkIdTypeArray *array);
 
 private:
-  vtkAMRConnectivity(const vtkAMRConnectivity&);  // Not implemented.
-  void operator=(const vtkAMRConnectivity&);  // Not implemented.
-  // ETX
+  vtkAMRConnectivity(const vtkAMRConnectivity&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkAMRConnectivity&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif /* vtkAMRConnectivity_h */

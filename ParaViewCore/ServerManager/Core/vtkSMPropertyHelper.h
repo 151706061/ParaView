@@ -231,10 +231,9 @@ public:
 protected:
   void setUseUnchecked(bool useUnchecked) { this->UseUnchecked = useUnchecked; }
 
-//BTX
 private:
-  vtkSMPropertyHelper(const vtkSMPropertyHelper&); // Not implemented
-  void operator=(const vtkSMPropertyHelper&); // Not implemented
+  vtkSMPropertyHelper(const vtkSMPropertyHelper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMPropertyHelper&) VTK_DELETE_FUNCTION;
   void Initialize(vtkSMProperty *property);
 
   template<typename T> T GetProperty(unsigned int index) const;
@@ -271,7 +270,7 @@ private:
     vtkSMProxyProperty *ProxyProperty;
     vtkSMInputProperty *InputProperty;
     };
-//ETX
+
 };
 
 

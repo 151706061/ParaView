@@ -90,15 +90,14 @@ public:
   // being used. Returns true if the scalar bar visibility was changed.
   virtual bool HideScalarBarIfNotNeeded(vtkSMProxy* lutProxy, vtkSMProxy* view);
 
-//BTX
 protected:
   vtkSMTransferFunctionManager();
   ~vtkSMTransferFunctionManager();
 
 private:
-  vtkSMTransferFunctionManager(const vtkSMTransferFunctionManager&); // Not implemented
-  void operator=(const vtkSMTransferFunctionManager&); // Not implemented
-//ETX
+  vtkSMTransferFunctionManager(const vtkSMTransferFunctionManager&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMTransferFunctionManager&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

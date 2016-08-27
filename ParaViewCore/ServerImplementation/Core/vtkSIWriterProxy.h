@@ -44,7 +44,6 @@ public:
   // ports to do this on.
   virtual void UpdatePipelineTime(double time);
 
-//BTX
 protected:
   vtkSIWriterProxy();
   ~vtkSIWriterProxy();
@@ -61,9 +60,9 @@ protected:
   vtkSetStringMacro(FileNameMethod);
 
 private:
-  vtkSIWriterProxy(const vtkSIWriterProxy&); // Not implemented
-  void operator=(const vtkSIWriterProxy&); // Not implemented
-//ETX
+  vtkSIWriterProxy(const vtkSIWriterProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSIWriterProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

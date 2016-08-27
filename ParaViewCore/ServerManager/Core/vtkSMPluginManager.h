@@ -84,7 +84,7 @@ public:
     LocalPluginLoadedEvent,
     RemotePluginLoadedEvent
   };
-//BTX
+
 protected:
   vtkSMPluginManager();
   ~vtkSMPluginManager();
@@ -95,12 +95,12 @@ protected:
   vtkPVPluginsInformation* LocalInformation;
 
 private:
-  vtkSMPluginManager(const vtkSMPluginManager&); // Not implemented
-  void operator=(const vtkSMPluginManager&); // Not implemented
+  vtkSMPluginManager(const vtkSMPluginManager&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMPluginManager&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

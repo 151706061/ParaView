@@ -29,15 +29,14 @@ public:
   vtkTypeMacro(vtkGeometryRepresentationWithHiddenLinesRemoval, vtkGeometryRepresentationWithFaces);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkGeometryRepresentationWithHiddenLinesRemoval();
   ~vtkGeometryRepresentationWithHiddenLinesRemoval();
 
 private:
-  vtkGeometryRepresentationWithHiddenLinesRemoval(const vtkGeometryRepresentationWithHiddenLinesRemoval&); // Not implemented
-  void operator=(const vtkGeometryRepresentationWithHiddenLinesRemoval&); // Not implemented
-//ETX
+  vtkGeometryRepresentationWithHiddenLinesRemoval(const vtkGeometryRepresentationWithHiddenLinesRemoval&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkGeometryRepresentationWithHiddenLinesRemoval&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

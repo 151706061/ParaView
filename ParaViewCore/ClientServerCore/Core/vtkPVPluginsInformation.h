@@ -74,12 +74,10 @@ public:
   // auto-load state.
   void Update(vtkPVPluginsInformation* other);
 
-  //BTX
   // Description:
   // Manage a serialized version of the information.
   virtual void CopyToStream(vtkClientServerStream*);
   virtual void CopyFromStream(const vtkClientServerStream*);
-  //ETX
 
   // Description:
   // Get the plugin search path.
@@ -93,7 +91,7 @@ public:
   static bool PluginRequirementsSatisfied(
     vtkPVPluginsInformation* client_plugins,
     vtkPVPluginsInformation* server_plugins);
-//BTX
+
 protected:
   vtkPVPluginsInformation();
   ~vtkPVPluginsInformation();
@@ -102,12 +100,12 @@ protected:
   vtkSetStringMacro(SearchPaths);
 
 private:
-  vtkPVPluginsInformation(const vtkPVPluginsInformation&); // Not implemented
-  void operator=(const vtkPVPluginsInformation&); // Not implemented
+  vtkPVPluginsInformation(const vtkPVPluginsInformation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVPluginsInformation&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

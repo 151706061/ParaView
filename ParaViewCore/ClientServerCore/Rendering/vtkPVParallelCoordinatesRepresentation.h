@@ -70,7 +70,6 @@ public:
   // to abort and raise an error. Default implementation simply returns false.
   virtual bool Export(vtkCSVExporter* exporter);
 
-//BTX
 protected:
   vtkPVParallelCoordinatesRepresentation();
   ~vtkPVParallelCoordinatesRepresentation();
@@ -94,12 +93,12 @@ protected:
   double Opacity;
 private:
   vtkPVParallelCoordinatesRepresentation(
-      const vtkPVParallelCoordinatesRepresentation&); // Not implemented
-  void operator=(const vtkPVParallelCoordinatesRepresentation&); // Not implemented
+      const vtkPVParallelCoordinatesRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVParallelCoordinatesRepresentation&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

@@ -51,10 +51,9 @@ namespace
       // check that we've outputted the proper amount of times
       if(this->OutputCounter != this->ExpectedOutputCounter)
         {
-        cerr << "CoProcessingTestOutputs.cxx: number of outputs was "
+        vtkErrorMacro("CoProcessingTestOutputs.cxx: number of outputs was "
              << this->OutputCounter << " but the number should have been "
-             << this->ExpectedOutputCounter << endl;
-        throw 1;
+             << this->ExpectedOutputCounter);
         }
     }
     // We have two input data sets and we have an frequency for
@@ -99,8 +98,8 @@ namespace
     }
 
   private:
-    vtkCPTestPipeline(const vtkCPTestPipeline&); // Not implemented
-    void operator=(const vtkCPTestPipeline&); // Not implemented
+    vtkCPTestPipeline(const vtkCPTestPipeline&) VTK_DELETE_FUNCTION;
+    void operator=(const vtkCPTestPipeline&) VTK_DELETE_FUNCTION;
   };
 
   vtkStandardNewMacro(vtkCPTestPipeline);

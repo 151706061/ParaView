@@ -162,10 +162,13 @@
     <file>Icons/pqRotate16.png</file>
     <file>Icons/pqRotate24.png</file>
     <file>Icons/pqRotate32.png</file>
+    <file>Icons/pqRotateCameraCCW24.png</file>
+    <file>Icons/pqRotateCameraCW24.png</file>
     <file>Icons/pqRuler16.png</file>
     <file>Icons/pqSave16.png</file>
     <file>Icons/pqSave24.png</file>
     <file>Icons/pqSave32.png</file>
+    <file>Icons/pqSaveTable32.png</file>
     <file>Icons/pqSaveAnimation24.png</file>
     <file>Icons/pqScalarBar16.png</file>
     <file>Icons/pqScalarBar24.png</file>

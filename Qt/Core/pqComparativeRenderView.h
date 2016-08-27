@@ -63,11 +63,6 @@ public:
   /// Returns the root render view in the comparative view.
   virtual vtkSMRenderViewProxy* getRenderViewProxy() const;
 
-  /// This method is temporarily overridden to handle image capture.
-  /// Eventually, we need to move this logic to vtkSMComparativeViewProxy.
-  virtual vtkImageData* captureImage(int magnification);
-  using Superclass::captureImage;
-
 protected slots:
   /// Called when the layout on the comparative vis changes.
   void updateViewWidgets(QWidget* container=NULL);
@@ -78,8 +73,7 @@ protected:
   virtual QWidget* createWidget();
 
 private:
-  pqComparativeRenderView(const pqComparativeRenderView&); // Not implemented.
-  void operator=(const pqComparativeRenderView&); // Not implemented.
+  Q_DISABLE_COPY(pqComparativeRenderView)
 
   class pqInternal;
   pqInternal* Internal;

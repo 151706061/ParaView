@@ -82,7 +82,6 @@ public:
   vtkGetObjectMacro(CurrentInputDataObject, vtkDataObject);
   void SetComputedAnnotationValue(const char* value);
 
-//BTX
 protected:
   vtkPythonAnnotationFilter();
   ~vtkPythonAnnotationFilter();
@@ -100,8 +99,8 @@ protected:
   int ArrayAssociation;
 
 private:
-  vtkPythonAnnotationFilter(const vtkPythonAnnotationFilter&); // Not implemented
-  void operator=(const vtkPythonAnnotationFilter&); // Not implemented
+  vtkPythonAnnotationFilter(const vtkPythonAnnotationFilter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPythonAnnotationFilter&) VTK_DELETE_FUNCTION;
 
   bool DataTimeValid;
   double DataTime;
@@ -111,7 +110,6 @@ private:
   double TimeRange[2];
   vtkDataObject* CurrentInputDataObject;
 
-//ETX
 };
 
 #endif

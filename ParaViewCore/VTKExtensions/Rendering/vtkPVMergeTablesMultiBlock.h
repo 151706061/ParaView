@@ -45,7 +45,6 @@ public:
 
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkPVMergeTablesMultiBlock();
   ~vtkPVMergeTablesMultiBlock();
@@ -60,9 +59,9 @@ protected:
   virtual vtkExecutive* CreateDefaultExecutive();
 
 private:
-  vtkPVMergeTablesMultiBlock(const vtkPVMergeTablesMultiBlock&); // Not implemented
-  void operator=(const vtkPVMergeTablesMultiBlock&); // Not implemented
-//ETX
+  vtkPVMergeTablesMultiBlock(const vtkPVMergeTablesMultiBlock&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVMergeTablesMultiBlock&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

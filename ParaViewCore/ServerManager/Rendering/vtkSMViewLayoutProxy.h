@@ -204,9 +204,10 @@ public:
   static void SetMultiViewImageBorderColor(double r, double g, double b);
   static void SetMultiViewImageBorderWidth(int width);
   static const double* GetMultiViewImageBorderColor();
+  static void GetMultiViewImageBorderColor(unsigned char rgb[3]);
+  static void GetMultiViewImageBorderColor(double rgb[3]);
   static int GetMultiViewImageBorderWidth();
 
-//BTX
 protected:
   vtkSMViewLayoutProxy();
   ~vtkSMViewLayoutProxy();
@@ -234,8 +235,8 @@ protected:
 
   int MaximizedCell;
 private:
-  vtkSMViewLayoutProxy(const vtkSMViewLayoutProxy&); // Not implemented
-  void operator=(const vtkSMViewLayoutProxy&); // Not implemented
+  vtkSMViewLayoutProxy(const vtkSMViewLayoutProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMViewLayoutProxy&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
@@ -252,7 +253,6 @@ private:
   static double MultiViewImageBorderColor[3];
   static int MultiViewImageBorderWidth;
 
-//ETX
 };
 
 #endif

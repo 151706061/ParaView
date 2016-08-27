@@ -166,6 +166,7 @@ public:
   //   ALL_DEFINITIONS=0 / CORE_DEFINITIONS=1 / CUSTOM_DEFINITIONS=2
   // Some extra restriction can be set directly on the iterator itself
   // by setting a set of GroupName...
+  VTK_NEWINSTANCE
   vtkPVProxyDefinitionIterator* NewIterator( int scope=ALL_DEFINITIONS );
 
   // Description
@@ -182,7 +183,6 @@ public:
   // remote server and not plugin loaded on the client.
   void EnableXMLProxyDefnitionUpdate(bool);
 
-//BTX
   // Description:
   // Push a new state to the underneath implementation
   // The provided implementation just store the message
@@ -285,13 +285,13 @@ protected:
   void InvokeCustomDefitionsUpdated();
 
 private:
-  vtkSIProxyDefinitionManager(const vtkSIProxyDefinitionManager&); // Not implemented
-  void operator=(const vtkSIProxyDefinitionManager&); // Not implemented
+  vtkSIProxyDefinitionManager(const vtkSIProxyDefinitionManager&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSIProxyDefinitionManager&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
   vtkInternals* InternalsFlatten;
-//ETX
+
 };
 
 #endif

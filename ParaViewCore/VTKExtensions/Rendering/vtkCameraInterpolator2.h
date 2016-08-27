@@ -41,7 +41,6 @@ public:
   void AddFocalPathPoint(double x, double y, double z);
   void ClearFocalPath();
 
-  //BTX
   enum Modes 
     {
     PATH,
@@ -49,8 +48,6 @@ public:
     LOOK_AHEAD,
     ORTHOGONAL
     };
-  //ETX
-
 
   // Description:
   // Mode for managing the focal point.
@@ -66,13 +63,11 @@ public:
   vtkSetClampMacro(PositionMode, int, PATH, ORTHOGONAL);
   vtkGetMacro(PositionMode, int);
 
-  //BTX
   enum PathInterpolationModes
     {
     LINEAR,
     SPLINE
     };
-  //ETX
 
   // Support for interpolation modes hasn't been implemented yet.
   vtkSetClampMacro(PositionPathInterpolationMode, int, LINEAR, SPLINE);
@@ -98,7 +93,6 @@ public:
   // \c u has to be in the range [0, 1].
   void InterpolateCamera(double u, vtkCamera*);
 
-//BTX
 protected:
   vtkCameraInterpolator2();
   ~vtkCameraInterpolator2();
@@ -119,10 +113,9 @@ protected:
   vtkParametricSpline* PositionSpline;
 
 private:
-  vtkCameraInterpolator2(const vtkCameraInterpolator2&); // Not implemented
-  void operator=(const vtkCameraInterpolator2&); // Not implemented
+  vtkCameraInterpolator2(const vtkCameraInterpolator2&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkCameraInterpolator2&) VTK_DELETE_FUNCTION;
 
-//ETX
 };
 
 #endif

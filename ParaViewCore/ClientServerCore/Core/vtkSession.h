@@ -34,7 +34,6 @@ public:
   // Returns true is this session is active/alive/valid.
   virtual bool GetIsAlive() = 0;
 
-//BTX
 protected:
   vtkSession();
   ~vtkSession();
@@ -57,9 +56,9 @@ protected:
   virtual void DeActivate();
 
 private:
-  vtkSession(const vtkSession&); // Not implemented
-  void operator=(const vtkSession&); // Not implemented
-//ETX
+  vtkSession(const vtkSession&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSession&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

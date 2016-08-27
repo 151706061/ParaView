@@ -77,7 +77,6 @@ public:
   // Test if the queue is empty before calling this method.
   unsigned int Pop();
 
-//BTX
 protected:
   vtkAMRStreamingPriorityQueue();
   ~vtkAMRStreamingPriorityQueue();
@@ -85,12 +84,12 @@ protected:
   vtkMultiProcessController* Controller;
 
 private:
-  vtkAMRStreamingPriorityQueue(const vtkAMRStreamingPriorityQueue&); // Not implemented
-  void operator=(const vtkAMRStreamingPriorityQueue&); // Not implemented
+  vtkAMRStreamingPriorityQueue(const vtkAMRStreamingPriorityQueue&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkAMRStreamingPriorityQueue&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

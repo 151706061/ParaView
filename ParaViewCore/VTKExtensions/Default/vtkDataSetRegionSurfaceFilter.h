@@ -76,7 +76,6 @@ public:
   vtkSetStringMacro(InterfaceIDsName);
   vtkGetStringMacro(InterfaceIDsName);
 
-//BTX
 protected:
   vtkDataSetRegionSurfaceFilter();
   ~vtkDataSetRegionSurfaceFilter();
@@ -107,9 +106,8 @@ protected:
   virtual vtkFastGeomQuad *GetNextVisibleQuadFromHash();
 
 private:
-  vtkDataSetRegionSurfaceFilter(const vtkDataSetRegionSurfaceFilter&); // Not implemented.
-  void operator=(const vtkDataSetRegionSurfaceFilter&); // Not implemented.
-//ETX
+  vtkDataSetRegionSurfaceFilter(const vtkDataSetRegionSurfaceFilter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkDataSetRegionSurfaceFilter&) VTK_DELETE_FUNCTION;
 
   char *RegionArrayName;
   vtkIntArray    *RegionArray;

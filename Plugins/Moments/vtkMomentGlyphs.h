@@ -79,7 +79,6 @@ protected:
                           vtkInformationVector **inputVector,
                           vtkInformationVector *outputVector);
 
-//BTX
   virtual void MakeMomentVectors(vtkSmartPointer<vtkDataSet> &input,
                                  vtkSmartPointer<vtkDataArray> &inputArray);
   virtual vtkSmartPointer<vtkDataArray> MakeGlyphScaleFactors(
@@ -87,11 +86,10 @@ protected:
                                                       vtkDataArray *inputArray);
   virtual vtkSmartPointer<vtkPolyData> MakeGlyphs(vtkDataSet *input,
                                                   vtkDataArray *inputArray);
-//ETX
 
 private:
-  vtkMomentGlyphs(const vtkMomentGlyphs &);         // Not implemented
-  void operator=(const vtkMomentGlyphs &);          // Not implemented
+  vtkMomentGlyphs(const vtkMomentGlyphs &) VTK_DELETE_FUNCTION;
+  void operator=(const vtkMomentGlyphs &) VTK_DELETE_FUNCTION;
 };
 
 #endif //vtkMomentGlyphs_h

@@ -37,15 +37,14 @@ public:
   vtkTypeMacro(vtkSIIntVectorProperty, vtkSIVectorProperty);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkSIIntVectorProperty();
   ~vtkSIIntVectorProperty();
 
 private:
-  vtkSIIntVectorProperty(const vtkSIIntVectorProperty&); // Not implemented
-  void operator=(const vtkSIIntVectorProperty&); // Not implemented
-//ETX
+  vtkSIIntVectorProperty(const vtkSIIntVectorProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSIIntVectorProperty&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -46,7 +46,6 @@ public:
   // after the shader has been bound, but before rendering the geometry.
   void Render();
 
-//BTX
 protected:
   vtkPVColorMaterialHelper();
   ~vtkPVColorMaterialHelper();
@@ -66,9 +65,9 @@ protected:
   eMaterialParamater Mode;
 
 private:
-  vtkPVColorMaterialHelper(const vtkPVColorMaterialHelper&); // Not implemented.
-  void operator=(const vtkPVColorMaterialHelper&); // Not implemented.
-//ETX
+  vtkPVColorMaterialHelper(const vtkPVColorMaterialHelper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVColorMaterialHelper&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

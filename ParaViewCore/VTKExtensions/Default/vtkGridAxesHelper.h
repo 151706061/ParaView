@@ -150,8 +150,6 @@ public:
   // Get if the face is facing backwards in the current viewport.
   vtkGetMacro(Backface, bool);
 
-
-//BTX
 protected:
   vtkGridAxesHelper();
   ~vtkGridAxesHelper();
@@ -190,9 +188,9 @@ protected:
   unsigned long GetTransformedPointsMTime;
 
 private:
-  vtkGridAxesHelper(const vtkGridAxesHelper&); // Not implemented.
-  void operator=(const vtkGridAxesHelper&); // Not implemented.
-//ETX
+  vtkGridAxesHelper(const vtkGridAxesHelper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkGridAxesHelper&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

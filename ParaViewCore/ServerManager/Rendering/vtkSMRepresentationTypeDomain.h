@@ -45,7 +45,6 @@ public:
   // type.
   virtual int SetDefaultValues(vtkSMProperty*, bool use_unchecked_values);
 
-//BTX
 protected:
   vtkSMRepresentationTypeDomain();
   ~vtkSMRepresentationTypeDomain();
@@ -55,9 +54,9 @@ protected:
   vtkPVDataInformation* GetInputInformation();
 
 private:
-  vtkSMRepresentationTypeDomain(const vtkSMRepresentationTypeDomain&); // Not implemented
-  void operator=(const vtkSMRepresentationTypeDomain&); // Not implemented
-//ETX
+  vtkSMRepresentationTypeDomain(const vtkSMRepresentationTypeDomain&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMRepresentationTypeDomain&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

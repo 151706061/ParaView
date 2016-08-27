@@ -66,7 +66,6 @@ public:
     return this->EnableTimeLabel? this->TimeLabel : "Time";
     }
 
-//BTX
 protected:
   vtkShearedWaveletSource();
   ~vtkShearedWaveletSource();
@@ -87,9 +86,9 @@ protected:
   double BasisV[3];
   double BasisW[3];
 private:
-  vtkShearedWaveletSource(const vtkShearedWaveletSource&); // Not implemented
-  void operator=(const vtkShearedWaveletSource&); // Not implemented
-//ETX
+  vtkShearedWaveletSource(const vtkShearedWaveletSource&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkShearedWaveletSource&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

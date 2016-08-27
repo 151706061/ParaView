@@ -57,9 +57,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "pqDataQueryReaction.h"
 #include "pqDeleteReaction.h"
 #include "pqDesktopServicesReaction.h"
+#include "pqExampleVisualizationsDialogReaction.h"
 #include "pqExportReaction.h"
 #include "pqFiltersMenuReaction.h"
 #include "pqHelpReaction.h"
+#include "pqHideAllReaction.h"
 #include "pqIgnoreSourceTimeReaction.h"
 #include "pqLinkSelectionReaction.h"
 #include "pqLoadDataReaction.h"
@@ -96,6 +98,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #include <QDockWidget>
+#include <QFileInfo>
 #include <QKeySequence>
 #include <QLayout>
 #include <QMainWindow>
@@ -151,6 +154,7 @@ void pqParaViewMenuBuilders::buildEditMenu(QMenu& menu)
   new pqIgnoreSourceTimeReaction(ui.actionIgnoreTime);
   new pqDeleteReaction(ui.actionDelete);
   new pqDeleteReaction(ui.actionDelete_All, true);
+  new pqHideAllReaction(ui.actionHide_All);
   new pqCopyReaction(ui.actionCopy);
   new pqCopyReaction(ui.actionPaste, true);
   new pqApplicationSettingsReaction(ui.actionEditSettings);
@@ -284,6 +288,7 @@ void pqParaViewMenuBuilders::buildPipelineBrowserContextMenu(QWidget& widget)
   new pqCreateCustomFilterReaction(ui.actionPBCreateCustomFilter);
   new pqIgnoreSourceTimeReaction(ui.actionPBIgnoreTime);
   new pqDeleteReaction(ui.actionPBDelete);
+  new pqHideAllReaction(ui.actionPBHideAll);
   new pqCopyReaction(ui.actionPBCopy);
   new pqCopyReaction(ui.actionPBPaste, true);
 }
@@ -316,31 +321,117 @@ void pqParaViewMenuBuilders::buildMacrosMenu
 //-----------------------------------------------------------------------------
 void pqParaViewMenuBuilders::buildHelpMenu(QMenu& menu)
 {
-#if defined (_WIN32)
-  QString filePath = QCoreApplication::applicationDirPath() + "/../doc/ParaViewGuide-CE.pdf";
-#elif defined(__APPLE__)
-  QString filePath = QCoreApplication::applicationDirPath() + "/../../../doc/ParaViewGuide-CE.pdf";
+#if defined(_WIN32) || defined(__APPLE__)
+  QString documentationPath = QCoreApplication::applicationDirPath() + "/../doc";
 #else
-  QString filePath = QCoreApplication::applicationDirPath() + "/../../doc/ParaViewGuide-CE.pdf";
+  QString appdir = QCoreApplication::applicationDirPath();
+  QString documentationPath = QFileInfo(appdir).fileName() == "bin" ?
+    /* w/o shared forwarding */ appdir + "/../share/paraview-" PARAVIEW_VERSION "/doc"  :
+    /* w/ shared forwarding  */ appdir + "/../../share/paraview-" PARAVIEW_VERSION "/doc";
 #endif
 
+  QString paraViewGuideFile = documentationPath + "/Guide.pdf";
+  QString paraViewGettingStartedFile = documentationPath + "/GettingStarted.pdf";
+  QString paraViewTutorialFile = documentationPath + "/Tutorial.pdf";
+
+  // Getting Started with ParaView
   new pqDesktopServicesReaction(
-    QUrl::fromLocalFile(filePath),
-    (menu.addAction(QIcon(":/pqWidgets/Icons/pdf.png"), "ParaView Guide") << pqSetName("actionGuide")));
-  QAction * help = menu.addAction("Help") <<
+    QUrl::fromLocalFile(paraViewGettingStartedFile),
+    (menu.addAction(QIcon(":/pqWidgets/Icons/pdf.png"),
+                    "Getting Started with ParaView") << pqSetName("actionGettingStarted")));
+
+  // ParaView Guide
+  QAction* guide = menu.addAction(
+    QIcon(":/pqWidgets/Icons/pdf.png"), "ParaView Guide");
+  guide->setObjectName("actionGuide");
+  guide->setShortcut(QKeySequence::HelpContents);
+  new pqDesktopServicesReaction(QUrl::fromLocalFile(paraViewGuideFile), guide);
+
+
+  // Help
+  QAction * help = menu.addAction("Reader, Filter, and Writer Reference") <<
     pqSetName("actionHelp");
-  help->setShortcut(QKeySequence::HelpContents);
   new pqHelpReaction(help);
 
+  // -----------------
   menu.addSeparator();
+
+  // ParaView Tutorial notes
+  new pqDesktopServicesReaction(
+    QUrl::fromLocalFile(paraViewTutorialFile),
+    (menu.addAction(QIcon(":/pqWidgets/Icons/pdf.png"),
+                    "ParaView Tutorial") << pqSetName("actionTutorialNotes")));
+
+  // Sandia National Labs Tutorials
+  new pqDesktopServicesReaction(
+    QUrl("http://www.paraview.org/Wiki/SNL_ParaView_4_Tutorials"),
+    (menu.addAction("Sandia National Labs Tutorials") << pqSetName("actionSNLTutorial")));
+
+  // Example Data Sets
+
+  // Example Visualizations
+  new pqExampleVisualizationsDialogReaction(
+    menu.addAction("Example Visualizations") << pqSetName("ExampleVisualizations"));
+
+  // -----------------
+  menu.addSeparator();
+
+  // ParaView Web Site
+  new pqDesktopServicesReaction(
+    QUrl("http://www.paraview.org"),
+    (menu.addAction("ParaView Web Site") << pqSetName("actionWebSite")));
+
+  // ParaView Wiki
+  new pqDesktopServicesReaction(
+    QUrl("http://www.paraview.org/Wiki/ParaView"),
+    (menu.addAction("ParaView Wiki") << pqSetName("actionWiki")));
+
+  // ParaView Mailing Lists
+  new pqDesktopServicesReaction(
+    QUrl("http://www.paraview.org/mailing-lists/"),
+    (menu.addAction("ParaView Mailing Lists") << pqSetName("actionMailingLists")));
+
+  // ParaView Release Notes
+  QString versionString(PARAVIEW_VERSION_FULL);
+  int indexOfHyphen = versionString.indexOf('-');
+  if (indexOfHyphen > -1)
+    {
+    versionString = versionString.left(indexOfHyphen);
+    }
+  versionString.replace('.', '-');
+  new pqDesktopServicesReaction(
+    QUrl("https://blog.kitware.com/paraview-" + versionString + "-release-notes/"),
+    (menu.addAction("Release Notes") << pqSetName("actionReleaseNotes")));
+
+  // -----------------
+  menu.addSeparator();
+
+  // Professional Support
+  new pqDesktopServicesReaction(
+    QUrl("http://www.kitware.com/products/paraviewpro.html"),
+    (menu.addAction("Professional Support") << pqSetName("actionProfessionalSupport")));
+
+  // Professional Training
+  new pqDesktopServicesReaction(
+    QUrl("http://www.kitware.com/products/protraining.php"),
+    (menu.addAction("Professional Training") << pqSetName("actionTraining")));
+
+  // Online Tutorials
   new pqDesktopServicesReaction(
     QUrl("http://www.paraview.org/tutorials/"),
     (menu.addAction("Online Tutorials") << pqSetName("actionTutorials")));
+
+  // Online Blogs
   new pqDesktopServicesReaction(
-    QUrl("http://www.kitware.com/blog/home/browse/topic/13"),
+    QUrl("https://blog.kitware.com/tag/ParaView/"),
     (menu.addAction("Online Blogs") << pqSetName("actionBlogs")));
 
+#if !defined(__APPLE__)
+  // -----------------
   menu.addSeparator();
+#endif
+
+  // About
   new pqAboutDialogReaction(
     menu.addAction("About...")
     << pqSetName("actionAbout"));

@@ -68,9 +68,8 @@ public:
   // is inferior or superior to the given threhold.
   vtkSetMacro(AlphaMethod, int);
   vtkGetMacro(AlphaMethod, int);
-  //BTX
+
   enum {NONE = 0, PROPORTIONAL=1, CLAMP=2};
-  //ETX
 
   // Description:
   // Set/Get the alpha threshold used if the AlphaMethod is CLAMP.
@@ -90,8 +89,8 @@ protected:
   virtual int RequestInformation (vtkInformation *, vtkInformationVector**, vtkInformationVector *);
   virtual int RequestData(vtkInformation *, vtkInformationVector **, vtkInformationVector *);
 private:
-  vtkImageSpriteSource(const vtkImageSpriteSource&);  // Not implemented.
-  void operator=(const vtkImageSpriteSource&);  // Not implemented.
+  vtkImageSpriteSource(const vtkImageSpriteSource&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkImageSpriteSource&) VTK_DELETE_FUNCTION;
 };
 
 

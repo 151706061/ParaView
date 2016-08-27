@@ -112,7 +112,7 @@ public:
   // InterpolateScalarsBeforeMapping is not supported by this representation.
   virtual void SetInterpolateScalarsBeforeMapping(int)
     {this->Superclass::SetInterpolateScalarsBeforeMapping(0); }
-//BTX
+
 protected:
   vtkPointSpriteRepresentation();
   ~vtkPointSpriteRepresentation();
@@ -148,14 +148,13 @@ protected:
   vtk1DGaussianTransferFunction* OpacityGaussianTransferFunction;
 
 private:
-  vtkPointSpriteRepresentation(const vtkPointSpriteRepresentation&); // Not implemented
-  void operator=(const vtkPointSpriteRepresentation&); // Not implemented
+  vtkPointSpriteRepresentation(const vtkPointSpriteRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPointSpriteRepresentation&) VTK_DELETE_FUNCTION;
 
   vtkTexture* TextureInternal;
   void SetTextureInternal(vtkTexture*);
   int RenderMode;
 
-//ETX
 };
 
 #endif

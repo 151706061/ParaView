@@ -49,6 +49,7 @@ paraview_test_load_data(""
   NE2_ps_bath.png
   non_convex_polygon.vtu
   office.binary.vtk
+  porphyrin.cml
   PropertyLink.pvsm
   quadraticTetra01.vtu
   RectGrid2.vtk
@@ -61,12 +62,16 @@ paraview_test_load_data(""
   tensors.pvti
   Test1.h5
   Test1.xmf
+  TestMultipleNumberOfComponentsPlugin.xml
   tube.exo
   vehicle_data.csv
   )
 
 SET (TESTS_WITHOUT_BASELINES
   ${CMAKE_CURRENT_SOURCE_DIR}/AboutDialog.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/ArrayBoundsScaleDomain.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/DelimitedTextReader.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/ExportFilteredColumnsSpreadsheet.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/FindWidget.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/OpenHelp.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/ServerConnectDialog.xml
@@ -75,8 +80,10 @@ SET (TESTS_WITHOUT_BASELINES
 
 if (PARAVIEW_ENABLE_PYTHON)
   list(APPEND TESTS_WITHOUT_BASELINES
+    ${CMAKE_CURRENT_SOURCE_DIR}/DetachedFromLayoutIndirect.xml
     ${CMAKE_CURRENT_SOURCE_DIR}/TestPythonConsole.xml
-    ${CMAKE_CURRENT_SOURCE_DIR}/TestPopOutWidget.xml) # needs programmable filter
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestPopOutWidget.xml # needs programmable filter
+    ${CMAKE_CURRENT_SOURCE_DIR}/MultipleNumberOfComponents.xml)
 endif()
 
 SET (TESTS_WITH_INLINE_COMPARES
@@ -91,6 +98,7 @@ SET (TESTS_WITH_INLINE_COMPARES
   ${CMAKE_CURRENT_SOURCE_DIR}/LoadStateMultiView.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/LogColorMap.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/MemoryInspectorPanel.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/Molecule.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/NonlinearSubdivisionDisplay.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/QuartilePlot.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/RemoteRendering.xml
@@ -104,7 +112,10 @@ SET (TESTS_WITH_INLINE_COMPARES
   ${CMAKE_CURRENT_SOURCE_DIR}/XYHistogram.xml
 )
 
-SET (TESTS_WITH_BASELINES)
+SET(TESTS_WITH_BASELINES
+  ${CMAKE_CURRENT_SOURCE_DIR}/TestOpacityRendering.xml
+)
+
 if(PARAVIEW_USE_VISITBRIDGE)
   list(APPEND TESTS_WITH_BASELINES
     ${CMAKE_CURRENT_SOURCE_DIR}/VisItBridgeChombo.xml
@@ -117,6 +128,11 @@ if(PARAVIEW_USE_VISITBRIDGE)
     ${CMAKE_CURRENT_SOURCE_DIR}/VisItBridgePFLOTRAN.xml
     ${CMAKE_CURRENT_SOURCE_DIR}/VisItBridgePixie.xml
     ${CMAKE_CURRENT_SOURCE_DIR}/VisItBridgeSamrai.xml)
+endif()
+
+if(PARAVIEW_USE_OSPRAY)
+  list(APPEND TESTS_WITH_BASELINES
+    ${CMAKE_CURRENT_SOURCE_DIR}/OSPRay.xml)
 endif()
 
 # Catalyst-Live tests
@@ -238,7 +254,9 @@ list(APPEND TESTS_WITH_BASELINES
   ${CMAKE_CURRENT_SOURCE_DIR}/ForceTime.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/Fractal2D.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/FunctionalBagPlots.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/Glyph3DRepresentation.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/GlyphUseCellCenters.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/HideAll.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/ImageVolumeRendering.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/InteractiveSelection.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/InteractiveViewLinkOffscreen.xml
@@ -248,9 +266,11 @@ list(APPEND TESTS_WITH_BASELINES
   ${CMAKE_CURRENT_SOURCE_DIR}/LoadSaveStateAnimation.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/LoadState.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/MultiBlockAttributes1.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/MultiBlockSingleBlock.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/MultiSliceMultiBlock.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/MultiSliceWavelet.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/NormalGlyphs.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/NumberOfComponentsDomain.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/NiftiReaderWriterPlugin.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/NonConvexPolygon.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/OpenSaveData.xml
@@ -262,6 +282,7 @@ list(APPEND TESTS_WITH_BASELINES
   ${CMAKE_CURRENT_SOURCE_DIR}/PlotOverTimeAutoApply.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/PolygonCellSelection.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/PolygonPointSelection.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/PointInterpolator.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/ProbePicking.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/PropertyConversion.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/PropertyConversion1.xml
@@ -271,9 +292,12 @@ list(APPEND TESTS_WITH_BASELINES
   ${CMAKE_CURRENT_SOURCE_DIR}/ReadXMLPolyDataFileSeries.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/RectilinearFractal.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/RepresentationSelector.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/RescaleToTemporal.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/RotateCamera90.xml
 #  ${CMAKE_CURRENT_SOURCE_DIR}/SaveAnimationGeometry.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/SaveColorMap.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/SaveCSV.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/SelectedProxyPanelVisibility.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/SelectionModifiersCells.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/SelectionModifiersPoints.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/SelectionModifiersBlocks.xml
@@ -283,6 +307,8 @@ list(APPEND TESTS_WITH_BASELINES
   ${CMAKE_CURRENT_SOURCE_DIR}/SliceAlongPolyline.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/SliceAlongSpline.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/SolidColorSource.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/SphereSlice.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/SpherePointSource.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/SpreadSheet1.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/SpreadSheet2.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/SpreadSheet3.xml
@@ -302,6 +328,7 @@ list(APPEND TESTS_WITH_BASELINES
   ${CMAKE_CURRENT_SOURCE_DIR}/TemporalShiftScale.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/TestSelectionOnMultipiece.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/TimeInspector.xml
+  ${CMAKE_CURRENT_SOURCE_DIR}/TimeStepProgressBar.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/Tessellate.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/Threshold.xml
   ${CMAKE_CURRENT_SOURCE_DIR}/UndoRedo.xml
@@ -327,6 +354,7 @@ if(VTK_USE_LARGE_DATA)
   )
   list(APPEND TESTS_WITH_BASELINES
     ${CMAKE_CURRENT_SOURCE_DIR}/CheckSelectedBlocks.xml
+    ${CMAKE_CURRENT_SOURCE_DIR}/RestoreBlockColorDefaultTransferFunction.xml
     )
 endif()
 
@@ -337,10 +365,13 @@ if(NOT APPLE)
     )
 endif()
 
-# This test makes use of "Point Gaussian" representation, only available with OpenGL2
 if("${VTK_RENDERING_BACKEND}" STREQUAL "OpenGL2")
   list(APPEND TESTS_WITH_BASELINES
+    # This test makes use of "Point Gaussian" representation, only available with OpenGL2
     ${CMAKE_CURRENT_SOURCE_DIR}/BackgroundColorCheck.xml
+
+    # PlotMatrixView is bugging in OpenGL1
+    ${CMAKE_CURRENT_SOURCE_DIR}/PlotMatrixViewArraySelection.xml
     )
 endif()
 
@@ -352,6 +383,9 @@ if (PARAVIEW_USE_MPI)
 
     # Test uses D3 which is available in MPI only builds.
     ${CMAKE_CURRENT_SOURCE_DIR}/GridConnectivity.xml
+
+    # Test uses D3 which is available in MPI only builds.
+    ${CMAKE_CURRENT_SOURCE_DIR}/ExportSelectionToCSV.xml
   )
 
   # Test uses GhostCellsGenerator which is available in MPI only builds.
@@ -388,9 +422,14 @@ if (PARAVIEW_USE_MPI)
     )
     set(CGNSReader-5blocks_cgns_DISABLE_CRS TRUE)
   endif()
+
+  # PointInterpolator only works in non-distributed modes.
+  set(PointInterpolator_DISABLE_CRS TRUE)
+  set(PointInterpolator_DISABLE_CS TRUE)
 endif()
 if(PARAVIEW_ENABLE_PYTHON)
   list(APPEND TESTS_WITH_BASELINES
+    ${CMAKE_CURRENT_SOURCE_DIR}/ColorByComponentNames.xml # needs programmable filter
     ${CMAKE_CURRENT_SOURCE_DIR}/SelectionLabels.xml
     ${CMAKE_CURRENT_SOURCE_DIR}/TraceExodus.xml
     ${CMAKE_CURRENT_SOURCE_DIR}/TraceExportAndSaveData.xml
@@ -400,6 +439,7 @@ if(PARAVIEW_ENABLE_PYTHON)
   list(APPEND TESTS_WITH_INLINE_COMPARES
     ${CMAKE_CURRENT_SOURCE_DIR}/TraceMultiViews.xml)
   list(APPEND TESTS_WITHOUT_BASELINES
+    ${CMAKE_CURRENT_SOURCE_DIR}/PythonCalculator.xml
     ${CMAKE_CURRENT_SOURCE_DIR}/TraceIntegrateVariables.xml)
 
   # Check that matplotlib is available
@@ -498,6 +538,7 @@ set(SelectionLinkInitial_DISABLE_CRS TRUE)
 set(SelectionLinkMultiple_DISABLE_CRS TRUE)
 set(SelectionLinkRemove_DISABLE_CRS TRUE)
 set(SelectionLinkReaction_DISABLE_CRS TRUE)
+set(ExportSelectionToCSV_DISABLE_CRS TRUE)
 
 # These tests cannot be run using ctest -j since they are affected by focus
 # changed events.
@@ -509,6 +550,7 @@ set (Contour_FORCE_SERIAL TRUE) # since this uses popup-menu
 set (Calculator_FORCE_SERIAL TRUE) # since this uses popup-menu
 set (LogColorMap_FORCE_SERIAL TRUE) # since this uses popup-menu
 set (ColorOpacityTableEditing_FORCE_SERIAL TRUE) # since this uses popup-menu
+set (SimpleInteraction_FORCE_SERIAL TRUE) # since this uses popup-menu
 set (FindWidget_FORCE_SERIAL TRUE) # Uses inline edit popups
 set (PropertyLink_FORCE_SERIAL TRUE)
 set (TestPythonView_FORCE_SERIAL TRUE) # Seems to work better in serial.
@@ -561,6 +603,7 @@ set (SpreadSheet2_THRESHOLD 50)
 set (PlotOverTimeAutoApply_THRESHOLD 50)
 set (ExportLinePlotToCSV_THRESHOLD 30)
 set (PlotOverTimeAutoApply_DISABLE_CRS TRUE) # since this uses surface selection.
+set (QuartilePlot_THRESHOLD 20)
 
 
 # DisconnectAndSaveAnimation is only support in Client-Server mode.
@@ -685,6 +728,10 @@ set (LoadStateMultiView_THRESHOLD 20)
 
 # Selection not supported in CRS and is needed for this test.
 set (ResetToVisibleRange_DISABLE_CRS TRUE)
+
+# Molecules are not supported in client-serve modes, currently.
+set (Molecule_DISABLE_CS TRUE)
+set (Molecule_DISABLE_CRS TRUE)
 
 ##########################################################
 # List of known incompatible tests for Collaboration

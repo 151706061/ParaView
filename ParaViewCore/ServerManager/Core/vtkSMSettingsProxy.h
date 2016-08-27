@@ -39,7 +39,6 @@ public:
   // "setter" properties.
   int ReadXMLAttributes(vtkSMSessionProxyManager* pm, vtkPVXMLElement* element);
 
-//BTX
  protected:
   vtkSMSettingsProxy();
   ~vtkSMSettingsProxy();
@@ -57,9 +56,9 @@ public:
   vtkSMSettingsObserver* Observer;
 
 private:
-  vtkSMSettingsProxy(const vtkSMSettingsProxy&); // Not implemented
-  void operator=(const vtkSMSettingsProxy&); // Not implemented
-//ETX
+  vtkSMSettingsProxy(const vtkSMSettingsProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMSettingsProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

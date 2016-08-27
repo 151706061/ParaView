@@ -108,7 +108,6 @@ public:
   vtkPVArrayInformation* GetArrayInformation(
     const char* arrayname, int fieldAssociation);
 
-//BTX
 protected:
   vtkPVTemporalDataInformation();
   ~vtkPVTemporalDataInformation();
@@ -124,9 +123,9 @@ protected:
   int NumberOfTimeSteps;
   int PortNumber;
 private:
-  vtkPVTemporalDataInformation(const vtkPVTemporalDataInformation&); // Not implemented
-  void operator=(const vtkPVTemporalDataInformation&); // Not implemented
-//ETX
+  vtkPVTemporalDataInformation(const vtkPVTemporalDataInformation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVTemporalDataInformation&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

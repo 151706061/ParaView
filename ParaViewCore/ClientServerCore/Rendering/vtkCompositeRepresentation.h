@@ -91,7 +91,6 @@ public:
   virtual void SetForceUseCache(bool val);
   virtual void SetForcedCacheKey(double val);
 
-//BTX
 protected:
   vtkCompositeRepresentation();
   ~vtkCompositeRepresentation();
@@ -115,13 +114,13 @@ protected:
   void TriggerUpdateDataEvent();
 
 private:
-  vtkCompositeRepresentation(const vtkCompositeRepresentation&); // Not implemented
-  void operator=(const vtkCompositeRepresentation&); // Not implemented
+  vtkCompositeRepresentation(const vtkCompositeRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkCompositeRepresentation&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
   vtkCommand* Observer;
-//ETX
+
 };
 
 #endif

@@ -94,7 +94,6 @@ public:
 
   void SelectInputVectors(int, int, int, int attributeMode, const char* name);
 
-//BTX
 protected:
   vtkSurfaceLICRepresentation();
   ~vtkSurfaceLICRepresentation();
@@ -113,9 +112,9 @@ protected:
 
   bool UseLICForLOD;
 private:
-  vtkSurfaceLICRepresentation(const vtkSurfaceLICRepresentation&); // Not implemented
-  void operator=(const vtkSurfaceLICRepresentation&); // Not implemented
-//ETX
+  vtkSurfaceLICRepresentation(const vtkSurfaceLICRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSurfaceLICRepresentation&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

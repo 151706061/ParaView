@@ -72,7 +72,7 @@ public:
   // controller is obtained from the active session.
   void SetController(vtkMultiProcessController*);
   vtkGetObjectMacro(Controller, vtkMultiProcessController);
-//BTX
+
   enum ProcessTypes
     {
     AUTO=0,
@@ -116,9 +116,9 @@ protected:
   vtkMultiProcessController* Controller;
 
 private:
-  vtkClientServerMoveData(const vtkClientServerMoveData&); // Not implemented.
-  void operator=(const vtkClientServerMoveData&); // Not implemented.
-//ETX
+  vtkClientServerMoveData(const vtkClientServerMoveData&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkClientServerMoveData&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

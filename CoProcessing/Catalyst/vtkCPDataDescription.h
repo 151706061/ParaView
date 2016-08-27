@@ -96,14 +96,13 @@ public:
   /// adaptor to the coprocessing pipelines.
   vtkGetObjectMacro(UserData, vtkFieldData);
 
-//BTX
 protected:
   vtkCPDataDescription();
   virtual ~vtkCPDataDescription();
 
 private:
-  vtkCPDataDescription(const vtkCPDataDescription&); // Not implemented
-  void operator=(const vtkCPDataDescription&); // Not implemented
+  vtkCPDataDescription(const vtkCPDataDescription&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkCPDataDescription&) VTK_DELETE_FUNCTION;
 
   /// The current simulation time.  This should be set in the adaptor.
   double Time;
@@ -127,7 +126,7 @@ private:
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

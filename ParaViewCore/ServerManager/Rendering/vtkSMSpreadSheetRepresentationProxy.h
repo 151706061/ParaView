@@ -32,7 +32,6 @@ public:
     vtkSMRepresentationProxy);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkSMSpreadSheetRepresentationProxy();
   ~vtkSMSpreadSheetRepresentationProxy();
@@ -44,9 +43,9 @@ protected:
   virtual void SetPropertyModifiedFlag(const char* name, int flag);
 
 private:
-  vtkSMSpreadSheetRepresentationProxy(const vtkSMSpreadSheetRepresentationProxy&); // Not implemented
-  void operator=(const vtkSMSpreadSheetRepresentationProxy&); // Not implemented
-//ETX
+  vtkSMSpreadSheetRepresentationProxy(const vtkSMSpreadSheetRepresentationProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMSpreadSheetRepresentationProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

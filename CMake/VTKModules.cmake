@@ -349,6 +349,12 @@ set(_vtk_modules
 
   vtkPVAnimation
   # Needed for animation support.
+
+  vtkPVVTKExtensionsPoints
+  # Needed for SPH filters.
+  
+  vtkIOTecplotTable
+  # needed for vtkTecplotReader
   )
 
 if("${VTK_RENDERING_BACKEND}" STREQUAL "OpenGL")
@@ -356,6 +362,7 @@ if("${VTK_RENDERING_BACKEND}" STREQUAL "OpenGL")
   list(APPEND _vtk_mpi_modules vtkRenderingParallelLIC)
 else()
   list(APPEND _vtk_modules vtkRenderingLICOpenGL2)
+  list(APPEND _vtk_modules vtkDomainsChemistryOpenGL2)
   list(APPEND _vtk_mpi_modules vtkRenderingParallelLIC)
 endif()
 

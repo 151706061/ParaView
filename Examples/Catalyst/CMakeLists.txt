@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 3.3)
 project(CatalystExamples CXX C)
 
 set(USE_CATALYST ON CACHE BOOL "Link the simulator with Catalyst")
@@ -34,6 +34,7 @@ add_subdirectory(CxxMappedDataArrayExample)
 add_subdirectory(MPISubCommunicatorExample)
 add_subdirectory(PythonDolfinExample)
 add_subdirectory(CxxParticlePathExample)
+add_subdirectory(CxxSOADataArrayExample)
 
 set(BUILD_FORTRAN_EXAMPLES OFF CACHE BOOL "Build Fortran Catalyst Examples")
 if(BUILD_FORTRAN_EXAMPLES)

@@ -33,7 +33,6 @@ public:
   vtkTypeMacro(vtkPVDataRepresentationPipeline, vtkCompositeDataPipeline);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkPVDataRepresentationPipeline();
   ~vtkPVDataRepresentationPipeline();
@@ -54,9 +53,9 @@ protected:
     vtkInformationVector* outInfoVec);
 
 private:
-  vtkPVDataRepresentationPipeline(const vtkPVDataRepresentationPipeline&); // Not implemented
-  void operator=(const vtkPVDataRepresentationPipeline&); // Not implemented
-//ETX
+  vtkPVDataRepresentationPipeline(const vtkPVDataRepresentationPipeline&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVDataRepresentationPipeline&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

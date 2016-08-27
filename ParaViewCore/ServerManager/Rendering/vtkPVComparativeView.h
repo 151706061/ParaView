@@ -25,6 +25,7 @@
 #include "vtkObject.h"
 
 class vtkCollection;
+class vtkImageData;
 class vtkSMComparativeAnimationCueProxy;
 class vtkSMProxy;
 class vtkSMViewProxy;
@@ -158,7 +159,15 @@ public:
   void MarkOutdated()
     { this->Outdated=true; }
 
-  //BTX
+
+  // Description:
+  // These methods mimic the vtkPVView API. They do nothing here since each view
+  // internal view will call PrepareForScreenshot and CleanupAfterScreenshot
+  // explicitly when we capture the images from each of them as needed.
+  void PrepareForScreenshot() {}
+  void CleanupAfterScreenshot() {}
+  vtkImageData* CaptureWindow(int magnification);
+
 protected:
   vtkPVComparativeView();
   ~vtkPVComparativeView();
@@ -197,14 +206,12 @@ protected:
   void SetRootView(vtkSMViewProxy*);
   vtkSMViewProxy* RootView;
 private:
-  vtkPVComparativeView(const vtkPVComparativeView&); // Not implemented
-  void operator=(const vtkPVComparativeView&); // Not implemented
+  vtkPVComparativeView(const vtkPVComparativeView&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVComparativeView&) VTK_DELETE_FUNCTION;
 
   class vtkInternal;
   vtkInternal* Internal;
   vtkCommand* MarkOutdatedObserver;
-
-  //ETX
 };
 
 #endif

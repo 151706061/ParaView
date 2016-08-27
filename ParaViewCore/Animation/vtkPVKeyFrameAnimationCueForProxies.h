@@ -59,7 +59,6 @@ public:
   virtual void SetAnimationValue(int index, double value);
   virtual void EndUpdateAnimationValues();
 
-//BTX
 protected:
   vtkPVKeyFrameAnimationCueForProxies();
   ~vtkPVKeyFrameAnimationCueForProxies();
@@ -78,9 +77,9 @@ protected:
   int ValueIndexMax;
 
 private:
-  vtkPVKeyFrameAnimationCueForProxies(const vtkPVKeyFrameAnimationCueForProxies&); // Not implemented
-  void operator=(const vtkPVKeyFrameAnimationCueForProxies&); // Not implemented
-//ETX
+  vtkPVKeyFrameAnimationCueForProxies(const vtkPVKeyFrameAnimationCueForProxies&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVKeyFrameAnimationCueForProxies&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

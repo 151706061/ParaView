@@ -61,15 +61,12 @@ public:
 
   void SetContourConnection (vtkAlgorithmOutput*);
 
-  //BTX
   virtual int RequestData(vtkInformation*, vtkInformationVector**,
                           vtkInformationVector*);
 
 private:
-  vtkPVAMRFragmentIntegration(const vtkPVAMRFragmentIntegration&);  // Not implemented.
-  void operator=(const vtkPVAMRFragmentIntegration&);    // Not implemented.
-
-  //ETX
+  vtkPVAMRFragmentIntegration(const vtkPVAMRFragmentIntegration&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVAMRFragmentIntegration&) VTK_DELETE_FUNCTION;
 
 protected:
   double VolumeFractionSurfaceValue;

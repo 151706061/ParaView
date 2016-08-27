@@ -226,7 +226,6 @@ public:
     return this->SelfDir;
   }
 
-//BTX
 protected:
   vtkProcessModule();
   ~vtkProcessModule();
@@ -265,8 +264,8 @@ protected:
 
   bool ReportInterpreterErrors;
 private:
-  vtkProcessModule(const vtkProcessModule&); // Not implemented.
-  void operator=(const vtkProcessModule&); // Not implemented.
+  vtkProcessModule(const vtkProcessModule&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkProcessModule&) VTK_DELETE_FUNCTION;
 
   void DetermineExecutablePath(int argc, char** argv);
 
@@ -295,7 +294,7 @@ private:
 
   std::string ProgramPath;
   std::string SelfDir;
-//ETX
+
 };
 
 #endif //vtkProcessModule_h

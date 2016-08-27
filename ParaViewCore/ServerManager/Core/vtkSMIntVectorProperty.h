@@ -141,7 +141,6 @@ public:
   // XML.
   virtual void ResetToXMLDefaults();
 
-//BTX
 protected:
   vtkSMIntVectorProperty();
   ~vtkSMIntVectorProperty();
@@ -177,9 +176,9 @@ protected:
   virtual void SaveStateValues(vtkPVXMLElement* propElement);
 
 private:
-  vtkSMIntVectorProperty(const vtkSMIntVectorProperty&); // Not implemented
-  void operator=(const vtkSMIntVectorProperty&); // Not implemented
-//ETX
+  vtkSMIntVectorProperty(const vtkSMIntVectorProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMIntVectorProperty&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

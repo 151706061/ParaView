@@ -293,15 +293,14 @@ public:
     return self? self->GetRange(range) : false;
     }
 
-//BTX
 protected:
   vtkSMTransferFunctionProxy();
   ~vtkSMTransferFunctionProxy();
 
 private:
-  vtkSMTransferFunctionProxy(const vtkSMTransferFunctionProxy&); // Not implemented
-  void operator=(const vtkSMTransferFunctionProxy&); // Not implemented
-//ETX
+  vtkSMTransferFunctionProxy(const vtkSMTransferFunctionProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMTransferFunctionProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

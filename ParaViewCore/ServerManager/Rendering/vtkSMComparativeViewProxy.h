@@ -91,6 +91,10 @@ protected:
   vtkSMComparativeViewProxy();
   ~vtkSMComparativeViewProxy();
 
+  // Description:
+  // Overridden to do the capturing of images from each of the internal views
+  // and then stitching them together.
+  virtual vtkImageData* CaptureWindowInternal(int magnification);
 
   void InvokeConfigureEvent();
 
@@ -98,8 +102,8 @@ protected:
   virtual void CreateVTKObjects();
 
 private:
-  vtkSMComparativeViewProxy(const vtkSMComparativeViewProxy&); // Not implemented
-  void operator=(const vtkSMComparativeViewProxy&); // Not implemented
+  vtkSMComparativeViewProxy(const vtkSMComparativeViewProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMComparativeViewProxy&) VTK_DELETE_FUNCTION;
 };
 
 #endif

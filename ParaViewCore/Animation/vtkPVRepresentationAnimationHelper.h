@@ -40,16 +40,15 @@ public:
   void SetOpacity(double);
   void SetSourceProxy(vtkSMProxy* proxy);
 
-//BTX
 protected:
   vtkPVRepresentationAnimationHelper();
   ~vtkPVRepresentationAnimationHelper();
 
   vtkWeakPointer<vtkSMProxy> SourceProxy;
 private:
-  vtkPVRepresentationAnimationHelper(const vtkPVRepresentationAnimationHelper&); // Not implemented
-  void operator=(const vtkPVRepresentationAnimationHelper&); // Not implemented
-//ETX
+  vtkPVRepresentationAnimationHelper(const vtkPVRepresentationAnimationHelper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVRepresentationAnimationHelper&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

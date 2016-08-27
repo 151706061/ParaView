@@ -44,13 +44,13 @@ public:
   pqColorButtonEventPlayer(QObject* parent=0);
   ~pqColorButtonEventPlayer();
 
+  using Superclass::playEvent;
   bool playEvent(QObject* object, const QString& command, const QString&
     arguments, bool& error);
 
   static const QString &EVENT_NAME();
 private:
-  pqColorButtonEventPlayer(const pqColorButtonEventPlayer&); // Not implemented.
-  void operator=(const pqColorButtonEventPlayer&); // Not implemented.
+  Q_DISABLE_COPY(pqColorButtonEventPlayer)
 };
 
 #endif

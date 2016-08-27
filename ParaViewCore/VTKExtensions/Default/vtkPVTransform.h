@@ -50,7 +50,6 @@ public:
   void SetAbsoluteScale(double x, double y, double z);
   vtkGetVector3Macro(AbsoluteScale, double);
 
-//BTX
 protected:
   vtkPVTransform();
   ~vtkPVTransform();
@@ -63,10 +62,9 @@ protected:
   vtkTransform *AbsoluteTransform;
 
 private:
-  vtkPVTransform(const vtkPVTransform&); // Not implemented
-  void operator=(const vtkPVTransform&); // Not implemented
+  vtkPVTransform(const vtkPVTransform&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVTransform&) VTK_DELETE_FUNCTION;
 
-//ETX
 };
 
 #endif

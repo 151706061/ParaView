@@ -39,7 +39,6 @@ public:
   // Allow to register a given XML state for a given proxy GlobalId
   virtual void CacheXMLProxyState(vtkTypeUInt32 id, vtkPVXMLElement* xml);
 
-//BTX
 protected:
   vtkSMDeserializerXMLCache();
   ~vtkSMDeserializerXMLCache();
@@ -52,12 +51,12 @@ protected:
   virtual vtkPVXMLElement* LocateProxyElement(vtkTypeUInt32 id);
 
 private:
-  vtkSMDeserializerXMLCache(const vtkSMDeserializerXMLCache&); // Not implemented
-  void operator=(const vtkSMDeserializerXMLCache&); // Not implemented
+  vtkSMDeserializerXMLCache(const vtkSMDeserializerXMLCache&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMDeserializerXMLCache&) VTK_DELETE_FUNCTION;
 
   class vtkInternal;
   vtkInternal* Internals;
-//ETX
+
 };
 
 #endif

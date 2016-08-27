@@ -35,7 +35,6 @@ public:
   vtkTypeMacro(vtkSIIndexSelectionProperty, vtkSIProperty)
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkSIIndexSelectionProperty();
   ~vtkSIIndexSelectionProperty();
@@ -47,9 +46,9 @@ protected:
   virtual bool Pull(vtkSMMessage*);
 
 private:
-  vtkSIIndexSelectionProperty(const vtkSIIndexSelectionProperty&); // Not implemented
-  void operator=(const vtkSIIndexSelectionProperty&); // Not implemented
-//ETX
+  vtkSIIndexSelectionProperty(const vtkSIIndexSelectionProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSIIndexSelectionProperty&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

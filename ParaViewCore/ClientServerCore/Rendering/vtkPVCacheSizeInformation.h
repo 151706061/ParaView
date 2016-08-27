@@ -38,12 +38,10 @@ public:
   // Merge another information object.
   virtual void AddInformation(vtkPVInformation*);
 
-  //BTX
   // Description:
   // Manage a serialized version of the information.
   virtual void CopyToStream(vtkClientServerStream*);
   virtual void CopyFromStream(const vtkClientServerStream*);
-  //ETX
 
   vtkGetMacro(CacheSize, unsigned long);
   vtkSetMacro(CacheSize, unsigned long);
@@ -53,8 +51,8 @@ protected:
 
   unsigned long CacheSize;
 private:
-  vtkPVCacheSizeInformation(const vtkPVCacheSizeInformation&); // Not implemented.
-  void operator=(const vtkPVCacheSizeInformation&); // Not implemented.
+  vtkPVCacheSizeInformation(const vtkPVCacheSizeInformation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVCacheSizeInformation&) VTK_DELETE_FUNCTION;
 };
 
 #endif

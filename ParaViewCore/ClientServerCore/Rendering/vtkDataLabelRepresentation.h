@@ -106,7 +106,7 @@ public:
   int ProcessViewRequest(
     vtkInformationRequestKey* request_type,
     vtkInformation* inInfo, vtkInformation* outInfo);
-//BTX
+
 protected:
   vtkDataLabelRepresentation();
   ~vtkDataLabelRepresentation();
@@ -170,9 +170,9 @@ protected:
   int PointLabelVisibility;
   int CellLabelVisibility;
 private:
-  vtkDataLabelRepresentation(const vtkDataLabelRepresentation&); // Not implemented
-  void operator=(const vtkDataLabelRepresentation&); // Not implemented
-//ETX
+  vtkDataLabelRepresentation(const vtkDataLabelRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkDataLabelRepresentation&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

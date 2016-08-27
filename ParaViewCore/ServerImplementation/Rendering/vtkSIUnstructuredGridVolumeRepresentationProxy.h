@@ -31,7 +31,6 @@ public:
   vtkTypeMacro(vtkSIUnstructuredGridVolumeRepresentationProxy, vtkSIProxy);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkSIUnstructuredGridVolumeRepresentationProxy();
   ~vtkSIUnstructuredGridVolumeRepresentationProxy();
@@ -42,9 +41,9 @@ protected:
 
 
 private:
-  vtkSIUnstructuredGridVolumeRepresentationProxy(const vtkSIUnstructuredGridVolumeRepresentationProxy&); // Not implemented
-  void operator=(const vtkSIUnstructuredGridVolumeRepresentationProxy&); // Not implemented
-//ETX
+  vtkSIUnstructuredGridVolumeRepresentationProxy(const vtkSIUnstructuredGridVolumeRepresentationProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSIUnstructuredGridVolumeRepresentationProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

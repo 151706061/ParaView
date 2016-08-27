@@ -73,6 +73,10 @@ public:
   void setTimeValue(double time);
   double timeValue() const;
 
+  /// Get/set the precision with which time is reported.
+  void setTimePrecision(int val);
+  int timePrecision() const;
+
   /// Get/set the number of timesteps.
   void setTimeStepCount(int count);
   int timeStepCount() const;
@@ -108,7 +112,7 @@ private slots:
   void timestepValueChanged();
 
 private:
-  Q_DISABLE_COPY(pqAnimationTimeWidget);
+  Q_DISABLE_COPY(pqAnimationTimeWidget)
 
   // Returns the current timekeeper.
   vtkSMProxy* timeKeeper() const;

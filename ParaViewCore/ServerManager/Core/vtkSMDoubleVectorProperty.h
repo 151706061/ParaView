@@ -156,9 +156,7 @@ protected:
   vtkSMDoubleVectorProperty();
   ~vtkSMDoubleVectorProperty();
 
-  //BTX
   friend class vtkSMRenderViewProxy;
-  //ETX
 
   // Description:
   // Let the property write its content into the stream
@@ -187,8 +185,8 @@ protected:
   virtual void SaveStateValues(vtkPVXMLElement* propElement);
 
 private:
-  vtkSMDoubleVectorProperty(const vtkSMDoubleVectorProperty&); // Not implemented
-  void operator=(const vtkSMDoubleVectorProperty&); // Not implemented
+  vtkSMDoubleVectorProperty(const vtkSMDoubleVectorProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMDoubleVectorProperty&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;

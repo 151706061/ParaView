@@ -36,11 +36,11 @@ public:
   void AddString(const char* str);
   void AddUniqueString(const char* str);
   
-  //BTX
+
   // Description:
   // Add a command and format it any way you like.
   void AddFormattedString(const char* EventString, ...);
-  //ETX
+
   
   // Description:
   // Initialize to empty.
@@ -74,8 +74,8 @@ protected:
   void Reallocate(int num);
   void DeleteStrings();
 
-  vtkStringList(const vtkStringList&); // Not implemented
-  void operator=(const vtkStringList&); // Not implemented
+  vtkStringList(const vtkStringList&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkStringList&) VTK_DELETE_FUNCTION;
 };
 
 #endif

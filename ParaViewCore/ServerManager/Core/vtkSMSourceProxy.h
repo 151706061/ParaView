@@ -36,9 +36,9 @@
 class vtkPVArrayInformation;
 class vtkPVDataInformation;
 class vtkPVDataSetAttributesInformation;
-//BTX
+
 struct vtkSMSourceProxyInternals;
-//ETX
+
 class vtkSMOutputPort;
 class vtkSMProperty;
 class vtkSMSessionProxyManager;
@@ -179,8 +179,6 @@ public:
   // Overridden to reserve additional IDs for use by "ExtractSelection" proxies.
   virtual vtkTypeUInt32 GetGlobalID();
 
-//BTX
-
   enum ProcessSupportType
   {
     SINGLE_PROCESS,
@@ -251,9 +249,9 @@ private:
   unsigned int NumberOfAlgorithmOutputPorts;
   unsigned int NumberOfAlgorithmRequiredInputPorts;
 
-  vtkSMSourceProxy(const vtkSMSourceProxy&); // Not implemented
-  void operator=(const vtkSMSourceProxy&); // Not implemented
-//ETX
+  vtkSMSourceProxy(const vtkSMSourceProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMSourceProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

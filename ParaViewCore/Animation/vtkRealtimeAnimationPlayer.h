@@ -36,7 +36,6 @@ public:
   vtkGetMacro(Duration, unsigned long);
   vtkSetMacro(Duration, unsigned long);
 
-//BTX
 protected:
   vtkRealtimeAnimationPlayer();
   ~vtkRealtimeAnimationPlayer();
@@ -58,9 +57,9 @@ protected:
   double Factor;
   vtkTimerLog* Timer;
 private:
-  vtkRealtimeAnimationPlayer(const vtkRealtimeAnimationPlayer&); // Not implemented
-  void operator=(const vtkRealtimeAnimationPlayer&); // Not implemented
-//ETX
+  vtkRealtimeAnimationPlayer(const vtkRealtimeAnimationPlayer&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkRealtimeAnimationPlayer&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

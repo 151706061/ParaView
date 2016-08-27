@@ -32,15 +32,14 @@ public:
   vtkTypeMacro(vtkMySpecialPolyDataMapper, vtkCompositePolyDataMapper2);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkMySpecialPolyDataMapper();
   ~vtkMySpecialPolyDataMapper();
 
 private:
-  vtkMySpecialPolyDataMapper(const vtkMySpecialPolyDataMapper&); // Not implemented
-  void operator=(const vtkMySpecialPolyDataMapper&); // Not implemented
-//ETX
+  vtkMySpecialPolyDataMapper(const vtkMySpecialPolyDataMapper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkMySpecialPolyDataMapper&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

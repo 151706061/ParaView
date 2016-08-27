@@ -62,7 +62,6 @@ public:
   void SetBackfaceDiffuseColor(double r, double g, double b);
   void SetBackfaceOpacity(double val);
 
-//BTX
 protected:
   vtkGeometryRepresentationWithFaces();
   ~vtkGeometryRepresentationWithFaces();
@@ -97,9 +96,9 @@ protected:
   int BackfaceRepresentation;
 
 private:
-  vtkGeometryRepresentationWithFaces(const vtkGeometryRepresentationWithFaces&); // Not implemented
-  void operator=(const vtkGeometryRepresentationWithFaces&); // Not implemented
-//ETX
+  vtkGeometryRepresentationWithFaces(const vtkGeometryRepresentationWithFaces&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkGeometryRepresentationWithFaces&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -69,15 +69,14 @@ public:
     return retVal;
     }
 
-//BTX
 protected:
   vtkSMCoreUtilities();
   ~vtkSMCoreUtilities();
 
 private:
-  vtkSMCoreUtilities(const vtkSMCoreUtilities&); // Not implemented
-  void operator=(const vtkSMCoreUtilities&); // Not implemented
-//ETX
+  vtkSMCoreUtilities(const vtkSMCoreUtilities&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMCoreUtilities&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

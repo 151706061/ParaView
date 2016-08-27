@@ -40,7 +40,6 @@ set (Module_SRCS
   vtkChartWarning.cxx
   vtkClientServerMoveData.cxx
   vtkCompositeRepresentation.cxx
-  vtkCubeAxesRepresentation.cxx
   vtkDataLabelRepresentation.cxx
   vtkGeometryRepresentation.cxx
   vtkGeometryRepresentationWithFaces.cxx
@@ -52,6 +51,7 @@ set (Module_SRCS
   vtkMPIMoveData.cxx
   vtkOutlineRepresentation.cxx
   vtkPExtentTranslator.cxx
+  vtkProgressBarSourceRepresentation.cxx
   vtkPVBagChartRepresentation.cxx
   vtkPVBoxChartRepresentation.cxx
   vtkPVCacheKeeper.cxx
@@ -69,6 +69,7 @@ set (Module_SRCS
   vtkPVHistogramChartRepresentation.cxx
   vtkPVImageSliceMapper.cxx
   vtkPVImplicitPlaneRepresentation.cxx
+  vtkPVImplicitCylinderRepresentation.cxx
   vtkPVLastSelectionInformation.cxx
   vtkPVMultiSliceView.cxx
   vtkPVOpenGLInformation.cxx
@@ -89,6 +90,7 @@ set (Module_SRCS
   vtkPVView.cxx
   vtkPVXYChartView.cxx
   vtkQuartileChartRepresentation.cxx
+  vtkRulerSourceRepresentation.cxx
   vtkSelectionDeliveryFilter.cxx
   vtkSelectionRepresentation.cxx
   vtkSpreadSheetRepresentation.cxx

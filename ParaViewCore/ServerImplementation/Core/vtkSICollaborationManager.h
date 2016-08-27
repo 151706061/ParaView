@@ -30,7 +30,6 @@ public:
   vtkTypeMacro(vtkSICollaborationManager, vtkSIObject);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
   // Description:
   // Push a new state to the underneath implementation
   // The provided implementation just store the message
@@ -51,12 +50,12 @@ protected:
   void BroadcastToClients(vtkSMMessage* msg);
 
 private:
-  vtkSICollaborationManager(const vtkSICollaborationManager&);    // Not implemented
-  void operator=(const vtkSICollaborationManager&); // Not implemented
+  vtkSICollaborationManager(const vtkSICollaborationManager&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSICollaborationManager&) VTK_DELETE_FUNCTION;
 
   class vtkInternal;
   vtkInternal* Internal;
-//ETX
+
 };
 
 #endif // #ifndef vtkSICollaborationManager_h

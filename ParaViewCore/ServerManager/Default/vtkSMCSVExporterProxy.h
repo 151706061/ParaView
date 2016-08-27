@@ -40,15 +40,14 @@ public:
   // Default implementation return true if the view is a render view.
   virtual bool CanExport(vtkSMProxy*);
 
-//BTX
 protected:
   vtkSMCSVExporterProxy();
   ~vtkSMCSVExporterProxy();
 
 private:
-  vtkSMCSVExporterProxy(const vtkSMCSVExporterProxy&); // Not implemented
-  void operator=(const vtkSMCSVExporterProxy&); // Not implemented
-//ETX
+  vtkSMCSVExporterProxy(const vtkSMCSVExporterProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMCSVExporterProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

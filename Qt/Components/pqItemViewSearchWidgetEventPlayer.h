@@ -45,12 +45,13 @@ public:
   pqItemViewSearchWidgetEventPlayer(QObject* parent=0);
   ~pqItemViewSearchWidgetEventPlayer();
 
+  using Superclass::playEvent;
   bool playEvent(QObject* object, const QString& command, const QString&
     arguments, bool& error);
 
   static const QString &EVENT_NAME();
 private:
-  Q_DISABLE_COPY(pqItemViewSearchWidgetEventPlayer);
+  Q_DISABLE_COPY(pqItemViewSearchWidgetEventPlayer)
 };
 
 #endif

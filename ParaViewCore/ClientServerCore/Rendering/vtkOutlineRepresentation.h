@@ -40,7 +40,6 @@ public:
   virtual void SetPickable(int)
     { this->Superclass::SetPickable(0); }
 
-//BTX
 protected:
   vtkOutlineRepresentation();
   ~vtkOutlineRepresentation();
@@ -49,9 +48,9 @@ protected:
     { this->Superclass::SetRepresentation(WIREFRAME); }
 
 private:
-  vtkOutlineRepresentation(const vtkOutlineRepresentation&); // Not implemented
-  void operator=(const vtkOutlineRepresentation&); // Not implemented
-//ETX
+  vtkOutlineRepresentation(const vtkOutlineRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkOutlineRepresentation&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

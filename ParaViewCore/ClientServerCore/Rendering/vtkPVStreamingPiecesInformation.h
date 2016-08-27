@@ -26,9 +26,7 @@
 #include "vtkPVInformation.h"
 #include "vtkPVClientServerCoreRenderingModule.h" // needed for export macro
 
-//BTX
 #include <vector> // needed for internal API
-//ETX
 
 class VTKPVCLIENTSERVERCORERENDERING_EXPORT vtkPVStreamingPiecesInformation : public vtkPVInformation
 {
@@ -50,24 +48,21 @@ public:
   virtual void CopyToStream(vtkClientServerStream*);
   virtual void CopyFromStream(const vtkClientServerStream*);
 
-//BTX
   // Description:
   // API to access the internal keys. 
   void GetKeys(std::vector<unsigned int>& keys) const;
-//ETX
 
-//BTX
 protected:
   vtkPVStreamingPiecesInformation();
   ~vtkPVStreamingPiecesInformation();
 
 private:
-  vtkPVStreamingPiecesInformation(const vtkPVStreamingPiecesInformation&); // Not implemented
-  void operator=(const vtkPVStreamingPiecesInformation&); // Not implemented
+  vtkPVStreamingPiecesInformation(const vtkPVStreamingPiecesInformation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVStreamingPiecesInformation&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

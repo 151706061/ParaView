@@ -31,15 +31,14 @@ public:
   /// interpretor will not be initialized and hence unavailable.
   static void CoProcessorInitialize(const char* pythonFileName);
 
-//BTX
 protected:
   vtkCPPythonAdaptorAPI();
   ~vtkCPPythonAdaptorAPI();
 
 private:
-  vtkCPPythonAdaptorAPI(const vtkCPPythonAdaptorAPI&); // Not implemented
-  void operator=(const vtkCPPythonAdaptorAPI&); // Not implemented
-//ETX
+  vtkCPPythonAdaptorAPI(const vtkCPPythonAdaptorAPI&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkCPPythonAdaptorAPI&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -106,18 +106,18 @@ public:
   // the begining of the application's execution before any sessions are
   // created.
   static void AddWriterToWhitelist(const char* writerxmlgroup, const char* writerxmlname);
-//BTX
+
 protected:
   vtkSMWriterFactory();
   ~vtkSMWriterFactory();
 
 private:
-  vtkSMWriterFactory(const vtkSMWriterFactory&); // Not implemented
-  void operator=(const vtkSMWriterFactory&); // Not implemented
+  vtkSMWriterFactory(const vtkSMWriterFactory&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMWriterFactory&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

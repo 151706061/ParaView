@@ -33,15 +33,14 @@ public:
   void ResetTileDisplay();
   void ShowOnTileDisplay(unsigned int);
 
-//BTX
 protected:
   vtkViewLayout();
   ~vtkViewLayout();
 
 private:
-  vtkViewLayout(const vtkViewLayout&); // Not implemented
-  void operator=(const vtkViewLayout&); // Not implemented
-//ETX
+  vtkViewLayout(const vtkViewLayout&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkViewLayout&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

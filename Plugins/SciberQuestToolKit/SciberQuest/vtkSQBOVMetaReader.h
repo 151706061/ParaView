@@ -42,10 +42,8 @@
 #include <vector> // for vector
 #include <string> // for string
 
-//BTX
 class BOVReader;
 class vtkPVXMLElement;
-//ETX
 
 class VTKSCIBERQUEST_EXPORT vtkSQBOVMetaReader : public vtkSQBOVReaderBase
 {
@@ -58,12 +56,11 @@ public:
   // Iitialize the reader from an XML document. You also need to
   // pass in the bov file name so that subsetting and array selection
   // can be applied which has to occur after the file has been opened.
-  //BTX
+
   virtual int Initialize(
         vtkPVXMLElement *root,
         const char *fileName,
         std::vector<std::string> &arrays);
-  //ETX
 
   // Description:
   // Get/Set the file to read. Setting the file name opens
@@ -146,8 +143,8 @@ protected:
   long long GetProcRam();
 
 private:
-  vtkSQBOVMetaReader(const vtkSQBOVMetaReader &); // Not implemented
-  void operator=(const vtkSQBOVMetaReader &); // Not implemented
+  vtkSQBOVMetaReader(const vtkSQBOVMetaReader &) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSQBOVMetaReader &) VTK_DELETE_FUNCTION;
 
 private:
   int PeriodicBC[3];       // flag indicating which directions have periodic BC

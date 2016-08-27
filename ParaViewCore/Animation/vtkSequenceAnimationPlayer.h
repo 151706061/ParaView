@@ -32,7 +32,6 @@ public:
   vtkSetClampMacro(NumberOfFrames, int, 2, VTK_INT_MAX);
   vtkGetMacro(NumberOfFrames, int);
 
-//BTX
 protected:
   vtkSequenceAnimationPlayer();
   ~vtkSequenceAnimationPlayer();
@@ -53,9 +52,9 @@ protected:
   double EndTime;
   int FrameNo;
 private:
-  vtkSequenceAnimationPlayer(const vtkSequenceAnimationPlayer&); // Not implemented
-  void operator=(const vtkSequenceAnimationPlayer&); // Not implemented
-//ETX
+  vtkSequenceAnimationPlayer(const vtkSequenceAnimationPlayer&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSequenceAnimationPlayer&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

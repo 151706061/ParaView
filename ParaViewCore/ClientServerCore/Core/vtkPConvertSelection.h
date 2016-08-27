@@ -36,7 +36,6 @@ public:
   void SetController(vtkMultiProcessController*);
   vtkGetObjectMacro(Controller, vtkMultiProcessController);
 
-//BTX
 protected:
   vtkPConvertSelection();
   ~vtkPConvertSelection();
@@ -48,9 +47,9 @@ protected:
 
   vtkMultiProcessController* Controller;
 private:
-  vtkPConvertSelection(const vtkPConvertSelection&); // Not implemented
-  void operator=(const vtkPConvertSelection&); // Not implemented
-//ETX
+  vtkPConvertSelection(const vtkPConvertSelection&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPConvertSelection&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif // vtkPConvertSelection_h

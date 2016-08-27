@@ -31,9 +31,7 @@ class vtkPVXMLElement;
 class vtkSMProxy;
 class vtkSMProxyLocator;
 
-//BTX
 struct vtkSMStateLoaderInternals;
-//ETX
 
 class VTKPVSERVERMANAGERCORE_EXPORT vtkSMStateLoader : public vtkSMDeserializerXML
 {
@@ -126,8 +124,8 @@ protected:
   vtkSMProxyLocator* ProxyLocator;
   int KeepIdMapping;
 private:
-  vtkSMStateLoader(const vtkSMStateLoader&); // Not implemented
-  void operator=(const vtkSMStateLoader&); // Not implemented
+  vtkSMStateLoader(const vtkSMStateLoader&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMStateLoader&) VTK_DELETE_FUNCTION;
 
   vtkSMStateLoaderInternals* Internal;
 };

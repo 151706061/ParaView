@@ -21,6 +21,8 @@
 
 #include "vtkPVServerManagerRenderingModule.h" //needed for exports
 #include "vtkSMObject.h"
+#include "vtkSmartPointer.h" // needed for vtkSmartPointer
+#include <vector> // needed for std::vector
 
 class vtkImageData;
 class vtkPoints;
@@ -75,20 +77,25 @@ public:
     int borderWidth=0, const unsigned char* borderColorRGB=NULL);
 
   // Description:
+  // Merges multiple images into a single one and returns that.
+  static vtkSmartPointer<vtkImageData> MergeImages(
+    const std::vector<vtkSmartPointer<vtkImageData> >& images,
+    int borderWidth=0, const unsigned char* borderColorRGB=NULL);
+
+  // Description:
   // Fill the specified extents in the image with the given color.
   // If the image is a 4 component image, then this method fills the 4th
   // component with 0xff.
   static void FillImage(vtkImageData* image, const int extent[6], const unsigned char rgb[3]);
 
-//BTX
 protected:
   vtkSMUtilities() {}
   ~vtkSMUtilities(){}
 
 private:
-  vtkSMUtilities(const vtkSMUtilities&); // Not implemented
-  void operator=(const vtkSMUtilities&); // Not implemented
-//ETX
+  vtkSMUtilities(const vtkSMUtilities&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMUtilities&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

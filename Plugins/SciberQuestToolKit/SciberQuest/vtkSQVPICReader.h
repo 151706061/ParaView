@@ -40,10 +40,8 @@ class vtkMultiProcessController;
 class vtkInformation;
 class vtkPVXMLElement;
 
-//BTX
 class VPICDataSet;
 class GridExchange;
-//ETX
 
 class VTKSCIBERQUEST_EXPORT vtkSQVPICReader : public vtkImageAlgorithm
 {
@@ -54,12 +52,11 @@ public:
 
   // Description:
   // Intialize from xml document.
-  //BTX
+
   int Initialize(
       vtkPVXMLElement *root,
       const char *fileName,
       std::vector<string> &arrays);
-  //ETX
 
   // Description:
   // Specify file name of VPIC data file to read.
@@ -174,8 +171,8 @@ protected:
 
 
 private:
-  vtkSQVPICReader(const vtkSQVPICReader&);  // Not implemented.
-  void operator=(const vtkSQVPICReader&); // Not implemented.
+  vtkSQVPICReader(const vtkSQVPICReader&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSQVPICReader&) VTK_DELETE_FUNCTION;
 };
 
 #endif

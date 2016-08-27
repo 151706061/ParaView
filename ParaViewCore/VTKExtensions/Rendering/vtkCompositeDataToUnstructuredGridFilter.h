@@ -52,7 +52,6 @@ public:
   vtkGetMacro(MergePoints, bool);
   vtkBooleanMacro(MergePoints, bool);
 
-//BTX
 protected:
   vtkCompositeDataToUnstructuredGridFilter();
   ~vtkCompositeDataToUnstructuredGridFilter();
@@ -76,9 +75,9 @@ protected:
   unsigned int SubTreeCompositeIndex;
   bool MergePoints;
 private:
-  vtkCompositeDataToUnstructuredGridFilter(const vtkCompositeDataToUnstructuredGridFilter&); // Not implemented
-  void operator=(const vtkCompositeDataToUnstructuredGridFilter&); // Not implemented
-//ETX
+  vtkCompositeDataToUnstructuredGridFilter(const vtkCompositeDataToUnstructuredGridFilter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkCompositeDataToUnstructuredGridFilter&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

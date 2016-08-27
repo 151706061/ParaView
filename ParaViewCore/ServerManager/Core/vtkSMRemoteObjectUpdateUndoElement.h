@@ -49,8 +49,6 @@ public:
   // Set ProxyLocator to use if any.
   virtual void SetProxyLocator(vtkSMProxyLocator*);
 
-//BTX
-
   // Description:
   // Set the state of the UndoElement
   virtual void SetUndoRedoState(const vtkSMMessage* before,
@@ -72,10 +70,9 @@ protected:
   vtkSMProxyLocator* ProxyLocator;
 
 private:
-  vtkSMRemoteObjectUpdateUndoElement(const vtkSMRemoteObjectUpdateUndoElement&); // Not implemented.
-  void operator=(const vtkSMRemoteObjectUpdateUndoElement&); // Not implemented.
+  vtkSMRemoteObjectUpdateUndoElement(const vtkSMRemoteObjectUpdateUndoElement&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMRemoteObjectUpdateUndoElement&) VTK_DELETE_FUNCTION;
 
-//ETX
 };
 
 #endif

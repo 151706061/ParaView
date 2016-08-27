@@ -75,7 +75,6 @@ public:
   // unchanged.
   virtual int LoadXMLState(vtkPVXMLElement* element, vtkSMProxyLocator* locator);
 
-//BTX
 protected:
   vtkSMComparativeAnimationCueProxy();
   ~vtkSMComparativeAnimationCueProxy();
@@ -91,12 +90,12 @@ protected:
   vtkPVComparativeAnimationCue* GetComparativeAnimationCue();
 
 private:
-  vtkSMComparativeAnimationCueProxy(const vtkSMComparativeAnimationCueProxy&); // Not implemented
-  void operator=(const vtkSMComparativeAnimationCueProxy&); // Not implemented
+  vtkSMComparativeAnimationCueProxy(const vtkSMComparativeAnimationCueProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMComparativeAnimationCueProxy&) VTK_DELETE_FUNCTION;
 
   class vtkInternal;
   vtkInternal* Internals;
-//ETX
+
 };
 
 #endif

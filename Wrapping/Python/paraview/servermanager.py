@@ -50,6 +50,7 @@ import paraview, re, os, os.path, new, sys, atexit
 # prefer `vtk` from `paraview` since it doesn't import all
 # vtk modules.
 from paraview import vtk
+from paraview import _backwardscompatibilityhelper as _bc
 
 from vtk.vtkPVServerImplementationCore import *
 from vtk.vtkPVClientServerCoreCore import *
@@ -108,7 +109,7 @@ def _wrap_property(proxy, smproperty):
                 property = VectorProperty(proxy, smproperty)
     elif smproperty.IsA("vtkSMVectorProperty"):
         if smproperty.IsA("vtkSMIntVectorProperty") and \
-          smproperty.GetDomain("enum"):
+          (smproperty.GetDomain("enum") or smproperty.GetDomain("comps")):
             property = EnumerationProperty(proxy, smproperty)
         else:
             property = VectorProperty(proxy, smproperty)
@@ -462,16 +463,14 @@ class Proxy(object):
             return self.__GetActiveCamera
         if name == "SaveDefinition" and hasattr(self.SMProxy, "SaveDefinition"):
             return self.__SaveDefinition
-        if name == "ColorAttributeType" and self.SMProxy.GetProperty("ColorArrayName"):
-            if paraview.compatibility.GetVersion() <= 4.1:
-                if self.GetProperty("ColorArrayName")[0] == "CELLS":
-                    return "CELL_DATA"
-                else:
-                    return "POINT_DATA"
-            else:
-                # if ColorAttributeType is being used, warn.
-                paraview.print_debug_info(\
-                    "'ColorAttributeType' is obsolete. Simply use 'ColorArrayName' instead.  Refer to ParaView Python API changes documentation online.")
+
+        try:
+            return _bc.getattr(self, name)
+        except _bc.NotSupportedException:
+            # we fall through and let getattr() raise the appropriate exception.
+            pass
+        except _bc.Continue:
+            pass
         # If not a property, see if SMProxy has the method
         try:
             proxyAttr = getattr(self.SMProxy, name)
@@ -882,6 +881,8 @@ class EnumerationProperty(VectorProperty):
         the numerical values otherwise."""
         val = self.SMProperty.GetElement(index)
         domain = self.SMProperty.GetDomain("enum")
+        if not domain:
+          domain = self.SMProperty.GetDomain("comps")
         for i in range(domain.GetNumberOfEntries()):
             if domain.GetEntryValue(i) == val:
                 return domain.GetEntryText(i)
@@ -891,6 +892,8 @@ class EnumerationProperty(VectorProperty):
         """Converts value to type suitable for vtSMProperty::SetElement()"""
         if type(value) == str:
             domain = self.SMProperty.GetDomain("enum")
+            if not domain:
+              domain = self.SMProperty.GetDomain("comps")
             if domain.HasEntryText(value):
                 return domain.GetEntryValueForText(value)
             else:
@@ -901,6 +904,8 @@ class EnumerationProperty(VectorProperty):
         "Returns the list of available values for the property."
         retVal = []
         domain = self.SMProperty.GetDomain("enum")
+        if not domain:
+          domain = self.SMProperty.GetDomain("comps")
         for i in range(domain.GetNumberOfEntries()):
             retVal.append(domain.GetEntryText(i))
         return retVal
@@ -2584,6 +2589,7 @@ def updateModules(m):
     createModule('piecewise_functions', m.piecewise_functions)
     createModule("extended_sources", m.extended_sources)
     createModule("incremental_point_locators", m.misc)
+    createModule("point_locators", m.misc)
 
 def _createModules(m):
     """Called when the module is loaded, this creates sub-
@@ -2605,6 +2611,7 @@ def _createModules(m):
     m.extended_sources = createModule("extended_sources")
     m.misc = createModule("misc")
     createModule("incremental_point_locators", m.misc)
+    createModule("point_locators", m.misc)
 
 class PVModule(object):
     pass

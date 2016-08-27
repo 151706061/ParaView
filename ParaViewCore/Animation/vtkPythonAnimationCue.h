@@ -45,7 +45,6 @@ public:
   vtkSetStringMacro(Script);
   vtkGetStringMacro(Script);
 
-//BTX
 protected:
   vtkPythonAnimationCue();
   ~vtkPythonAnimationCue();
@@ -64,9 +63,9 @@ protected:
   char* Script;
 
 private:
-  vtkPythonAnimationCue(const vtkPythonAnimationCue&); // Not implemented
-  void operator=(const vtkPythonAnimationCue&); // Not implemented
-//ETX
+  vtkPythonAnimationCue(const vtkPythonAnimationCue&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPythonAnimationCue&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

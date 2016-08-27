@@ -45,12 +45,13 @@ public:
   pqColorDialogEventPlayer(QObject* parent=0);
   ~pqColorDialogEventPlayer();
 
+  using Superclass::playEvent;
   bool playEvent(QObject* object, const QString& command, const QString&
     arguments, bool& error);
 
   static const QString &EVENT_NAME();
 private:
-  Q_DISABLE_COPY(pqColorDialogEventPlayer);
+  Q_DISABLE_COPY(pqColorDialogEventPlayer)
 };
 
 #endif

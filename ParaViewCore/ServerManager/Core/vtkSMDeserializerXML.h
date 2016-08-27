@@ -35,7 +35,6 @@ public:
   vtkTypeMacro(vtkSMDeserializerXML, vtkSMDeserializer);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkSMDeserializerXML();
   ~vtkSMDeserializerXML();
@@ -71,9 +70,9 @@ protected:
   virtual void CreatedNewProxy(vtkTypeUInt32 id, vtkSMProxy* proxy);
 
 private:
-  vtkSMDeserializerXML(const vtkSMDeserializerXML&); // Not implemented
-  void operator=(const vtkSMDeserializerXML&); // Not implemented
-//ETX
+  vtkSMDeserializerXML(const vtkSMDeserializerXML&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMDeserializerXML&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

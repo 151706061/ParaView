@@ -140,9 +140,8 @@ class vtkSMInformationHelper;
 class vtkSMPropertyLink;
 class vtkSMProxy;
 class vtkSMProxyLocator;
-//BTX
+
 struct vtkSMPropertyInternals;
-//ETX
 
 class VTKPVSERVERMANAGERCORE_EXPORT vtkSMProperty : public vtkSMObject
 {
@@ -408,7 +407,6 @@ public:
   // Use this method to clear unchecked values set of this property.
   virtual void ClearUncheckedElements() {}
 
-//BTX
 protected:
   vtkSMProperty();
   ~vtkSMProperty();
@@ -559,8 +557,8 @@ protected:
   vtkSMPropertyLink* Links;
 
 private:
-  vtkSMProperty(const vtkSMProperty&); // Not implemented
-  void operator=(const vtkSMProperty&); // Not implemented
+  vtkSMProperty(const vtkSMProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMProperty&) VTK_DELETE_FUNCTION;
 
   // Callback to fire vtkCommand::DomainModifiedEvent every time any of the
   // domains change.
@@ -573,7 +571,7 @@ private:
 
   bool PendingModifiedEvents;
   bool BlockModifiedEvents;
-//ETX
+
 };
 
 #define vtkSMPropertyTemplateMacroCase(typeSMProperty, type, prop, call) \

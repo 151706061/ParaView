@@ -68,7 +68,6 @@ public:
 
   vtkGetStringMacro(InitialString);
 
-//BTX
 protected:
   vtkSIVectorProperty();
   ~vtkSIVectorProperty();
@@ -88,9 +87,9 @@ protected:
     vtkPVXMLElement* element);
 
 private:
-  vtkSIVectorProperty(const vtkSIVectorProperty&); // Not implemented
-  void operator=(const vtkSIVectorProperty&); // Not implemented
-//ETX
+  vtkSIVectorProperty(const vtkSIVectorProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSIVectorProperty&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

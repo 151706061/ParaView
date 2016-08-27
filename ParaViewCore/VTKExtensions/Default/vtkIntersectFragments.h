@@ -60,7 +60,6 @@ protected:
   vtkIntersectFragments();
   ~vtkIntersectFragments();
 
-  //BTX
   /// pipeline
   virtual int RequestData(vtkInformation *, vtkInformationVector **, vtkInformationVector *);
   virtual int FillInputPortInformation(int port, vtkInformation *info);
@@ -147,9 +146,9 @@ protected:
   double ProgressIncrement;
 
 private:
-  vtkIntersectFragments(const vtkIntersectFragments&);  // Not implemented.
-  void operator=(const vtkIntersectFragments&);  // Not implemented.
-  //ETX
+  vtkIntersectFragments(const vtkIntersectFragments&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkIntersectFragments&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

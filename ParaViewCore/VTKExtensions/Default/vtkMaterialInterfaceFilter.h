@@ -266,7 +266,6 @@ protected:
   vtkMaterialInterfaceFilter();
   ~vtkMaterialInterfaceFilter();
 
-  //BTX
   virtual int RequestData(vtkInformation *, vtkInformationVector **, vtkInformationVector *);
   virtual int FillInputPortInformation(int port, vtkInformation *info);
   virtual int FillOutputPortInformation(int port, vtkInformation *info);
@@ -724,9 +723,9 @@ protected:
 #endif
 
 private:
-  vtkMaterialInterfaceFilter(const vtkMaterialInterfaceFilter&);  // Not implemented.
-  void operator=(const vtkMaterialInterfaceFilter&);  // Not implemented.
-  //ETX
+  vtkMaterialInterfaceFilter(const vtkMaterialInterfaceFilter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkMaterialInterfaceFilter&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

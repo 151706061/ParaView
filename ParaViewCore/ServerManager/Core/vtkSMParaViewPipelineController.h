@@ -210,7 +210,6 @@ public:
   // For a given proxy returns the name of the group used for helper proxies.
   static vtkStdString GetHelperProxyGroupName(vtkSMProxy*);
 
-//BTX
 protected:
   vtkSMParaViewPipelineController();
   ~vtkSMParaViewPipelineController();
@@ -246,9 +245,14 @@ protected:
   // for subclasses to determine which properties were modified since
   // initialization.
   unsigned long GetInitializationTime(vtkSMProxy*);
+
+  // Description:
+  // Proxies can specify custom initialization using XML hints. This method
+  // calls those initialization helpers, if any.
+  void ProcessInitializationHelper(vtkSMProxy*, unsigned long initializationTimeStamp);
 private:
-  vtkSMParaViewPipelineController(const vtkSMParaViewPipelineController&); // Not implemented
-  void operator=(const vtkSMParaViewPipelineController&); // Not implemented
+  vtkSMParaViewPipelineController(const vtkSMParaViewPipelineController&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMParaViewPipelineController&) VTK_DELETE_FUNCTION;
 
   // Description:
   // We added support for LZ4 in ParaView 5.0.1. LZ4 is a good default
@@ -261,7 +265,7 @@ private:
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

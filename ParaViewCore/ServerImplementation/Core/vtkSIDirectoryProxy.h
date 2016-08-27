@@ -36,13 +36,10 @@ public:
   vtkTypeMacro(vtkSIDirectoryProxy, vtkSIProxy);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
   // Description:
   // Pull the current state of the underneath implementation
   virtual void Pull(vtkSMMessage* msg);
-//ETX
 
-//BTX
 protected:
   vtkSIDirectoryProxy();
   ~vtkSIDirectoryProxy();
@@ -51,10 +48,9 @@ protected:
   virtual bool ReadXMLProperty(vtkPVXMLElement* property_element);
 
 private:
-  vtkSIDirectoryProxy(const vtkSIDirectoryProxy&); // Not implemented
-  void operator=(const vtkSIDirectoryProxy&); // Not implemented
+  vtkSIDirectoryProxy(const vtkSIDirectoryProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSIDirectoryProxy&) VTK_DELETE_FUNCTION;
 
-//ETX
 };
 
 #endif

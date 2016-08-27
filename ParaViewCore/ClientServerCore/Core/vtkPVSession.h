@@ -102,7 +102,6 @@ public:
   // CleanupPendingProgress() block.
   bool GetPendingProgress();
 
-//BTX
 protected:
   vtkPVSession();
   ~vtkPVSession();
@@ -125,14 +124,14 @@ protected:
 
   vtkPVProgressHandler* ProgressHandler;
 private:
-  vtkPVSession(const vtkPVSession&); // Not implemented
-  void operator=(const vtkPVSession&); // Not implemented
+  vtkPVSession(const vtkPVSession&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVSession&) VTK_DELETE_FUNCTION;
 
   int ProgressCount;
   // This flags ensures that while we are waiting for an previous progress-pair
   // to finish, we don't start new progress-pairs.
   bool InCleanupPendingProgress;
-//ETX
+
 };
 
 #endif

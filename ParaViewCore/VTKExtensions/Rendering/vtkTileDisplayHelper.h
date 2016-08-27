@@ -79,18 +79,17 @@ public:
   // - If the DumpImagePath is set to NULL, then no image dump will occurs.
   void SetDumpImagePath(const char* newPath);
 
-//BTX
 protected:
   vtkTileDisplayHelper();
   ~vtkTileDisplayHelper();
 
 private:
-  vtkTileDisplayHelper(const vtkTileDisplayHelper&); // Not implemented
-  void operator=(const vtkTileDisplayHelper&); // Not implemented
+  vtkTileDisplayHelper(const vtkTileDisplayHelper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkTileDisplayHelper&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

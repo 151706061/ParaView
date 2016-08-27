@@ -18,6 +18,7 @@
 #include "vtkObjectFactory.h"
 #include "vtkProcessModuleAutoMPI.h"
 #include "vtkSISourceProxy.h"
+#include "vtkSMArraySelectionDomain.h"
 #include "vtkSMInputArrayDomain.h"
 #include "vtkSMParaViewPipelineControllerWithRendering.h"
 #include "vtkSMTrace.h"
@@ -48,7 +49,9 @@ vtkPVGeneralSettings::vtkPVGeneralSettings()
   ScalarBarMode(vtkPVGeneralSettings::AUTOMATICALLY_HIDE_SCALAR_BARS),
   CacheGeometryForAnimation(false),
   AnimationGeometryCacheLimit(0),
-  PropertiesPanelMode(vtkPVGeneralSettings::ALL_IN_ONE)
+  AnimationTimePrecision(17),
+  PropertiesPanelMode(vtkPVGeneralSettings::ALL_IN_ONE),
+  LockPanels(false)
 {
   this->SetDefaultViewType("RenderView");
 }
@@ -169,8 +172,11 @@ void vtkPVGeneralSettings::SetScalarBarMode(int val)
 //----------------------------------------------------------------------------
 void vtkPVGeneralSettings::SetInheritRepresentationProperties(bool val)
 {
-  vtkSMParaViewPipelineControllerWithRendering::SetInheritRepresentationProperties(val);
-  this->Modified();
+  if (val != vtkSMParaViewPipelineControllerWithRendering::GetInheritRepresentationProperties())
+    {
+    vtkSMParaViewPipelineControllerWithRendering::SetInheritRepresentationProperties(val);
+    this->Modified();
+    }
 }
 
 //----------------------------------------------------------------------------
@@ -183,15 +189,37 @@ void vtkPVGeneralSettings::SetMultiViewImageBorderColor(double r, double g, doub
 //----------------------------------------------------------------------------
 void vtkPVGeneralSettings::SetMultiViewImageBorderWidth(int width)
 {
-  vtkSMViewLayoutProxy::SetMultiViewImageBorderWidth(width);
-  this->Modified();
+  if (width != vtkSMViewLayoutProxy::GetMultiViewImageBorderWidth())
+    {
+    vtkSMViewLayoutProxy::SetMultiViewImageBorderWidth(width);
+    this->Modified();
+    }
 }
 
 //----------------------------------------------------------------------------
 void vtkPVGeneralSettings::SetTransparentBackground(bool val)
 {
-  vtkSMViewProxy::SetTransparentBackground(val);
-  this->Modified();
+  if (val != vtkSMViewProxy::GetTransparentBackground())
+    {
+    vtkSMViewProxy::SetTransparentBackground(val);
+    this->Modified();
+    }
+}
+
+//----------------------------------------------------------------------------
+void vtkPVGeneralSettings::SetLoadAllVariables(bool val)
+{
+  if (val != vtkSMArraySelectionDomain::GetLoadAllVariables())
+    {
+    vtkSMArraySelectionDomain::SetLoadAllVariables(val);
+    this->Modified();
+    }
+}
+
+//----------------------------------------------------------------------------
+bool vtkPVGeneralSettings::GetLoadAllVariables()
+{
+  return vtkSMArraySelectionDomain::GetLoadAllVariables();
 }
 
 //----------------------------------------------------------------------------
@@ -207,4 +235,5 @@ void vtkPVGeneralSettings::PrintSelf(ostream& os, vtkIndent indent)
   os << indent << "CacheGeometryForAnimation: " << this->CacheGeometryForAnimation << "\n";
   os << indent << "AnimationGeometryCacheLimit: " << this->AnimationGeometryCacheLimit << "\n";
   os << indent << "PropertiesPanelMode: " << this->PropertiesPanelMode << "\n";
+  os << indent << "LockPanels: " << this->LockPanels << "\n";
 }

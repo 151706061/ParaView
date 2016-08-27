@@ -49,14 +49,14 @@ public:
   ~pqColorButtonEventTranslator();
 
   /// Overridden to handle events on QColorDialog.
+  using Superclass::translateEvent;
   virtual bool translateEvent(QObject* Object, QEvent* Event, bool& Error);
 
 private slots:
   void onColorChosen(const QColor&);
 
 private:
-  pqColorButtonEventTranslator(const pqColorButtonEventTranslator&); // Not implemented.
-  void operator=(const pqColorButtonEventTranslator&); // Not implemented.
+  Q_DISABLE_COPY(pqColorButtonEventTranslator)
 };
 
 #endif

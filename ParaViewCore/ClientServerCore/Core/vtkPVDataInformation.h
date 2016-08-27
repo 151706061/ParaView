@@ -161,6 +161,14 @@ public:
   vtkPVDataInformation* GetDataInformationForCompositeIndex(int index);
 
   // Description:
+  // Compute the number of block leaf from this information
+  // multipieces are counted as single block.
+  // The boolean skipEmpty parameter allows to choose to count empty dataset are not
+  // Calling this method with skipEmpty to false will correspond to the vtkBlockColors array
+  // in a multiblock.
+  unsigned int GetNumberOfBlockLeafs(bool skipEmpty);
+
+  // Description:
   // This is same as GetDataInformationForCompositeIndex() however note that the
   // index will get modified in this method.
   vtkPVDataInformation* GetDataInformationForCompositeIndex(int* index);
@@ -204,12 +212,6 @@ public:
   // Allows run time addition of information getters for new classes
   static void RegisterHelper(const char *classname,
                              const char *helperclassname);
-
-  // Description:
-  // Specify whether or not to sort the point data, cell data,
-  // and field data arrays. The default is to sort.
-  vtkGetMacro(SortArrays, bool);
-  void SetSortArrays(bool);
 
 protected:
   vtkPVDataInformation();
@@ -271,11 +273,10 @@ protected:
   friend class vtkPVDataInformationHelper;
   friend class vtkPVCompositeDataInformation;
 private:
-  vtkPVDataInformation(const vtkPVDataInformation&); // Not implemented
-  void operator=(const vtkPVDataInformation&); // Not implemented
+  vtkPVDataInformation(const vtkPVDataInformation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVDataInformation&) VTK_DELETE_FUNCTION;
 
   int PortNumber;
-  bool SortArrays;
 };
 
 #endif

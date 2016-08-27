@@ -38,17 +38,15 @@ protected:
   // ...........................................................protected-ivars
 
 protected:
-//BTX
-  // .......................................................................BTX
+
   vtkPVRenderLoopEvent();
   ~vtkPVRenderLoopEvent();
 
 private:
   vtkPVRenderLoopEventInternal *Internal;
-  vtkPVRenderLoopEvent(const vtkPVRenderLoopEvent&); // Not implemented.
-  void operator=(const vtkPVRenderLoopEvent&); // Not implemented.
-//ETX
-  // .......................................................................ETX
+  vtkPVRenderLoopEvent(const vtkPVRenderLoopEvent&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVRenderLoopEvent&) VTK_DELETE_FUNCTION;
+
 
 
 };

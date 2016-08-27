@@ -31,15 +31,14 @@ public:
   vtkTypeMacro(vtkPVNullSource, vtkLineSource);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkPVNullSource();
   ~vtkPVNullSource();
 
 private:
-  vtkPVNullSource(const vtkPVNullSource&); // Not implemented
-  void operator=(const vtkPVNullSource&); // Not implemented
-//ETX
+  vtkPVNullSource(const vtkPVNullSource&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVNullSource&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

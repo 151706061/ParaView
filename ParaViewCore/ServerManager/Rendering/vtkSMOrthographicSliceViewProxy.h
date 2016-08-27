@@ -41,7 +41,6 @@ public:
   virtual vtkSMRepresentationProxy* CreateDefaultRepresentation(
     vtkSMProxy* proxy, int outputPort);
 
-//BTX
 protected:
   vtkSMOrthographicSliceViewProxy();
   ~vtkSMOrthographicSliceViewProxy();
@@ -55,9 +54,9 @@ protected:
   void OnMouseWheelForwardEvent(vtkObject*, unsigned long, void* calldata);
   void OnPlacePointEvent(vtkObject*, unsigned long, void* calldata);
 private:
-  vtkSMOrthographicSliceViewProxy(const vtkSMOrthographicSliceViewProxy&); // Not implemented
-  void operator=(const vtkSMOrthographicSliceViewProxy&); // Not implemented
-//ETX
+  vtkSMOrthographicSliceViewProxy(const vtkSMOrthographicSliceViewProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMOrthographicSliceViewProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

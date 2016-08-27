@@ -44,12 +44,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "pqOptions.h"
 #include "pqPVApplicationCore.h"
 #include "pqSettings.h"
-#include "vtkInitializationHelper.h"
-#include "vtkPVPluginTracker.h"
 
-#ifdef Q_WS_X11
-#include <QPlastiqueStyle>
-#endif
+#include "vtkInitializationHelper.h"
+#include "vtkPVConfig.h"
+#include "vtkPVPluginTracker.h"
 
 #include "vtkPVConfig.h"
 

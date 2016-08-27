@@ -41,7 +41,6 @@ public:
   vtkGetObjectMacro(StateLocator, vtkSMStateLocator);
   virtual void SetStateLocator(vtkSMStateLocator*);
 
-//BTX
 protected:
   vtkSMDeserializerProtobuf();
   ~vtkSMDeserializerProtobuf();
@@ -56,9 +55,9 @@ protected:
 
   vtkSMStateLocator* StateLocator;
 private:
-  vtkSMDeserializerProtobuf(const vtkSMDeserializerProtobuf&); // Not implemented
-  void operator=(const vtkSMDeserializerProtobuf&); // Not implemented
-//ETX
+  vtkSMDeserializerProtobuf(const vtkSMDeserializerProtobuf&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMDeserializerProtobuf&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

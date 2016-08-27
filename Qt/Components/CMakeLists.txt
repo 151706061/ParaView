@@ -74,8 +74,6 @@ set (Module_SRCS
   pqComponentsInit.h
   pqComponentsTestUtility.cxx
   pqComponentsTestUtility.h
-  pqCubeAxesEditorDialog.cxx
-  pqCubeAxesEditorDialog.h
   pqCustomFilterDefinitionModel.cxx
   pqCustomFilterDefinitionModel.h
   pqCustomFilterDefinitionWizard.cxx
@@ -283,8 +281,6 @@ set (Module_SRCS
   pqSILWidget.h
   pqSMSignalAdaptors.cxx
   pqSMSignalAdaptors.h
-  pqSpreadSheetViewDecorator.cxx
-  pqSpreadSheetViewDecorator.h
   pqStandardLegacyCustomPanels.cxx
   pqStandardLegacyCustomPanels.h
   pqStringVectorPropertyWidget.cxx
@@ -320,8 +316,7 @@ set (Module_SRCS
   pqViewManager.h
   pqWidgetRangeDomain.cxx
   pqWidgetRangeDomain.h
-  pqWriterDialog.cxx
-  pqWriterDialog.h
+  pqAbstractItemSelectionModel.cxx
 )
 
 set (Module_MOC_HDRS
@@ -345,7 +340,6 @@ set (Module_MOC_HDRS
   pqComparativeCueWidget.h
   pqComparativeVisPanel.h
   pqComponentsTestUtility.h
-  pqCubeAxesEditorDialog.h
   pqCustomFilterDefinitionWizard.h
   pqCustomFilterManager.h
   pqCustomFilterManagerModel.h
@@ -444,7 +438,6 @@ set (Module_MOC_HDRS
   pqSILModel.h
   pqSILWidget.h
   pqSMSignalAdaptors.h
-  pqSpreadSheetViewDecorator.h
   pqStandardLegacyCustomPanels.h
   pqStringVectorPropertyWidget.h
   pqTabbedMultiViewWidget.h
@@ -460,7 +453,7 @@ set (Module_MOC_HDRS
   pqViewFrame.h
   pqViewManager.h
   pqWidgetRangeDomain.h
-  pqWriterDialog.h
+  pqAbstractItemSelectionModel.h
 )
 
 set (Module_UI_FILES
@@ -475,7 +468,6 @@ set (Module_UI_FILES
   Resources/UI/pqComparativeParameterRangeDialog.ui
   Resources/UI/pqComparativeVisPanel.ui
   Resources/UI/pqContourControls.ui
-  Resources/UI/pqCubeAxesEditorDialog.ui
   Resources/UI/pqCustomFilterDefinitionWizard.ui
   Resources/UI/pqCustomFilterManager.ui
   Resources/UI/pqCustomViewButtonDialog.ui
@@ -518,10 +510,8 @@ set (Module_UI_FILES
   Resources/UI/pqServerLauncherDialog.ui
   Resources/UI/pqSetBreakpointDialog.ui
   Resources/UI/pqSettingsDialog.ui
-  Resources/UI/pqSpreadSheetViewDecorator.ui
   Resources/UI/pqTimerLogDisplay.ui
   Resources/UI/pqViewFrame.ui
-  Resources/UI/pqWriterDialog.ui
 )
 
 if(PARAVIEW_ENABLE_PYTHON)
@@ -566,15 +556,13 @@ set (Module_RESOURCE_FILES
   Resources/pqComponents.qrc
 )
 
-if (PARAVIEW_QT_VERSION VERSION_GREATER "4")
-  qt5_wrap_cpp(__Module_MOC_SRCS ${Module_MOC_HDRS})
-  qt5_wrap_ui(__Module_UI_SRCS ${Module_UI_FILES})
-  qt5_add_resources(__Module_RESOURCE_SRCS ${Module_RESOURCE_FILES})
-else ()
-  qt4_wrap_cpp(__Module_MOC_SRCS ${Module_MOC_HDRS})
-  qt4_wrap_ui(__Module_UI_SRCS ${Module_UI_FILES})
-  qt4_add_resources(__Module_RESOURCE_SRCS ${Module_RESOURCE_FILES})
-endif ()
+include(ParaViewQt)
+pv_find_package_qt(qt_private_targets REQUIRED QUIET
+  QT4_COMPONENTS QtNetwork
+  QT5_COMPONENTS Widgets Network)
+pv_qt_wrap_cpp(__Module_MOC_SRCS ${Module_MOC_HDRS})
+pv_qt_wrap_ui(__Module_UI_SRCS ${Module_UI_FILES})
+pv_qt_add_resources(__Module_RESOURCE_SRCS ${Module_RESOURCE_FILES})
 
 SOURCE_GROUP("Resources" FILES
   ${Module_UI_FILES}
@@ -593,6 +581,7 @@ vtk_module_library(${vtk-module}
   ${__Module_RESOURCE_SRCS}
   ${__Module_MOC_SRCS}
   ${__Module_UI_SRCS})
+target_link_libraries(${vtk-module} LINK_PRIVATE ${qt_private_targets})
 
 #the pqSGExportStateWizard has subclasses that directly access
 #the UI file, and currently we don't have a clean way to break this hard

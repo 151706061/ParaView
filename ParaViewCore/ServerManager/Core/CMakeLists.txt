@@ -92,6 +92,7 @@ set (Module_SRCS
   vtkSMProxy.cxx
   vtkSMProxyDefinitionManager.cxx
   vtkSMProxyGroupDomain.cxx
+  vtkSMProxyInitializationHelper.cxx
   vtkSMProxyIterator.cxx
   vtkSMProxyLink.cxx
   vtkSMProxyListDomain.cxx
@@ -136,6 +137,7 @@ SET_SOURCE_FILES_PROPERTIES(
   vtkSMDomain
   vtkSMLink
   vtkSMPropertyHelper
+  vtkSMProxyInitializationHelper
   vtkSMProxyManager  # since New() is protected.
   vtkSMRangeDomainTemplate
   vtkSMRemoteObject
@@ -153,4 +155,8 @@ SET_SOURCE_FILES_PROPERTIES(
   vtkSMUncheckedPropertyHelper
   WRAP_EXCLUDE)
 
+# OpenGL2 specific definitions
+if("${VTK_RENDERING_BACKEND}" STREQUAL "OpenGL2")
+  add_definitions(-DVTKGL2)
+endif()
 vtk_module_library(vtkPVServerManagerCore ${Module_SRCS})

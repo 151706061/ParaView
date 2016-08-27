@@ -74,7 +74,6 @@ public:
   // reader.
   virtual int CanReadFile(const char* name);
 
-//BTX
 protected:
   vtkAdiosPixieReader();
   ~vtkAdiosPixieReader();
@@ -91,12 +90,12 @@ protected:
   char* Parameters;
 
 private:
-  vtkAdiosPixieReader(const vtkAdiosPixieReader&);  // Not implemented.
-  void operator=(const vtkAdiosPixieReader&);  // Not implemented.
+  vtkAdiosPixieReader(const vtkAdiosPixieReader&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkAdiosPixieReader&) VTK_DELETE_FUNCTION;
 
   class Internals;
   Internals* Internal;
-//ETX
+
 };
 
 #endif

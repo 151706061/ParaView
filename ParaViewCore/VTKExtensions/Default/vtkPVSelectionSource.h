@@ -115,7 +115,6 @@ public:
   vtkSetStringMacro(QueryString);
   vtkGetStringMacro(QueryString);
 
-//BTX
 protected:
   vtkPVSelectionSource();
   ~vtkPVSelectionSource();
@@ -151,12 +150,12 @@ protected:
   char *QueryString;
 
 private:
-  vtkPVSelectionSource(const vtkPVSelectionSource&); // Not implemented
-  void operator=(const vtkPVSelectionSource&); // Not implemented
+  vtkPVSelectionSource(const vtkPVSelectionSource&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVSelectionSource&) VTK_DELETE_FUNCTION;
 
   class vtkInternal;
   vtkInternal* Internal;
-//ETX
+
 };
 
 #endif

@@ -123,7 +123,6 @@ public:
   // Thus all data is expected to available on the local process.
   virtual bool Export(vtkCSVExporter* exporter);
 
-//BTX
 protected:
   vtkPVContextView();
   ~vtkPVContextView();
@@ -157,8 +156,8 @@ protected:
   bool UseOffscreenRenderingForScreenshots;
   bool UseOffscreenRendering;
 private:
-  vtkPVContextView(const vtkPVContextView&); // Not implemented
-  void operator=(const vtkPVContextView&); // Not implemented
+  vtkPVContextView(const vtkPVContextView&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVContextView&) VTK_DELETE_FUNCTION;
 
   // Used in GetSelection to avoid modifying the selection obtained from the
   // annotation link.
@@ -167,7 +166,7 @@ private:
 
   template <class T>
   vtkSelection* GetSelectionImplementation(T* chart);
-//ETX
+
 };
 
 #endif

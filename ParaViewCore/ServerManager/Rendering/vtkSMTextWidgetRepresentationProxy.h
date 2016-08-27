@@ -31,7 +31,7 @@ public:
   void PrintSelf(ostream& os, vtkIndent indent);
   
 protected:
-//BTX
+
   vtkSMTextWidgetRepresentationProxy();
   ~vtkSMTextWidgetRepresentationProxy();
   
@@ -43,9 +43,9 @@ protected:
   friend class vtkSMTextSourceRepresentationProxy;
 
 private:
-  vtkSMTextWidgetRepresentationProxy(const vtkSMTextWidgetRepresentationProxy&); // Not implemented
-  void operator=(const vtkSMTextWidgetRepresentationProxy&); // Not implemented
-//ETX
+  vtkSMTextWidgetRepresentationProxy(const vtkSMTextWidgetRepresentationProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMTextWidgetRepresentationProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

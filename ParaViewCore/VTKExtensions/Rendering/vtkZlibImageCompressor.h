@@ -45,12 +45,11 @@ public:
   virtual int Compress();
   virtual int Decompress();
 
-  //BTX
   // Description:
   // Serialize/Restore compressor configuration (but not the data) into the stream.
   virtual void SaveConfiguration(vtkMultiProcessStream *stream);
   virtual bool RestoreConfiguration(vtkMultiProcessStream* stream);
-  //ETX
+
   virtual const char *SaveConfiguration();
   virtual const char *RestoreConfiguration(const char *stream);
 
@@ -94,8 +93,8 @@ private:
   int CompressionLevel;                           // zlib compression level
 
 private:
-  vtkZlibImageCompressor(const vtkZlibImageCompressor&); // Not implemented.
-  void operator=(const vtkZlibImageCompressor&); // Not implemented.
+  vtkZlibImageCompressor(const vtkZlibImageCompressor&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkZlibImageCompressor&) VTK_DELETE_FUNCTION;
 };
 
 #endif

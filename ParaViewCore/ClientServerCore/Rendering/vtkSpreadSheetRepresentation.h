@@ -69,8 +69,6 @@ public:
   void AddCompositeDataSetIndex(unsigned int index);
   void RemoveAllCompositeDataSetIndices();
 
-
-//BTX
 protected:
   vtkSpreadSheetRepresentation();
   ~vtkSpreadSheetRepresentation();
@@ -91,9 +89,9 @@ protected:
   vtkNew<vtkBlockDeliveryPreprocessor> ExtractedDataConditioner;
 
 private:
-  vtkSpreadSheetRepresentation(const vtkSpreadSheetRepresentation&); // Not implemented
-  void operator=(const vtkSpreadSheetRepresentation&); // Not implemented
-//ETX
+  vtkSpreadSheetRepresentation(const vtkSpreadSheetRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSpreadSheetRepresentation&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

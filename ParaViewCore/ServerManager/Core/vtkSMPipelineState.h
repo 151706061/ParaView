@@ -41,8 +41,6 @@ public:
   vtkTypeMacro(vtkSMPipelineState,vtkSMRemoteObject);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
-
   // Description:
   // This method return the full object state that can be used to create that
   // object from scratch.
@@ -66,9 +64,9 @@ protected:
   virtual ~vtkSMPipelineState();
 
 private:
-  vtkSMPipelineState(const vtkSMPipelineState&); // Not implemented
-  void operator=(const vtkSMPipelineState&);       // Not implemented
-//ETX
+  vtkSMPipelineState(const vtkSMPipelineState&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMPipelineState&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif // #ifndef vtkSMPipelineState_h

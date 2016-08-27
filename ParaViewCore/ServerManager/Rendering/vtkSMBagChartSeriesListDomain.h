@@ -37,7 +37,6 @@ public:
   // Set the default values for the property.
   virtual int SetDefaultValues(vtkSMProperty*, bool use_unchecked_values);
 
-//BTX
 protected:
   vtkSMBagChartSeriesListDomain();
   ~vtkSMBagChartSeriesListDomain();
@@ -47,9 +46,9 @@ protected:
   int ArrayType;
 
 private:
-  vtkSMBagChartSeriesListDomain(const vtkSMBagChartSeriesListDomain&); // Not implemented
-  void operator=(const vtkSMBagChartSeriesListDomain&); // Not implemented
-//ETX
+  vtkSMBagChartSeriesListDomain(const vtkSMBagChartSeriesListDomain&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMBagChartSeriesListDomain&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

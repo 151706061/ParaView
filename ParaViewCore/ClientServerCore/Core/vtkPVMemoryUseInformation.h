@@ -60,7 +60,7 @@ protected:
   ~vtkPVMemoryUseInformation();
 
 private:
-  //BTX
+
   class MemInfo
     {
     public:
@@ -73,11 +73,10 @@ private:
       long long HostMemUse;
     };
   vector<MemInfo> MemInfos;
-  //ETX
 
 private:
-  vtkPVMemoryUseInformation(const vtkPVMemoryUseInformation&); // Not implemented
-  void operator=(const vtkPVMemoryUseInformation&); // Not implemented
+  vtkPVMemoryUseInformation(const vtkPVMemoryUseInformation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVMemoryUseInformation&) VTK_DELETE_FUNCTION;
 };
 
 #endif

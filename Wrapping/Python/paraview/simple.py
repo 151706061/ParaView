@@ -37,7 +37,6 @@ A simple example::
 
 import paraview
 import servermanager
-import lookuptable
 
 # Bring OutputPort in our namespace.
 from servermanager import OutputPort
@@ -117,9 +116,11 @@ def SetActiveConnection(connection=None, ns=None):
 #==============================================================================
 # Views and Layout methods
 #==============================================================================
-
-def CreateView(view_xml_name, **params):
-    "Creates and returns the specified proxy view based on its name/label."
+def CreateView(view_xml_name, detachedFromLayout=False, **params):
+    """Creates and returns the specified proxy view based on its name/label.
+    If detachedFromLayout is true, the view will no be grabbed by the layout
+    hence not visible unless it is attached after. This also set params keywords
+    arguments as view properties."""
     view = servermanager._create_view(view_xml_name)
     if not view:
         raise RuntimeError, "Failed to create requested view", view_xml_name
@@ -138,6 +139,8 @@ def CreateView(view_xml_name, **params):
     controller.PreInitializeProxy(view)
     SetProperties(view, **params)
     controller.PostInitializeProxy(view)
+    if detachedFromLayout:
+      view.SMProxy.SetAnnotation("ParaView::DetachedFromLayout", "true")
     controller.RegisterViewProxy(view, registrationName)
 
     # setup an interactor if current process support interaction if an
@@ -148,50 +151,58 @@ def CreateView(view_xml_name, **params):
 
 # -----------------------------------------------------------------------------
 
-def CreateRenderView(**params):
-    """"Create standard 3D render view"""
-    return CreateView("RenderView", **params)
+def CreateRenderView(detachedFromLayout=False, **params):
+    """"Create standard 3D render view.
+    See CreateView for arguments documentation"""
+    return CreateView("RenderView", detachedFromLayout, **params)
 
 # -----------------------------------------------------------------------------
 
-def CreateXYPlotView(**params):
-    """Create XY plot Chart view"""
-    return CreateView("XYChartView", **params)
+def CreateXYPlotView(detachedFromLayout=False, **params):
+    """Create XY plot Chart view.
+    See CreateView for arguments documentation"""
+    return CreateView("XYChartView", detachedFromLayout=False, **params)
 
 # -----------------------------------------------------------------------------
 
-def CreateBarChartView(**params):
-    """"Create Bar Chart view"""
-    return CreateView("XYBarChartView", **params)
+def CreateBarChartView(detachedFromLayout=False, **params):
+    """"Create Bar Chart view.
+    See CreateView for arguments documentation"""
+    return CreateView("XYBarChartView", detachedFromLayout, **params)
 
 # -----------------------------------------------------------------------------
 
-def CreateComparativeRenderView(**params):
-    """"Create Comparative view"""
-    return CreateView("ComparativeRenderView", **params)
+def CreateComparativeRenderView(detachedFromLayout=False, **params):
+    """"Create Comparative view.
+    See CreateView for arguments documentation"""
+    return CreateView("ComparativeRenderView", detachedFromLayout, **params)
 
 # -----------------------------------------------------------------------------
 
-def CreateComparativeXYPlotView(**params):
-    """"Create comparative XY plot Chart view"""
-    return CreateView("ComparativeXYPlotView", **params)
+def CreateComparativeXYPlotView(detachedFromLayout=False, **params):
+    """"Create comparative XY plot Chart view.
+    See CreateView for arguments documentation"""
+    return CreateView("ComparativeXYPlotView", detachedFromLayout, **params)
 
 # -----------------------------------------------------------------------------
 
-def CreateComparativeBarChartView(**params):
-    """"Create comparative Bar Chart view"""
-    return CreateView("ComparativeBarChartView", **params)
+def CreateComparativeBarChartView(detachedFromLayout=False, **params):
+    """"Create comparative Bar Chart view.
+    See CreateView for arguments documentation"""
+    return CreateView("ComparativeBarChartView", detachedFromLayout, **params)
 
 # -----------------------------------------------------------------------------
 
-def CreateParallelCoordinatesChartView(**params):
-    """"Create Parallele coordinate Chart view"""
+def CreateParallelCoordinatesChartView(detachedFromLayout=False, **params):
+    """"Create Parallele coordinate Chart view.
+    See CreateView for arguments documentation"""
     return CreateView("ParallelCoordinatesChartView", **params)
 
 # -----------------------------------------------------------------------------
 
-def Create2DRenderView(**params):
-    """"Create the standard 3D render view with the 2D interaction mode turned ON"""
+def Create2DRenderView(detachedFromLayout=False, **params):
+    """"Create the standard 3D render view with the 2D interaction mode turned ON.
+    See CreateView for arguments documentation"""
     return CreateView("2DRenderView", **params)
 
 # -----------------------------------------------------------------------------
@@ -299,6 +310,30 @@ def ResetCamera(view=None):
 
 # -----------------------------------------------------------------------------
 
+def CreateLayout(name=None):
+    """Create a new layout with no active view."""
+    layout = servermanager.misc.ViewLayout(registrationGroup="layouts")
+    if name:
+        RenameLayout(name, layout)
+    return layout
+
+# -----------------------------------------------------------------------------
+
+def RemoveLayout(proxy=None):
+    """Remove the provided layout, if none is provided,
+    remove the layout containing the active view.
+    If it is the last layout it will create a new
+    one with the same name as the removed one."""
+    pxm = servermanager.ProxyManager()
+    if not proxy:
+        proxy = GetLayout()
+    name = pxm.GetProxyName('layouts', proxy)
+    pxm.UnRegisterProxy('layouts', name, proxy)
+    if len(GetLayouts()) == 0:
+      CreateLayout(name)
+
+# -----------------------------------------------------------------------------
+
 def GetLayouts():
     """Returns the layout proxies on the active session.
     Layout proxies are used to place views in a grid."""
@@ -320,6 +355,13 @@ def GetLayout(view=None):
             return layout
     return None
 
+def GetLayoutByName(name):
+    """Return the first layout with the given name, if any."""
+    layouts = GetLayouts()
+    for key in layouts.keys():
+      if key[0] == name:
+        return layouts.get(key)
+    return None
 
 def GetViewsInLayout(layout=None):
     """Returns a list of views in the given layout. If not layout is specified,
@@ -419,6 +461,15 @@ def Hide(proxy=None, view=None):
         raise ValueError, "proxy argument cannot be None when no active source is present."
     controller = servermanager.ParaViewPipelineController()
     controller.Hide(proxy, proxy.Port, view)
+
+# -----------------------------------------------------------------------------
+def HideAll(view=None):
+    """Hide all pipeline sources in the given view.
+    If view is not specified, active view is used."""
+    if not view:
+        view = active_objects.view
+    controller = servermanager.ParaViewPipelineController()
+    controller.HideAll(view)
 
 # -----------------------------------------------------------------------------
 def SetDisplayProperties(proxy=None, view=None, **params):
@@ -1045,6 +1096,7 @@ def _GetLUTReaderInstance():
     it if needed."""
     global _lutReader
     if _lutReader is None:
+      import lookuptable
       _lutReader = lookuptable.vtkPVLUTReader()
     return _lutReader
 

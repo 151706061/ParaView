@@ -42,7 +42,6 @@ public:
   void SetColor(double r, double g, double b);
   void SetLineWidth(double r);
 
-//BTX
 protected:
   vtkPVFrustumActor();
   ~vtkPVFrustumActor();
@@ -51,9 +50,9 @@ protected:
   vtkPolyDataMapper* Mapper;
 
 private:
-  vtkPVFrustumActor(const vtkPVFrustumActor&); // Not implemented
-  void operator=(const vtkPVFrustumActor&); // Not implemented
-//ETX
+  vtkPVFrustumActor(const vtkPVFrustumActor&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVFrustumActor&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

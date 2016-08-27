@@ -153,7 +153,6 @@ protected:
   virtual void RenderInternal(vtkRenderer *renderer, vtkActor *actor, 
                        unsigned long typeflags, bool forceCompileOnly);
 
-  //BTX
 protected:
   vtkScatterPlotPainter();
   virtual ~vtkScatterPlotPainter();
@@ -205,9 +204,9 @@ protected:
 
   vtkScalarsToColors* LookupTable;
 private:
-  vtkScatterPlotPainter(const vtkScatterPlotPainter&); // Not implemented.
-  void operator=(const vtkScatterPlotPainter&); // Not implemented.
-  //ETX
+  vtkScatterPlotPainter(const vtkScatterPlotPainter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkScatterPlotPainter&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

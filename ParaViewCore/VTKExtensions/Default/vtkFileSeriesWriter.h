@@ -63,7 +63,6 @@ public:
   vtkSetMacro(WriteAllTimeSteps, int);
   vtkBooleanMacro(WriteAllTimeSteps, int);
 
-  //BTX
   // Description:
   // see vtkAlgorithm for details
   virtual int ProcessRequest(vtkInformation*,
@@ -74,9 +73,9 @@ public:
   // Get/Set the interpreter to use to call methods on the writer.
   void SetInterpreter(vtkClientServerInterpreter* interp)
     { this->Interpreter = interp; }
-  //ETX
+
 protected:
-//BTX
+
   vtkFileSeriesWriter();
   ~vtkFileSeriesWriter();
 
@@ -91,8 +90,8 @@ protected:
                   vtkInformationVector* outputVector);
 
 private:
-  vtkFileSeriesWriter(const vtkFileSeriesWriter&); // Not implemented.
-  void operator=(const vtkFileSeriesWriter&); // Not implemented.
+  vtkFileSeriesWriter(const vtkFileSeriesWriter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkFileSeriesWriter&) VTK_DELETE_FUNCTION;
   
   void SetWriterFileName(const char* fname);
   void WriteATimestep(vtkDataObject*, vtkInformation* inInfo);
@@ -109,7 +108,7 @@ private:
   char* FileName;
 
   vtkClientServerInterpreter* Interpreter;
-//ETX
+
 };
 
 #endif

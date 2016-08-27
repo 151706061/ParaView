@@ -62,15 +62,14 @@ public:
     std::vector<vtkSmartPointer<vtkDataObject> >& pieces,
     vtkDataObject* result);
 
-//BTX
 protected:
   vtkMultiProcessControllerHelper();
   ~vtkMultiProcessControllerHelper();
 
 private:
-  vtkMultiProcessControllerHelper(const vtkMultiProcessControllerHelper&); // Not implemented
-  void operator=(const vtkMultiProcessControllerHelper&); // Not implemented
-//ETX
+  vtkMultiProcessControllerHelper(const vtkMultiProcessControllerHelper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkMultiProcessControllerHelper&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

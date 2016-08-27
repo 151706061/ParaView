@@ -43,12 +43,10 @@ public:
   // Internal method: called only on non-Root nodes.
   void GatherZBufferValueRMI(int x, int y);
 
-//BTX
   enum Tags {
     GATHER_Z_RMI_TAG=987987,
     Z_TAG=88771
   };
-//ETX
 
   // Description:
   // Overridden to set the Image Size when ParallelRendering is off.
@@ -64,8 +62,8 @@ protected:
   ~vtkMPICompositeManager();
   
 private:
-  vtkMPICompositeManager(const vtkMPICompositeManager&); // Not implemented.
-  void operator=(const vtkMPICompositeManager&); // Not implemented.
+  vtkMPICompositeManager(const vtkMPICompositeManager&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkMPICompositeManager&) VTK_DELETE_FUNCTION;
   
 };
 

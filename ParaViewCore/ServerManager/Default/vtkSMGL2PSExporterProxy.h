@@ -44,7 +44,6 @@ public:
   // See superclass documentation for description.
   int ReadXMLAttributes(vtkSMSessionProxyManager *pm, vtkPVXMLElement *element);
 
-//BTX
 protected:
   vtkSMGL2PSExporterProxy();
   ~vtkSMGL2PSExporterProxy();
@@ -55,9 +54,9 @@ protected:
   int ViewType;
 
 private:
-  vtkSMGL2PSExporterProxy(const vtkSMGL2PSExporterProxy&); // Not implemented
-  void operator=(const vtkSMGL2PSExporterProxy&); // Not implemented
-//ETX
+  vtkSMGL2PSExporterProxy(const vtkSMGL2PSExporterProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMGL2PSExporterProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

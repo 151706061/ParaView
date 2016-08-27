@@ -37,7 +37,6 @@ public:
   // Returns the default visibility for a series given its name.
   virtual bool GetDefaultSeriesVisibility(const char*);
 
-//BTX
 protected:
   vtkSMFunctionalBagChartSeriesSelectionDomain();
   ~vtkSMFunctionalBagChartSeriesSelectionDomain();
@@ -48,10 +47,9 @@ protected:
   virtual std::vector<vtkStdString> GetDefaultValue(const char* series);
 
 private:
-  vtkSMFunctionalBagChartSeriesSelectionDomain(const vtkSMFunctionalBagChartSeriesSelectionDomain&); // Not implemented
-  void operator=(const vtkSMFunctionalBagChartSeriesSelectionDomain&); // Not implemented
+  vtkSMFunctionalBagChartSeriesSelectionDomain(const vtkSMFunctionalBagChartSeriesSelectionDomain&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMFunctionalBagChartSeriesSelectionDomain&) VTK_DELETE_FUNCTION;
 
-//ETX
 };
 
 #endif

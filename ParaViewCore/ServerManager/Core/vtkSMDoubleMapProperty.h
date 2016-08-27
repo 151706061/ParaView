@@ -82,6 +82,7 @@ public:
 
   // Description:
   // Returns a new iterator for the map.
+  VTK_NEWINSTANCE
   vtkSMDoubleMapPropertyIterator* NewIterator();
 
   void* GetMapPointer();
@@ -113,8 +114,8 @@ protected:
   virtual int LoadState(vtkPVXMLElement* element, vtkSMProxyLocator* loader);
 
 private:
-  vtkSMDoubleMapProperty(const vtkSMDoubleMapProperty&); // Not implemented
-  void operator=(const vtkSMDoubleMapProperty&); // Not implemented
+  vtkSMDoubleMapProperty(const vtkSMDoubleMapProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMDoubleMapProperty&) VTK_DELETE_FUNCTION;
 
   vtkSMDoubleMapPropertyPrivate *Private;
 };

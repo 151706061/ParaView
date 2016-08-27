@@ -31,7 +31,6 @@ public:
 
   virtual void AboutToDelete();
 
-//BTX
 protected:
   vtkSIPVRepresentationProxy();
   ~vtkSIPVRepresentationProxy();
@@ -42,14 +41,14 @@ protected:
   virtual bool ReadXMLAttributes(vtkPVXMLElement* element);
 
 private:
-  vtkSIPVRepresentationProxy(const vtkSIPVRepresentationProxy&); // Not implemented
-  void operator=(const vtkSIPVRepresentationProxy&); // Not implemented
+  vtkSIPVRepresentationProxy(const vtkSIPVRepresentationProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSIPVRepresentationProxy&) VTK_DELETE_FUNCTION;
 
   void OnVTKObjectModified();
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

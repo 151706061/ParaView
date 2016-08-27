@@ -55,8 +55,6 @@ public:
   // vtkClientServerInterpreterInitializer the first time it is called.
   static vtkClientServerInterpreterInitializer* GetInitializer();
 
-
-//BTX
   typedef void (*InterpreterInitializationCallback)(vtkClientServerInterpreter*);
 
   // Description:
@@ -79,12 +77,12 @@ protected:
   void RegisterInterpreter(vtkClientServerInterpreter*);
 
 private:
-  vtkClientServerInterpreterInitializer(const vtkClientServerInterpreterInitializer&); // Not implemented
-  void operator=(const vtkClientServerInterpreterInitializer&); // Not implemented
+  vtkClientServerInterpreterInitializer(const vtkClientServerInterpreterInitializer&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkClientServerInterpreterInitializer&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals *Internals;
-//ETX
+
 };
 
 #endif

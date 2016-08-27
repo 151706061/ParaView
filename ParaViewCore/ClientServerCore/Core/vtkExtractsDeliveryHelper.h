@@ -68,7 +68,6 @@ public:
   vtkSetMacro(NumberOfSimulationProcesses, int);
   vtkGetMacro(NumberOfSimulationProcesses, int);
 
-//BTX
 protected:
   vtkExtractsDeliveryHelper();
   ~vtkExtractsDeliveryHelper();
@@ -95,9 +94,9 @@ protected:
   vtkSmartPointer<vtkMultiProcessController> ParallelController;
 
 private:
-  vtkExtractsDeliveryHelper(const vtkExtractsDeliveryHelper&); // Not implemented
-  void operator=(const vtkExtractsDeliveryHelper&); // Not implemented
-//ETX
+  vtkExtractsDeliveryHelper(const vtkExtractsDeliveryHelper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkExtractsDeliveryHelper&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -63,7 +63,12 @@ public:
   // communicate between all active processes.
   void SetSynchronizedWindows(vtkPVSynchronizedRenderWindows*);
 
-//BTX
+  // Fixes a -Woverloaded-virtual warning.
+  using vtkOpenGLHardwareSelector::BeginRenderProp;
+  // Description:
+  // Set the local ProcessId.
+  void BeginRenderProp(vtkRenderWindow *);
+
 protected:
   vtkPVHardwareSelector();
   ~vtkPVHardwareSelector();
@@ -90,12 +95,12 @@ protected:
   int UniqueId;
   vtkWeakPointer<vtkPVSynchronizedRenderWindows> SynchronizedWindows;
 private:
-  vtkPVHardwareSelector(const vtkPVHardwareSelector&); // Not implemented
-  void operator=(const vtkPVHardwareSelector&); // Not implemented
+  vtkPVHardwareSelector(const vtkPVHardwareSelector&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVHardwareSelector&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

@@ -53,7 +53,7 @@ public:
   virtual void EndUpdateAnimationValues();
 
   void SetDataSourceProxy(vtkSMProxy *dataSourceProxy);
-//BTX
+
 protected:
   vtkPVCameraAnimationCue();
   ~vtkPVCameraAnimationCue();
@@ -61,9 +61,9 @@ protected:
   vtkPVRenderView* View;
   vtkSMProxy* DataSourceProxy;
 private:
-  vtkPVCameraAnimationCue(const vtkPVCameraAnimationCue&); // Not implemented
-  void operator=(const vtkPVCameraAnimationCue&); // Not implemented
-//ETX
+  vtkPVCameraAnimationCue(const vtkPVCameraAnimationCue&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVCameraAnimationCue&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

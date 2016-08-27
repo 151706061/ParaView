@@ -72,7 +72,6 @@ protected:
   char* CellArrayNameToProcess;
   vtkSetStringMacro(CellArrayNameToProcess);
 
-  //BTX
   virtual int RequestData(vtkInformation *, vtkInformationVector **, vtkInformationVector *);
   virtual int FillInputPortInformation(int port, vtkInformation *info);
   virtual int FillOutputPortInformation(int port, vtkInformation *info);
@@ -111,9 +110,9 @@ protected:
 
 
 private:
-  vtkFlashContour(const vtkFlashContour&);  // Not implemented.
-  void operator=(const vtkFlashContour&);  // Not implemented.
-  //ETX
+  vtkFlashContour(const vtkFlashContour&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkFlashContour&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

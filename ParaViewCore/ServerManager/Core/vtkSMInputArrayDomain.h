@@ -33,8 +33,12 @@
 //                         'vertex', 'edge', 'row', 'none', 'any-except-field', 'any'.
 //                         If not specified, 'any-except-field' is assumed. This
 //                         indicates the attribute type for acceptable arrays.
-// \li \c number_of_components : (optional) 0 by default. If non-zero, indicates
-//                         the component count for acceptable arrays.
+// \li \c number_of_components : (optional) Indicates the number of components 
+//                         required in arrays that are considered acceptable. 
+//                         0 (default) indicates any number of components is acceptable. 
+//                         A comma-separated list (e.g., "1" or "1,3,4") of component counts 
+//                         limits acceptable arrays to those with a number of components that 
+//                         appear in the list. 
 //
 // This domain doesn't support any required properties (to help clean old
 // code, we print a warning if any required properties are specified).
@@ -51,6 +55,8 @@
 #include "vtkPVServerManagerCoreModule.h" //needed for exports
 #include "vtkSMDomain.h"
 #include "vtkDataObject.h" // needed for vtkDataObject::AttributeTypes
+
+#include <vector> // Needed for vector
 
 // Needed to get around some header defining ANY as a macro
 #ifdef ANY
@@ -87,8 +93,14 @@ public:
   const char* GetAttributeTypeAsString();
 
   // Description:
-  // Get the required number of components. Set to 0 for no check.
-  vtkGetMacro(NumberOfComponents, int);
+  // Return the first acceptable number of components or 0 if any number of
+  // components are acceptable. This method is deprecated.
+  VTK_LEGACY(int GetNumberOfComponents());
+
+  // Description:
+  // Get the AcceptableNumberOfComponents vector
+  // Empty or containing a zero means no check.
+  std::vector<int> GetAcceptableNumbersOfComponents() const;
 
   /// Get/Set the application wide setting for automatic conversion of properties.
   /// Automatic conversion of properties allows conversion between cell and point
@@ -133,14 +145,26 @@ public:
   // required_number_of_components == 0 (i.e. no restriction of num. of components
   // is specified) or if required_number_of_components == num. of components
   // in the array.
-  static bool IsArrayAcceptable(
-    int required_number_of_components, vtkPVArrayInformation* arrayInfo);
+  // This method is deprecated.
+  VTK_LEGACY(static bool IsArrayAcceptable(
+    int required_number_of_components, vtkPVArrayInformation* arrayInfo));
+
+  // Description:
+  // This method will check if the arrayInfo contain info about an acceptable array,
+  // by checking its number of components against this domain acceptable 
+  // numbers of components. Note that it takes into account property conversion
+  // This method return the accepted number of components to use.
+  int IsArrayAcceptable(vtkPVArrayInformation* arrayInfo);
   
 protected:
   vtkSMInputArrayDomain();
   ~vtkSMInputArrayDomain();
 
-  vtkSetMacro(NumberOfComponents, int);
+  // Description:
+  // Set the first acceptable number of components
+  // This method is deprecated
+  VTK_LEGACY(void SetNumberOfComponents(int));
+
   vtkSetMacro(AttributeType, int);
   void SetAttributeType(const char* type);
 
@@ -160,11 +184,11 @@ protected:
   bool HasAcceptableArray(vtkPVDataSetAttributesInformation* attrInfo);
 
   int AttributeType;
-  int NumberOfComponents;
+  std::vector<int> AcceptableNumbersOfComponents;
 private:
   static bool AutomaticPropertyConversion;
-  vtkSMInputArrayDomain(const vtkSMInputArrayDomain&); // Not implemented
-  void operator=(const vtkSMInputArrayDomain&); // Not implemented
+  vtkSMInputArrayDomain(const vtkSMInputArrayDomain&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMInputArrayDomain&) VTK_DELETE_FUNCTION;
 };
 
 #endif

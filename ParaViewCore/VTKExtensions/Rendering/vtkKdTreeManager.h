@@ -71,7 +71,6 @@ public:
   // Rebuilds the KdTree.
   void GenerateKdTree();
 
-//BTX
 protected:
   vtkKdTreeManager();
   ~vtkKdTreeManager();
@@ -93,13 +92,12 @@ protected:
   vtkSetVector6Macro(WholeExtent, int);
 
 private:
-  vtkKdTreeManager(const vtkKdTreeManager&); // Not implemented
-  void operator=(const vtkKdTreeManager&); // Not implemented
+  vtkKdTreeManager(const vtkKdTreeManager&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkKdTreeManager&) VTK_DELETE_FUNCTION;
 
   class vtkDataObjectSet;
   vtkDataObjectSet* DataObjects;
 
-//ETX
 };
 
 #endif

@@ -44,6 +44,9 @@ public:
   vtkSetStringMacro(TrackSelection);
   vtkGetStringMacro(TrackSelection);
 
+  vtkSetStringMacro(ArraySelection);
+  vtkGetStringMacro(ArraySelection);
+
 protected:
   vtkCinemaExporter();
   ~vtkCinemaExporter();
@@ -58,6 +61,8 @@ protected:
 
   char* TrackSelection;
 
+  char* ArraySelection;
+
 private:
   /// @brief Defines the Python script to be ran.
   const vtkStdString GetPythonScript();
@@ -66,11 +71,8 @@ private:
   /// initializes it if required.
   bool checkInterpreterInitialization();
 
-  /// @{
-  /// @brief Not implemented
-  vtkCinemaExporter(const vtkCinemaExporter&); // Not implemented
-  void operator=(const vtkCinemaExporter&); // Not implemented
-  /// @}
+  vtkCinemaExporter(const vtkCinemaExporter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkCinemaExporter&) VTK_DELETE_FUNCTION;
 };
 
 #endif

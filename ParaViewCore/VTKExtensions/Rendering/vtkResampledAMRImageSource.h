@@ -78,7 +78,6 @@ public:
   bool NeedsInitialization() const
     { return (this->MTime > this->InitializationTime); }
 
-//BTX
 protected:
   vtkResampledAMRImageSource();
   ~vtkResampledAMRImageSource();
@@ -96,11 +95,11 @@ protected:
   vtkSmartPointer<vtkIntArray> DonorLevel;
 
 private:
-  vtkResampledAMRImageSource(const vtkResampledAMRImageSource&); // Not implemented
-  void operator=(const vtkResampledAMRImageSource&); // Not implemented
+  vtkResampledAMRImageSource(const vtkResampledAMRImageSource&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkResampledAMRImageSource&) VTK_DELETE_FUNCTION;
 
   vtkTimeStamp InitializationTime;
-//ETX
+
 };
 
 #endif

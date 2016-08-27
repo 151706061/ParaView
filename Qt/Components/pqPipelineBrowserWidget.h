@@ -38,6 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 class pqPipelineModel;
 class pqPipelineAnnotationFilterModel;
 class pqPipelineSource;
+class pqOutputPort;
 class pqView;
 class vtkSession;
 
@@ -70,6 +71,17 @@ public:
   /// Disable any Session filter
   void disableSessionFilter();
 
+  /// Overload of pqFlatTreeView::setModel
+  void setModel(pqPipelineModel* model);
+
+  /// TODO document
+  /// @note Moved from proteced
+  const QModelIndex pipelineModelIndex(const QModelIndex& index) const;
+  const pqPipelineModel* getPipelineModel(const QModelIndex& index) const;
+
+  /// static method to sets the visibility of a pqOutputPort
+  static void setVisibility(bool visible, pqOutputPort* port);
+
 signals:
   /// Fired when the delete key is pressed.
   /// Typically implies that the selected items need to be deleted.
@@ -87,12 +99,14 @@ protected slots:
 protected:
   /// sets the visibility for items in the indices list.
   void setVisibility(bool visible, const QModelIndexList& indices);
+
   pqPipelineModel* PipelineModel;
   pqPipelineAnnotationFilterModel* FilteredPipelineModel;
-  const QModelIndex pipelineModelIndex(const QModelIndex& index) const;
-  const pqPipelineModel* getPipelineModel(const QModelIndex& index) const;
 
 private:
+  /// Set up the current pqPipelineModel.
+  void configureModel();
+
   Q_DISABLE_COPY(pqPipelineBrowserWidget)
 };
 

@@ -139,17 +139,16 @@ protected:
   int AddKeyFrameInternal(vtkPVKeyFrame* keyframe);
   int RemoveKeyFrameInternal(vtkPVKeyFrame* keyframe);
 
-  //BTX
   friend class vtkPVKeyFrameCueManipulatorObserver;
   vtkPVKeyFrameCueManipulatorObserver* Observer;
   void ExecuteEvent(vtkObject* obj, unsigned long event, void* );
-  //ETX
+
   int SendEndEvent;
   int LastAddedKeyFrameIndex;
 
 private:
-  vtkPVKeyFrameCueManipulator(const vtkPVKeyFrameCueManipulator&); // Not implemented.
-  void operator=(const vtkPVKeyFrameCueManipulator&); // Not implemented.
+  vtkPVKeyFrameCueManipulator(const vtkPVKeyFrameCueManipulator&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVKeyFrameCueManipulator&) VTK_DELETE_FUNCTION;
 };
 
 #endif

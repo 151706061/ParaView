@@ -96,7 +96,6 @@ protected:
   // Needed for copying cell data to point data.
   vtkUnstructuredGrid* Mesh;
 
-  //BTX
   virtual int RequestData(vtkInformation *, vtkInformationVector **, vtkInformationVector *);
 
   void InitializeCopyAttributes(vtkNonOverlappingAMR *hbdsInput, vtkDataSet* mesh);
@@ -150,9 +149,9 @@ protected:
   vtkAMRDualClipLocator* BlockLocator;
 
 private:
-  vtkAMRDualClip(const vtkAMRDualClip&);  // Not implemented.
-  void operator=(const vtkAMRDualClip&);  // Not implemented.
-  //ETX
+  vtkAMRDualClip(const vtkAMRDualClip&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkAMRDualClip&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

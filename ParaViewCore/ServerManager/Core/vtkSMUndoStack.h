@@ -71,8 +71,6 @@ public:
   // \returns the status of the operation.
   virtual int Redo();
 
-//BTX
-
   enum EventIds
     {
     PushUndoSetEvent = 1987,
@@ -94,14 +92,14 @@ protected:
   void FillWithRemoteObjects( vtkUndoSet *undoSet, vtkCollection *collection);
 
 private:
-  vtkSMUndoStack(const vtkSMUndoStack&); // Not implemented.
-  void operator=(const vtkSMUndoStack&); // Not implemented.
+  vtkSMUndoStack(const vtkSMUndoStack&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMUndoStack&) VTK_DELETE_FUNCTION;
 
   class vtkInternal;
   vtkInternal* Internal;
   
   vtkSMUndoStackObserver* Observer;
-//ETX
+
 };
 
 

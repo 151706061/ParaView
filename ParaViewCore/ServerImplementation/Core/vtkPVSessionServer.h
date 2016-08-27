@@ -93,7 +93,6 @@ public:
   vtkSetMacro(MultipleConnection, bool);
   vtkGetMacro(MultipleConnection, bool);
 
-//BTX
   void OnClientServerMessageRMI(void* message, int message_length);
   void OnCloseSessionRMI();
 
@@ -128,9 +127,9 @@ protected:
   friend class vtkInternals;
 
 private:
-  vtkPVSessionServer(const vtkPVSessionServer&); // Not implemented
-  void operator=(const vtkPVSessionServer&); // Not implemented
-//ETX
+  vtkPVSessionServer(const vtkPVSessionServer&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVSessionServer&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

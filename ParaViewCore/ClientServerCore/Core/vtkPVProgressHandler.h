@@ -84,7 +84,6 @@ public:
   // Temporary storage for most recent message text.
   vtkGetStringMacro(LastMessage);
 
-//BTX
 protected:
   vtkPVProgressHandler();
   ~vtkPVProgressHandler();
@@ -103,8 +102,8 @@ protected:
   vtkPVSession* Session;
   double ProgressFrequency;
 private:
-  vtkPVProgressHandler(const vtkPVProgressHandler&); // Not implemented
-  void operator=(const vtkPVProgressHandler&); // Not implemented
+  vtkPVProgressHandler(const vtkPVProgressHandler&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVProgressHandler&) VTK_DELETE_FUNCTION;
 
   // Description:
   // Callback called when vtkCommand::ProgressEvent is received.
@@ -128,7 +127,7 @@ private:
 
   vtkSetStringMacro(LastMessage);
   char* LastMessage;
-//ETX
+
 };
 
 #endif

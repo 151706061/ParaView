@@ -132,7 +132,6 @@ public:
   // Returns 1 if the domain updated the property.
   virtual int SetDefaultValues(vtkSMProperty*, bool use_unchecked_values);
 
-//BTX
 protected:
   vtkSMCompositeTreeDomain();
   ~vtkSMCompositeTreeDomain();
@@ -156,9 +155,9 @@ protected:
   int DefaultMode;
   int SourcePort;
 private:
-  vtkSMCompositeTreeDomain(const vtkSMCompositeTreeDomain&); // Not implemented
-  void operator=(const vtkSMCompositeTreeDomain&); // Not implemented
-//ETX
+  vtkSMCompositeTreeDomain(const vtkSMCompositeTreeDomain&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMCompositeTreeDomain&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

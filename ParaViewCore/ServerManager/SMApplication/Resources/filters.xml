@@ -5427,6 +5427,12 @@ array.
         number_of_elements="1"
         default_values="1"
         >
+      <BoundsDomain name="range" mode="array_scaled_extent">
+        <RequiredProperties>
+          <Property function="Input" name="Input" />
+          <Property function="ArraySelection" name="SelectInputTensors" />
+        </RequiredProperties>
+      </BoundsDomain>
       <Documentation>
         This property specifies the scale factor to scale every glyph by.
       </Documentation>
@@ -5878,7 +5884,12 @@ array.
                             name="ScaleFactor"
                             number_of_elements="1"
                             panel_visibility="default">
-        <DoubleRangeDomain name="range" />
+        <BoundsDomain name="range" mode="array_scaled_extent">
+          <RequiredProperties>
+            <Property function="Input" name="Input" />
+            <Property function="ArraySelection" name="SelectInputScalars" />
+          </RequiredProperties>
+        </BoundsDomain>
         <Documentation>The scalar value at a given point is multiplied by the
         value of this property to determine the magnitude of the change vector
         for that point.</Documentation>
@@ -5968,7 +5979,12 @@ array.
                             name="ScaleFactor"
                             number_of_elements="1"
                             panel_visibility="default">
-        <DoubleRangeDomain name="range" />
+        <BoundsDomain name="range" mode="array_scaled_extent">
+          <RequiredProperties>
+            <Property function="Input" name="Input" />
+            <Property function="ArraySelection" name="SelectInputVectors" />
+          </RequiredProperties>
+        </BoundsDomain>
         <Documentation>Each component of the selected vector array will be
         multiplied by the value of this property before being used to compute
         new point coordinates.</Documentation>
@@ -8262,7 +8278,7 @@ source.</Documentation>
                  name="ImageResampling">
       <Documentation long_help="Sample data attributes using a 3D image as probing mesh."
                      short_help="Sample data values using a 3D image."/>
-
+      <Deprecated deprecated_in="5.1" to_remove_in="5.2">Please use "Resample To Image" instead instead of "ImageResampling" filter.</Deprecated>
       <InputProperty command="SetInputConnection" name="Input">
         <ProxyGroupDomain name="groups">
           <Group name="sources" />
@@ -10909,6 +10925,14 @@ source.</Documentation>
                          default_values="0"
                          name="Component"
                          number_of_elements="1">
+        <NumberOfComponentsDomain name="comps">
+          <RequiredProperties>
+            <Property function="Input"
+                      name="Input" />
+            <Property function="ArraySelection"
+                      name="SelectInputArray" />
+          </RequiredProperties>
+        </NumberOfComponentsDomain>
         <Documentation>
           This property indicates the component of the array to be extracted.
         </Documentation>
@@ -11635,6 +11659,32 @@ source.</Documentation>
       <!-- End of TimeToTextConvertor -->
     </SourceProxy>
     <!-- ==================================================================== -->
+    <SourceProxy class="vtkTimeStepProgressFilter"
+                 label="Time Step Progress Bar"
+                 name="TimeStepProgressFilter">
+      <Documentation long_help="Shows input data time as progress bar in the view."
+                     short_help="Show data time step as progress bar.">The Time Step Progress Bar
+                     filter can be used to show the relative position of the actual time step/value
+                     relatively to the number of timesteps/data time range in a progress bar.
+                     </Documentation>
+      <InputProperty command="SetInputConnection"
+                     name="Input">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources" />
+          <Group name="filters" />
+        </ProxyGroupDomain>
+        <Documentation>This property specifies the input dataset for which to
+        display the time step.</Documentation>
+      </InputProperty>
+      <Hints>
+        <Visibility replace_input="0" />
+        <OutputPort index="0"
+                    name="Output-0"
+                    type="progress" />
+      </Hints>
+      <!-- End of TimeToTextConvertor -->
+    </SourceProxy>
+    <!-- ==================================================================== -->
     <SourceProxy class="vtkCellDerivatives"
                  label="Compute Derivatives"
                  name="CellDerivatives">
@@ -12077,6 +12127,11 @@ source.</Documentation>
                   name="input_type">
             <DataType value="vtkDataSet" />
           </Domain>
+        </Property>
+        <Property name="GlyphMode"
+                  id="2429.GlyphMode"
+                  number_of_elements="1">
+          <Element index="0" value="0"/>
         </Property>
         <Property id="2429.Scalars"
                   name="Scalars"
@@ -14613,6 +14668,19 @@ source.</Documentation>
         <Documentation>This property specifies the 3D coordinates for the
         center of the rotation.</Documentation>
       </DoubleVectorProperty>
+      <IntVectorProperty command="SetComputeRotationsOnTheFly"
+                         default_values="1"
+                         name="ComputeRotationsOnTheFly"
+                         number_of_elements="1"
+                         panel_visibility="default">
+        <Documentation>
+        Specify whether the rotations should be computed on-the-fly, which is
+        compute intensive, or if the arrays should be explicitly generated and
+        stored, at the cost of using more memory.
+        </Documentation>
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+
       <!-- End AngularPeriodicFilter -->
     </SourceProxy>
     <!-- ==================================================================== -->

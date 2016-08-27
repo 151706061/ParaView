@@ -28,15 +28,14 @@ public:
   vtkTypeMacro(vtkVisibleLinesPolyDataMapper, vtkPainterPolyDataMapper);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkVisibleLinesPolyDataMapper();
   ~vtkVisibleLinesPolyDataMapper();
 
 private:
-  vtkVisibleLinesPolyDataMapper(const vtkVisibleLinesPolyDataMapper&); // Not implemented
-  void operator=(const vtkVisibleLinesPolyDataMapper&); // Not implemented
-//ETX
+  vtkVisibleLinesPolyDataMapper(const vtkVisibleLinesPolyDataMapper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkVisibleLinesPolyDataMapper&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

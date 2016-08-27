@@ -37,7 +37,6 @@ public:
   vtkTypeMacro(vtkCaveSynchronizedRenderers, vtkSynchronizedRenderers);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkCaveSynchronizedRenderers();
   ~vtkCaveSynchronizedRenderers();
@@ -77,9 +76,9 @@ protected:
   int once;
 
 private:
-  vtkCaveSynchronizedRenderers(const vtkCaveSynchronizedRenderers&); // Not implemented
-  void operator=(const vtkCaveSynchronizedRenderers&); // Not implemented
-//ETX
+  vtkCaveSynchronizedRenderers(const vtkCaveSynchronizedRenderers&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkCaveSynchronizedRenderers&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

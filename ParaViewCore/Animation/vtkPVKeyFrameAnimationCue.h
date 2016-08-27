@@ -38,7 +38,6 @@ public:
   void RemoveKeyFrame(vtkPVKeyFrame*);
   void RemoveAllKeyFrames();
 
-//BTX
 protected:
   vtkPVKeyFrameAnimationCue();
   ~vtkPVKeyFrameAnimationCue();
@@ -46,9 +45,9 @@ protected:
   vtkPVKeyFrameCueManipulator* GetKeyFrameManipulator();
 
 private:
-  vtkPVKeyFrameAnimationCue(const vtkPVKeyFrameAnimationCue&); // Not implemented
-  void operator=(const vtkPVKeyFrameAnimationCue&); // Not implemented
-//ETX
+  vtkPVKeyFrameAnimationCue(const vtkPVKeyFrameAnimationCue&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVKeyFrameAnimationCue&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

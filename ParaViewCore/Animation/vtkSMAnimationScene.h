@@ -150,7 +150,6 @@ public:
   vtkSetMacro(ForceDisableCaching, bool);
   vtkGetMacro(ForceDisableCaching, bool);
 
-//BTX
 protected:
   vtkSMAnimationScene();
   ~vtkSMAnimationScene();
@@ -182,14 +181,14 @@ protected:
   bool OverrideStillRender;
   vtkSetMacro(OverrideStillRender, bool);
 private:
-  vtkSMAnimationScene(const vtkSMAnimationScene&); // Not implemented
-  void operator=(const vtkSMAnimationScene&); // Not implemented
+  vtkSMAnimationScene(const vtkSMAnimationScene&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMAnimationScene&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
   unsigned long TimeRangeObserverID;
   unsigned long TimestepValuesObserverID;
-//ETX
+
 };
 
 #endif

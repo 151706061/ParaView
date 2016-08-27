@@ -33,8 +33,10 @@
 #include "vtkDataObjectAlgorithm.h"
 #include "vtkSmartPointer.h" // needed for vtkSmartPointer.
 #include "vtkPVVTKExtensionsRenderingModule.h" // needed for export macro
-class vtkMultiProcessController;
+#include <vector> //  needed for std::vector
 
+class vtkMultiProcessController;
+class vtkSelection;
 class VTKPVVTKEXTENSIONSRENDERING_EXPORT vtkReductionFilter : public vtkDataObjectAlgorithm
 {
 public:
@@ -78,7 +80,6 @@ public:
   vtkSetMacro(GenerateProcessIds, int);
   vtkGetMacro(GenerateProcessIds, int);
 
-//BTX
   enum Tags {
     TRANSMIT_DATA_OBJECT = 23484
   };
@@ -103,18 +104,14 @@ protected:
   void PostProcess(vtkDataObject* output,
     vtkSmartPointer<vtkDataObject> inputs[],
     unsigned int num_inputs);
+
   // Description:
-  // GatherV for vtkSelection
+  // Gather for vtkSelection
   // sendData is a vtkSelection while receiveData is a vector of NumberOfProcesses
   // vtkSelections. Selections are gathered on destProcessId
-  int GatherVSelection(
-    vtkDataObject* sendData, vtkSmartPointer<vtkDataObject>* receiveData,
-    int destProcessId);
-  // Description:
-  // Adds selection to the list of vtkDataObjects handled by 
-  // vtkCommunicator::GatherV
-  int GatherV(
-    vtkDataObject* sendData, vtkSmartPointer<vtkDataObject>* receiveData,
+  int GatherSelection(
+    vtkSelection* sendData,
+    std::vector<vtkSmartPointer<vtkDataObject> >& receiveData,
     int destProcessId);
 
   vtkAlgorithm* PreGatherHelper;
@@ -124,9 +121,9 @@ protected:
   int GenerateProcessIds;
 
 private:
-  vtkReductionFilter(const vtkReductionFilter&); // Not implemented.
-  void operator=(const vtkReductionFilter&); // Not implemented.
-//ETX
+  vtkReductionFilter(const vtkReductionFilter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkReductionFilter&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

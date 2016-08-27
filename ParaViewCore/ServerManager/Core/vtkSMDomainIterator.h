@@ -25,9 +25,7 @@
 class vtkSMProperty;
 class vtkSMDomain;
 
-//BTX
 struct vtkSMDomainIteratorInternals;
-//ETX
 
 class VTKPVSERVERMANAGERCORE_EXPORT vtkSMDomainIterator : public vtkSMObject
 {
@@ -73,8 +71,8 @@ protected:
 private:
   vtkSMDomainIteratorInternals* Internals;
 
-  vtkSMDomainIterator(const vtkSMDomainIterator&); // Not implemented
-  void operator=(const vtkSMDomainIterator&); // Not implemented
+  vtkSMDomainIterator(const vtkSMDomainIterator&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMDomainIterator&) VTK_DELETE_FUNCTION;
 };
 
 #endif

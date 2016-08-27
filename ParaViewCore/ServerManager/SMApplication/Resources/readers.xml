@@ -1675,6 +1675,9 @@
         the edge blocks of a file) from their offset in the file to some
         arbitrary integers, usually specifying a unique global ID across a set
         of files.</Documentation>
+        <Hints>
+          <OmitFromLoadAllVariables />
+        </Hints>
       </StringVectorProperty>
       <StringVectorProperty information_only="1"
                             name="FaceMapInfo">
@@ -1697,6 +1700,9 @@
         face blocks of a file) from their offset in the file to some arbitrary
         integers, usually specifying a unique global ID across a set of
         files.</Documentation>
+        <Hints>
+          <OmitFromLoadAllVariables />
+        </Hints>
       </StringVectorProperty>
       <StringVectorProperty information_only="1"
                             name="ElementMapInfo">
@@ -1721,6 +1727,9 @@
         ID across a set of files. These are sometimes called new-style maps
         because they are specified differently than in older Exodus files,
         which only allowed a single element map.</Documentation>
+        <Hints>
+          <OmitFromLoadAllVariables />
+        </Hints>
       </StringVectorProperty>
       <StringVectorProperty information_only="1"
                             name="NodeSetInfo">
@@ -1745,6 +1754,9 @@
         should be loaded. The accompanying NodeSetResultArrayStatus property
         specifies which variables defined over those sets should be
         loaded.</Documentation>
+        <Hints>
+          <OmitFromLoadAllVariables />
+        </Hints>
       </StringVectorProperty>
       <StringVectorProperty information_only="1"
                             name="SideSetInfo">
@@ -1771,6 +1783,9 @@
         individually called out in a set and assigned a result value. The
         accompanying SideSetResultArrayStatus property specifies which
         variables defined over those sets should be loaded.</Documentation>
+        <Hints>
+          <OmitFromLoadAllVariables />
+        </Hints>
       </StringVectorProperty>
       <StringVectorProperty information_only="1"
                             name="FaceSetInfo">
@@ -1795,6 +1810,9 @@
         specifying a single number per face. The accompanying
         FaceSetResultArrayStatus property specifies which variables defined
         over those sets should be loaded.</Documentation>
+        <Hints>
+          <OmitFromLoadAllVariables />
+        </Hints>
       </StringVectorProperty>
       <StringVectorProperty information_only="1"
                             name="EdgeSetInfo">
@@ -1819,6 +1837,9 @@
         specifying a single number per edge. The accompanying
         EdgeSetResultArrayStatus property specifies which variables defined
         over those sets should be loaded.</Documentation>
+        <Hints>
+          <OmitFromLoadAllVariables />
+        </Hints>
       </StringVectorProperty>
       <StringVectorProperty information_only="1"
                             name="ElementSetInfo">
@@ -1843,6 +1864,9 @@
         specifying a single number per element. The accompanying
         ElementSetResultArrayStatus property specifies which variables defined
         over those sets should be loaded.</Documentation>
+        <Hints>
+          <OmitFromLoadAllVariables />
+        </Hints>
       </StringVectorProperty>
       <StringVectorProperty information_only="1"
                             name="ElementSetResultArrayInfo">
@@ -1867,6 +1891,9 @@
         which of those variables should be loaded. The corresponding set must
         also be loaded using the ElementSetArrayStatus property in order for
         the variable to appear.</Documentation>
+        <Hints>
+          <OmitFromLoadAllVariables />
+        </Hints>
       </StringVectorProperty>
       <StringVectorProperty information_only="1"
                             name="SideSetResultArrayInfo">
@@ -1893,6 +1920,9 @@
         property specifies which of those variables should be loaded. The
         corresponding set must also be loaded using the SideSetArrayStatus
         property in order for the variable to appear.</Documentation>
+        <Hints>
+          <OmitFromLoadAllVariables />
+        </Hints>
       </StringVectorProperty>
       <StringVectorProperty information_only="1"
                             name="FaceSetResultArrayInfo">
@@ -1917,6 +1947,9 @@
         which of those variables should be loaded. The corresponding set must
         also be loaded using the FaceSetArrayStatus property in order for the
         variable to appear.</Documentation>
+        <Hints>
+          <OmitFromLoadAllVariables />
+        </Hints>
       </StringVectorProperty>
       <StringVectorProperty information_only="1"
                             name="EdgeSetResultArrayInfo">
@@ -1941,6 +1974,9 @@
         which of those variables should be loaded. The corresponding set must
         also be loaded using the EdgeSetArrayStatus property in order for the
         variable to appear.</Documentation>
+        <Hints>
+          <OmitFromLoadAllVariables />
+        </Hints>
       </StringVectorProperty>
       <StringVectorProperty information_only="1"
                             name="NodeSetResultArrayInfo">
@@ -1965,6 +2001,9 @@
         variables should be loaded. The corresponding set must also be loaded
         using the NodeSetArrayStatus property in order for the variable to
         appear.</Documentation>
+        <Hints>
+          <OmitFromLoadAllVariables />
+        </Hints>
       </StringVectorProperty>
       <IntVectorProperty command="SetApplyDisplacements"
                          default_values="1"
@@ -4595,14 +4634,14 @@
       </Hints>
       <!-- End pdbreader -->
     </SourceProxy>
-    <SourceProxy class="vtkXYZMolReader"
+    <SourceProxy class="vtkXYZMolReader2"
                  label="XYZ Reader"
                  name="xyzreader">
       <Documentation long_help="Reads XYZ molecular data files into a polygonal dataset."
                      short_help="Read XYZ molecular data files.">The XYZ reader
                      reads XYZ molecular data files. The expected file
                      extension is .xyz. The output of this reader is a
-                     polygonal dataset.</Documentation>
+                     vtkMolecule</Documentation>
       <StringVectorProperty animateable="0"
                             command="SetFileName"
                             name="FileName"
@@ -4612,15 +4651,12 @@
         <Documentation>This property specifies the file name for the XYZ
         reader.</Documentation>
       </StringVectorProperty>
-      <IntVectorProperty animateable="1"
-                         command="SetTimeStep"
-                         default_values="0"
-                         name="TimeStep"
-                         number_of_elements="1">
-        <IntRangeDomain name="range" />
-        <Documentation>This property specifies the timestep the XYZ reader
-        should load.</Documentation>
-      </IntVectorProperty>
+      <DoubleVectorProperty information_only="1"
+                            name="TimestepValues"
+                            repeatable="1">
+        <TimeStepsInformationHelper />
+        <Documentation>Available timestep values.</Documentation>
+      </DoubleVectorProperty>
       <Hints>
         <ReaderFactory extensions="xyz"
                        file_description="XMol Molecule Files" />
@@ -4750,16 +4786,16 @@
       </Hints>
       <!-- End vtkOBJReader -->
     </SourceProxy>
-    <SourceProxy class="vtkGaussianCubeReader"
+    <SourceProxy class="vtkGaussianCubeReader2"
                  label="Gaussian Cube Reader"
                  name="gaussiancubereader">
-      <Documentation long_help="Produce polygonal data by reading a Gaussian Cube file."
+      <Documentation long_help="Produce a vtkMolecule by reading a Gaussian Cube file."
                      short_help="Read Gaussian Cube data files.">The Gaussian
-                     Cube reader produces polygonal data by reading data files
+                     Cube reader produces vtkMolecule data by reading data files
                      produced by the Gaussian software package. The expected
                      file extension is .cube.</Documentation>
       <OutputPort index="0"
-                  name="Output" />
+                  name="Molecule" />
       <OutputPort index="1"
                   name="Gridded Data" />
       <StringVectorProperty animateable="0"
@@ -4771,22 +4807,6 @@
         <Documentation>This property specifies the file name for the Gaussian
         Cube reader.</Documentation>
       </StringVectorProperty>
-      <DoubleVectorProperty command="SetHBScale"
-                            default_values="1.0"
-                            name="HBScale"
-                            number_of_elements="1">
-        <DoubleRangeDomain name="range" />
-        <Documentation>A scaling factor to compute bonds with hydrogen
-        atoms.</Documentation>
-      </DoubleVectorProperty>
-      <DoubleVectorProperty command="SetBScale"
-                            default_values="1.0"
-                            name="BScale"
-                            number_of_elements="1">
-        <DoubleRangeDomain name="range" />
-        <Documentation>A scaling factor to compute bonds between non-hydrogen
-        atoms</Documentation>
-      </DoubleVectorProperty>
       <Hints>
         <ReaderFactory extensions="cube"
                        file_description="Gaussian Cube Files" />
@@ -5844,6 +5864,16 @@
         reconstructed mesh should be read</Documentation>
       </IntVectorProperty>
       <IntVectorProperty animateable="0"
+                         command="SetUse64BitLabels"
+                         default_values="0"
+                         label="Expect 64-bit Labels"
+                         name="Use64BitLabels"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+        <Documentation>Expect the openFOAM case to use 64-bit label values.
+        </Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty animateable="0"
                          command="SetCreateCellToPoint"
                          default_values="1"
                          label="Create cell-to-point filtered data"
@@ -6640,6 +6670,61 @@
                        file_description="Delimited Text" />
       </Hints>
       <!-- End of CSVReader -->
+    </SourceProxy>
+    <SourceProxy class="vtkTecplotTableReader"
+                 label="Tecplot Table Reader"
+                 name="TecplotTableReaderCore">
+      <Documentation>The Tecplot
+                     table reader reads a .DAT file containing tabular
+                     data into a spreadsheet view.</Documentation>
+      <StringVectorProperty command="SetFileName"
+                            name="FileName"
+                            number_of_elements="1"
+                            panel_visibility="never"
+                            >
+        <FileListDomain name="files" />
+        <Documentation>The name of the file to read.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty command="GetFileName"
+                            information_only="1"
+                            name="FileNameInfo">
+        <SimpleStringInformationHelper />
+      </StringVectorProperty>
+      <IntVectorProperty command="SetMaxRecords"
+                         default_values="0"
+                         name="Max. Number of Records"
+                         number_of_elements="1">
+        <Documentation>The maximum number of records to read.
+                       Use this to preview a file.</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetHeaderLines"
+                         default_values="2"
+                         name="Number of header lines"
+                         number_of_elements="1"
+                         panel_visibility="advanced">
+        <Documentation>The number of lines that form the header.</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetColumnNamesOnLine"
+                         default_values="1"
+                         name="Line with column names"
+                         number_of_elements="1"
+                         panel_visibility="advanced">
+        <Documentation>The line that contains the column names.</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetSkipColumnNames"
+                         default_values="1"
+                         name="Skip #column name fields"
+                         number_of_elements="1"
+                         panel_visibility="advanced">
+        <Documentation>Number of fiels to skip while reading column names.</Documentation>
+      </IntVectorProperty>
+      <Hints>
+        <!-- View can be used to specify the preferred view for the proxy -->
+        <View type="SpreadSheetView" />
+        <ReaderFactory extensions="dat DAT"
+                       file_description="Tecplot Table" />
+      </Hints>
+      <!-- End of TecplotTableReader -->
     </SourceProxy>
     <SourceProxy class="vtkFileSeriesReader"
                  file_name_method="SetFileName"

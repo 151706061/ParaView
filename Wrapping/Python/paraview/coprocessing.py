@@ -30,7 +30,22 @@ class CoProcessor(object):
     """Base class for co-processing Pipelines. paraview.cpstate Module can
        be used to dump out ParaView states as co-processing pipelines. Those are
        typically subclasses of this. The subclasses must provide an
-       implementation for the CreatePipeline() method."""
+       implementation for the CreatePipeline() method.
+
+	   Cinema Tracks
+	   =============
+	   CoProcessor maintains user-defined information for the Cinema generation in
+       __CinemaTracks. This information includes track parameter values, data array
+       names, etc. __CinemaTracks holds this information in the following structure:
+
+        { proxy_reference : { 'ControlName' : [value_1, value_2, ..., value_n],
+                              'arraySelection' : ['ArrayName_1', ..., 'ArrayName_n'] } }
+
+		__CinemaTracks is populated when defining the co-processing pipline through
+		paraview.cpstate. paraview.cpstate uses accessor instances to set values and
+		array names through the RegisterCinemaTrack and AddArraysToCinemaTrack methods
+        of this class.
+    """
 
     def __init__(self):
         self.__PipelineCreated = False
@@ -40,8 +55,10 @@ class CoProcessor(object):
         self.__EnableLiveVisualization = False
         self.__LiveVisualizationFrequency = 1;
         self.__LiveVisualizationLink = None
+        # __CinemaTracksList is just for Spec-A compatibility (will be deprecated
+        # when porting Spec-A to pv_introspect. Use __CinemaTracks instead.
         self.__CinemaTracksList = []
-        self.__UserDefinedValues = {}
+        self.__CinemaTracks = {}
         self.__InitialFrequencies = {}
 
     def SetUpdateFrequencies(self, frequencies):
@@ -191,14 +208,21 @@ class CoProcessor(object):
                 cinemaOptions = view.cpCinemaOptions
                 if cinemaOptions and 'camera' in cinemaOptions:
                     dirname = None
-                    if 'composite' in cinemaOptions:
-                        dirname = self.UpdateCinemaComposite(view, datadescription)
+                    if 'composite' in view.cpCinemaOptions and view.cpCinemaOptions['composite'] == True:
+                        dirname = self.UpdateCinema(view, datadescription,
+                                                    specLevel="B")
                     else:
-                        dirname = self.UpdateCinema(view, datadescription)
+                        dirname = self.UpdateCinema(view, datadescription,
+                                                    specLevel="A")
                     if dirname:
                         cinema_dirs.append(dirname)
                 else:
-                    simple.WriteImage(fname, view, Magnification=view.cpMagnification)
+                    # for png quality = 0 means no compression. compression can be a potentially
+                    # very costly serial operation on process 0
+                    if fname.endswith('png'):
+                        simple.SaveScreenshot(fname, view, magnification=view.cpMagnification, quality=0)
+                    else:
+                        simple.SaveScreenshot(fname, view, magnification=view.cpMagnification)
 
 
         if len(cinema_dirs) > 1:
@@ -355,12 +379,6 @@ class CoProcessor(object):
         controller.RegisterPipelineProxy(proxy)
         return proxy
 
-    def UpdateFilterValues(self, name, proxy, values):
-        if (isinstance(proxy, simple.servermanager.filters.Slice) or
-            isinstance(proxy, simple.servermanager.filters.Clip)  or
-            isinstance(proxy, simple.servermanager.filters.Contour)):
-            self.__UserDefinedValues[name] = values
-
     def RegisterCinemaTrack(self, name, proxy, smproperty, valrange):
         """
         Register a point of control (filter's property) that will be varied over in a cinema export.
@@ -368,8 +386,19 @@ class CoProcessor(object):
         if not isinstance(proxy, servermanager.Proxy):
             raise RuntimeError, "Invalid 'proxy' argument passed to RegisterCinemaTrack."
         self.__CinemaTracksList.append({"name":name, "proxy":proxy, "smproperty":smproperty, "valrange":valrange})
-        self.UpdateFilterValues(name, proxy, valrange)
+        proxyDefinitions = self.__CinemaTracks[proxy] if (proxy in self.__CinemaTracks) else {}
+        proxyDefinitions[smproperty] = valrange
+        self.__CinemaTracks[proxy] = proxyDefinitions
+        return proxy
 
+    def AddArraysToCinemaTrack(self, proxy, propertyName, arrayNames):
+        ''' Register user-defined target arrays by name. '''
+        if not isinstance(proxy, servermanager.Proxy):
+            raise RuntimeError, "Invalid 'proxy' argument passed to AddArraysToCinemaTrack."
+
+        proxyDefinitions = self.__CinemaTracks[proxy] if (proxy in self.__CinemaTracks) else {}
+        proxyDefinitions[propertyName] = arrayNames
+        self.__CinemaTracks[proxy] = proxyDefinitions
         return proxy
 
     def RegisterView(self, view, filename, freq, fittoscreen, magnification, width, height, cinema=None):
@@ -473,178 +502,8 @@ class CoProcessor(object):
 
                    lut.RGBPoints.SetData(newrgbpoints)
 
-    def UpdateCinema(self, view, datadescription):
-        """ called from catalyst at each timestep to add to the cinema "SPEC A" database """
-        if not view.IsA("vtkSMRenderViewProxy") == True:
-            return
-
-        try:
-            import paraview.cinemaIO.cinema_store as CS
-            import paraview.cinemaIO.explorers as explorers
-            import paraview.cinemaIO.pv_explorers as pv_explorers
-        except ImportError as e:
-            paraview.print_error("Cannot import cinema")
-            paraview.print_error(e)
-            return
-
-        def get_nearest(eye, at, up, phis, thetas):
-            """ returns phi and theta settings that most closely match current view """
-            #todo: derive it instead of this brute force search
-            best_phi = None
-            best_theta = None
-            best_dist = None
-            best_up = None
-            dist1 = math.sqrt(sum(math.pow(eye[x]-at[x],2) for x in [0,1,2]))
-            for t,p in ((x,y) for x in thetas for y in phis):
-                theta_rad = (float(t)) / 180.0 * math.pi
-                phi_rad = float(p) / 180.0 * math.pi
-                pos = [
-                    float(at[0]) - math.cos(phi_rad)   * dist1 * math.cos(theta_rad),
-                    float(at[1]) + math.sin(phi_rad)   * dist1 * math.cos(theta_rad),
-                    float(at[2]) + math.sin(theta_rad) * dist1
-                ]
-                nup = [
-                    + math.cos(phi_rad) * math.sin(theta_rad),
-                    - math.sin(phi_rad) * math.sin(theta_rad),
-                    + math.cos(theta_rad)
-                ]
-                dist = math.sqrt(sum(math.pow(eye[x]-pos[x],2) for x in [0,1,2]))
-                updiff = math.sqrt(sum(math.pow(up[x]-nup[x],2) for x in [0,1,2]))
-                if best_dist == None or (dist<best_dist and updiff<1.0):
-                    best_phi = p
-                    best_theta = t
-                    best_dist = dist
-                    best_up = updiff
-            return best_phi, best_theta
-
-
-        pm = servermanager.vtkProcessModule.GetProcessModule()
-        pid = pm.GetPartitionId()
-
-        #load or create the cinema store for this view
-        import os.path
-        vfname = view.cpFileName
-        vfname = vfname[0:vfname.rfind("_")] #strip _num.ext
-
-        fname = os.path.join(os.path.dirname(vfname),
-                             "cinema",
-                             os.path.basename(vfname),
-                             "info.json")
-        fs = CS.FileStore(fname)
-        try:
-            fs.load()
-        except IOError:
-            pass
-        fs.add_metadata({'type':'parametric-image-stack'})
-
-        def float_limiter(x):
-            #a shame, but needed to make sure python, javascript and (directory/file)name agree
-            if isinstance(x, (float)):
-                #return '%6f' % x #arbitrarily chose 6 decimal places
-                return '%.6e' % x #arbitrarily chose 6 significant digits
-            else:
-                return x
-
-        #add record of current time to the store
-        timestep = datadescription.GetTimeStep()
-        time = datadescription.GetTime()
-        view.ViewTime = time
-        formatted_time = float_limiter(time)
-        try:
-            tprop = fs.get_parameter('time')
-            tprop['values'].append(formatted_time)
-        except KeyError:
-            tprop = CS.make_parameter('time', [formatted_time])
-            fs.add_parameter('time', tprop)
-
-        parameters = []
-        tracks = []
-
-        #fixed track for time
-        fnpattern = "{time}/"
-
-        #make up track for each variable
-        vals = []
-        names = []
-        for track in self.__CinemaTracksList:
-            proxy = track['proxy']
-            #rep = servermanager.GetRepresentation(proxy, view)
-            #if not rep or rep.Visibility == 0:
-            #    #skip if track if not visible in this view
-            #    continue
-            name = track['name']
-            #make unique
-            idx = 0
-            while name in names:
-                name = track['name'] + str(idx)
-                idx = idx+1
-            names.append(name)
-            fnpattern = fnpattern + "{"+name+"}/"
-            proxy = track['proxy']
-            smproperty = track['smproperty']
-            valrange = list(float_limiter(x for x in track['valrange']))
-            fs.add_parameter(name, CS.make_parameter(name, valrange))
-            parameters.append(name)
-            tracks.append(pv_explorers.Templated(name, proxy, smproperty))
-            #save off current value for later restoration
-            vals.append([proxy, smproperty, list(proxy.GetPropertyValue(smproperty))])
-
-        #make track for the camera rotation
-        cinemaOptions = view.cpCinemaOptions
-        if cinemaOptions and cinemaOptions.get('camera') == 'Spherical':
-            fnpattern = fnpattern + "{phi}/{theta}/"
-            if 'initial' in cinemaOptions:
-                eye = cinemaOptions['initial']['eye']
-                at = cinemaOptions['initial']['at']
-                up = cinemaOptions['initial']['up']
-                phis = list(float_limiter(x for x in cinemaOptions['phi']))
-                thetas = list(float_limiter(x for x in cinemaOptions['theta']))
-                best_phi, best_theta = get_nearest(eye, at, up, phis, thetas)
-                fs.add_parameter("phi", CS.make_parameter('phi', phis, default=best_phi))
-                fs.add_parameter("theta", CS.make_parameter('theta', thetas, default=best_theta))
-            else:
-                eye = view.CameraPosition
-                at = view.CameraFocalPoint
-                phis = list(float_limiter(x for x in cinemaOptions['phi']))
-                thetas = list(float_limiter(x for x in cinemaOptions['theta']))
-                fs.add_parameter("phi", CS.make_parameter('phi', phis))
-                fs.add_parameter("theta", CS.make_parameter('theta', thetas))
-            dist = math.sqrt(sum(math.pow(eye[x]-at[x],2) for x in [0,1,2]))
-            #rectify for cinema exporter
-            up = [math.fabs(x) for x in view.CameraViewUp]
-            uppest = 0;
-            if up[1]>up[uppest]: uppest = 1
-            if up[2]>up[uppest]: uppest = 2
-            cinup = [0,0,0]
-            cinup[uppest]=1
-            parameters.append("phi")
-            parameters.append("theta")
-            tracks.append(pv_explorers.Camera(at, cinup, dist, view))
-            #save off current value for later restoration
-            vals.append([view, 'CameraPosition', list(eye)])
-            vals.append([view, 'CameraFocalPoint', list(at)])
-            vals.append([view, 'CameraViewUp', list(up)])
-
-        fnpattern = fnpattern[:-1] #strip trailing /
-        imgext = view.cpFileName[view.cpFileName.rfind("."):]
-        fnpattern = fnpattern + imgext
-        fs.filename_pattern = fnpattern
-
-        #at current time, run through parameters and dump files
-        e = pv_explorers.ImageExplorer(fs, parameters, tracks, view=view, iSave=(pid==0))
-        e.explore({'time':formatted_time})
-
-        if pid == 0:
-            fs.save()
-
-        #restore values to what they were at beginning for next view
-        for proxy, property, value in vals:
-            proxy.SetPropertyWithName(property, value)
-
-        return os.path.basename(vfname)
-
-    def UpdateCinemaComposite(self, view, datadescription):
-        """ called from catalyst at each timestep to add to the cinema "SPEC B" database """
+    def UpdateCinema(self, view, datadescription, specLevel):
+        """ called from catalyst at each timestep to add to the cinema database """
         if not view.IsA("vtkSMRenderViewProxy") == True:
             return
 
@@ -682,14 +541,16 @@ class CoProcessor(object):
         view.ViewTime = time
         formatted_time = float_limiter(time)
 
-        #pass down user provided parameters
+        # Include camera information in the user defined parameters.
+        # pv_introspect uses __CinemaTracks to customize the exploration.
         co = view.cpCinemaOptions
+        camType = "Static"
         if "phi" in co:
-            self.__UserDefinedValues["phi"] = co["phi"]
+            self.__CinemaTracks["phi"] = co["phi"]
+            camType = "Spherical"
         if "theta" in co:
-            self.__UserDefinedValues["theta"] = co["theta"]
-
-        simple.Render(view)
+            self.__CinemaTracks["theta"] = co["theta"]
+            camType = "Spherical"
 
         #figure out what we show now
         pxystate= pv_introspect.record_visibility()
@@ -697,16 +558,23 @@ class CoProcessor(object):
         #make sure depth rasters are consistent
         view.LockBounds = 1
 
-        p = pv_introspect.inspect()
-        fs = pv_introspect.make_cinema_store(p, fname,
-                                            forcetime=formatted_time,
-                                            _userDefinedValues = self.__UserDefinedValues)
+        if specLevel=="B":
+            p = pv_introspect.inspect(skip_invisible=True)
+        else:
+            p = pv_introspect.inspect(skip_invisible=False)
+        fs = pv_introspect.make_cinema_store(p, fname, forcetime = formatted_time,\
+                                             userDefined = self.__CinemaTracks,
+                                             specLevel=specLevel,
+                                             camType=camType)
 
         #all nodes participate, but only root can writes out the files
         pm = servermanager.vtkProcessModule.GetProcessModule()
         pid = pm.GetPartitionId()
 
-        pv_introspect.explore(fs, p, iSave=(pid==0), currentTime={'time':formatted_time})
+        pv_introspect.explore(fs, p, iSave = (pid == 0), currentTime = {'time':formatted_time},\
+                              userDefined = self.__CinemaTracks,
+                              specLevel=specLevel,
+                              camType=camType)
         if pid == 0:
             fs.save()
 

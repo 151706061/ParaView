@@ -50,7 +50,6 @@ public:
   // Get the output range
   vtkGetVector2Macro(Range, double);
 
-//BTX
 protected:
   vtkExtractSelectionRange();
   ~vtkExtractSelectionRange();
@@ -66,10 +65,9 @@ protected:
   double Range[2];
 
 private:
-  vtkExtractSelectionRange(const vtkExtractSelectionRange&); // Not implemented
-  void operator=(const vtkExtractSelectionRange&); // Not implemented
+  vtkExtractSelectionRange(const vtkExtractSelectionRange&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkExtractSelectionRange&) VTK_DELETE_FUNCTION;
 
-//ETX
 };
 
 #endif

@@ -39,7 +39,6 @@ public:
   // Overridden to handle links with subproxy properties.
   int ReadXMLAttributes(vtkSMSessionProxyManager* pm, vtkPVXMLElement* element);
 
-//BTX
 protected:
   vtkSMChartRepresentationProxy();
   ~vtkSMChartRepresentationProxy();
@@ -51,9 +50,9 @@ protected:
   virtual void SetPropertyModifiedFlag(const char* name, int flag);
 
 private:
-  vtkSMChartRepresentationProxy(const vtkSMChartRepresentationProxy&); // Not implemented
-  void operator=(const vtkSMChartRepresentationProxy&); // Not implemented
-//ETX
+  vtkSMChartRepresentationProxy(const vtkSMChartRepresentationProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMChartRepresentationProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

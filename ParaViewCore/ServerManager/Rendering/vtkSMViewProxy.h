@@ -175,7 +175,6 @@ public:
     return self? self->HideOtherRepresentationsIfNeeded(repr) : false;
     }
 
-//BTX
 protected:
   vtkSMViewProxy();
   ~vtkSMViewProxy();
@@ -219,8 +218,8 @@ protected:
   bool Enable;
 
 private:
-  vtkSMViewProxy(const vtkSMViewProxy&); // Not implemented
-  void operator=(const vtkSMViewProxy&); // Not implemented
+  vtkSMViewProxy(const vtkSMViewProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMViewProxy&) VTK_DELETE_FUNCTION;
 
   static bool TransparentBackground;
 
@@ -234,7 +233,7 @@ private:
   class vtkRendererSaveInfo;
   vtkRendererSaveInfo* PrepareRendererBackground(vtkRenderer*, double, double, double, bool);
   void RestoreRendererBackground(vtkRenderer*, vtkRendererSaveInfo*);
-//ETX
+
 };
 
 #endif

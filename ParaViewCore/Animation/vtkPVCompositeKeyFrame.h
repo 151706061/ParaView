@@ -37,7 +37,7 @@ public:
   static vtkPVCompositeKeyFrame* New();
   vtkTypeMacro(vtkPVCompositeKeyFrame, vtkPVKeyFrame);
   void PrintSelf(ostream& os, vtkIndent indent);
-  //BTX
+
   enum
     {
     NONE =0,
@@ -46,7 +46,6 @@ public:
     EXPONENTIAL=3,
     SINUSOID=4
     };
-  //ETX
 
   // Description:
   // Overridden to pass on to the internal keyframe proxies.
@@ -96,8 +95,8 @@ protected:
   vtkPVExponentialKeyFrame* ExponentialKeyFrame;
   vtkPVSinusoidKeyFrame* SinusoidKeyFrame;
 private:
-  vtkPVCompositeKeyFrame(const vtkPVCompositeKeyFrame&); // Not implemented.
-  void operator=(const vtkPVCompositeKeyFrame&); // Not implemented.
+  vtkPVCompositeKeyFrame(const vtkPVCompositeKeyFrame&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVCompositeKeyFrame&) VTK_DELETE_FUNCTION;
 };
 
 #endif

@@ -52,19 +52,18 @@ public:
 
   void UpdateIdMap(vtkTypeUInt32* idMapArray, int size);
   void ResetIdMap();
-//BTX
+
 protected:
   vtkPVCatalystSessionCore();
   ~vtkPVCatalystSessionCore();
 
 private:
-  vtkPVCatalystSessionCore(const vtkPVCatalystSessionCore&); // Not implemented
-  void operator=(const vtkPVCatalystSessionCore&);   // Not implemented
+  vtkPVCatalystSessionCore(const vtkPVCatalystSessionCore&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVCatalystSessionCore&) VTK_DELETE_FUNCTION;
 
   class vtkInternal;
   vtkInternal* CatalystInternal;
 
-//ETX
 };
 
 #endif

@@ -18,6 +18,13 @@
 // to a vtkSMProxyProperty. 
 // The Server Mananger configuration defines the proxy types that form this list,
 // while the value of this domain is the list of instances of proxies.
+// Example usage :
+// <ProxyListDomain name="proxy_list">
+//   <Proxy group="implicit_functions"
+//          name="Plane" />
+//   <Group name="implicit_functions"/>
+// </ProxyListDomain>
+
 //
 // .SECTION See Also
 // vtkSMDomain vtkSMProxyProperty
@@ -131,8 +138,8 @@ protected:
   void SetProxies(vtkSMProxy** proxies, unsigned int count);
 
 private:
-  vtkSMProxyListDomain(const vtkSMProxyListDomain&); // Not implemented.
-  void operator=(const vtkSMProxyListDomain&); // Not implemented.
+  vtkSMProxyListDomain(const vtkSMProxyListDomain&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMProxyListDomain&) VTK_DELETE_FUNCTION;
 
   vtkSMProxyListDomainInternals* Internals;
 };

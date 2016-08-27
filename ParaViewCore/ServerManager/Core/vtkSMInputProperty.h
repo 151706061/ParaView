@@ -27,9 +27,7 @@
 #ifndef vtkSMInputProperty_h
 #define vtkSMInputProperty_h
 
-//BTX
 struct vtkSMInputPropertyInternals;
-//ETX
 
 #include "vtkPVServerManagerCoreModule.h" //needed for exports
 #include "vtkSMProxyProperty.h"
@@ -97,8 +95,8 @@ protected:
   int MultipleInput;
   int PortIndex;
 private:
-  vtkSMInputProperty(const vtkSMInputProperty&); // Not implemented
-  void operator=(const vtkSMInputProperty&); // Not implemented
+  vtkSMInputProperty(const vtkSMInputProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMInputProperty&) VTK_DELETE_FUNCTION;
 };
 
 #endif

@@ -113,9 +113,7 @@ public:
   // before a domain check is performed.
   virtual unsigned int GetNumberOfUncheckedElements();
 
-  //BTX
   enum ElementTypes{ INT, DOUBLE, STRING };
-  //ETX
 
   // Description: 
   // Copy all property values.
@@ -170,8 +168,8 @@ protected:
   virtual void SaveStateValues(vtkPVXMLElement* propElement);
 
 private:
-  vtkSMStringVectorProperty(const vtkSMStringVectorProperty&); // Not implemented
-  void operator=(const vtkSMStringVectorProperty&); // Not implemented
+  vtkSMStringVectorProperty(const vtkSMStringVectorProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMStringVectorProperty&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;

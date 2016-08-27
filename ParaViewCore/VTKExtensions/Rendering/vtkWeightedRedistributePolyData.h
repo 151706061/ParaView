@@ -46,7 +46,6 @@ protected:
   vtkWeightedRedistributePolyData();
   ~vtkWeightedRedistributePolyData();
 
-//BTX
   enum
   {
     NUM_LOC_CELLS_TAG  = 70,
@@ -56,15 +55,13 @@ protected:
     SCHED_1_TAG        = 310,
     SCHED_2_TAG        = 311
   };
-//ETX
-
 
   virtual void MakeSchedule (vtkPolyData* input, vtkCommSched*);
   float* Weights;
 
 private:
-  vtkWeightedRedistributePolyData(const vtkWeightedRedistributePolyData&); // Not implemented
-  void operator=(const vtkWeightedRedistributePolyData&); // Not implemented
+  vtkWeightedRedistributePolyData(const vtkWeightedRedistributePolyData&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkWeightedRedistributePolyData&) VTK_DELETE_FUNCTION;
 };
 
 //****************************************************************

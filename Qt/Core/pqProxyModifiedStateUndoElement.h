@@ -53,7 +53,6 @@ public:
   /// UNINITIALIZED.
   void MadeUninitialized(pqProxy*);
 
-//BTX
 protected:
   pqProxyModifiedStateUndoElement();
   ~pqProxyModifiedStateUndoElement();
@@ -62,9 +61,8 @@ protected:
   vtkTypeUInt32 ProxySourceGlobalId;
   bool Reverse;
 private:
-  pqProxyModifiedStateUndoElement(const pqProxyModifiedStateUndoElement&); // Not implemented
-  void operator=(const pqProxyModifiedStateUndoElement&); // Not implemented
-//ETX
+  pqProxyModifiedStateUndoElement(const pqProxyModifiedStateUndoElement&) VTK_DELETE_FUNCTION;
+  void operator=(const pqProxyModifiedStateUndoElement&) VTK_DELETE_FUNCTION;
 };
 
 #endif

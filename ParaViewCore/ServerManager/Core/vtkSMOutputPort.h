@@ -78,7 +78,6 @@ public:
   // Provides access to the source proxy to which the output port belongs.
   vtkSMSourceProxy* GetSourceProxy();
 
-//BTX
 protected:
   vtkSMOutputPort();
   ~vtkSMOutputPort();
@@ -124,8 +123,8 @@ protected:
   bool TemporalDataInformationValid;
 
 private:
-  vtkSMOutputPort(const vtkSMOutputPort&); // Not implemented
-  void operator=(const vtkSMOutputPort&); // Not implemented
+  vtkSMOutputPort(const vtkSMOutputPort&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMOutputPort&) VTK_DELETE_FUNCTION;
 
   friend class vtkSMSourceProxy;
   friend class vtkSMCompoundSourceProxy;
@@ -133,7 +132,7 @@ private:
 
   // Update Pipeline with the given timestep request.
   void UpdatePipeline(double time);
-//ETX
+
 };
 
 #endif

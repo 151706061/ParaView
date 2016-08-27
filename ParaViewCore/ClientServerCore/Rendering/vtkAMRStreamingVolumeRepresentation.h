@@ -136,7 +136,6 @@ public:
   // Forwarded to vtkSmartVolumeMapper.
   void SetRequestedRenderMode(int);
 
-//BTX
 protected:
   vtkAMRStreamingVolumeRepresentation();
   ~vtkAMRStreamingVolumeRepresentation();
@@ -236,8 +235,8 @@ protected:
   int StreamingRequestSize;
 
 private:
-  vtkAMRStreamingVolumeRepresentation(const vtkAMRStreamingVolumeRepresentation&); // Not implemented
-  void operator=(const vtkAMRStreamingVolumeRepresentation&); // Not implemented
+  vtkAMRStreamingVolumeRepresentation(const vtkAMRStreamingVolumeRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkAMRStreamingVolumeRepresentation&) VTK_DELETE_FUNCTION;
 
   // Description:
   // This flag is set to true if the input pipeline is streaming capable in
@@ -254,7 +253,6 @@ private:
   // longer valid.
   bool InStreamingUpdate;
 
-//ETX
 };
 
 #endif

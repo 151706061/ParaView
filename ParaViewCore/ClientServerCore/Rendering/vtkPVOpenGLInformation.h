@@ -41,7 +41,6 @@ public:
   // Merge another information object.
   virtual void AddInformation(vtkPVInformation*);
 
-  //BTX
   // Description:
   // Manage a serialized version of the information.
   virtual void CopyToStream(vtkClientServerStream*);
@@ -54,7 +53,6 @@ public:
   // controls what output port the data-information is gathered from.
   virtual void CopyParametersToStream(vtkMultiProcessStream&) {};
   virtual void CopyParametersFromStream(vtkMultiProcessStream&) {};
-  //ETX
 
   const std::string& GetVendor();
   const std::string& GetVersion();
@@ -77,8 +75,8 @@ protected:
 
 
 private:
-  vtkPVOpenGLInformation(const vtkPVOpenGLInformation&); // Not implemented
-  void operator=(const vtkPVOpenGLInformation&); // Not implemented
+  vtkPVOpenGLInformation(const vtkPVOpenGLInformation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVOpenGLInformation&) VTK_DELETE_FUNCTION;
 
 bool LocalDisplay;
 

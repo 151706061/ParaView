@@ -66,7 +66,7 @@
 #include "vtkPVTrackballRotate.h"
 #include "vtkPVTrackballRotate.h"
 #include "vtkPVTrackballZoom.h"
-#include "vtkPVTrackballZoom.h"
+#include "vtkPVTrackballZoomToMouse.h"
 #include "vtkRenderer.h"
 #include "vtkRenderViewBase.h"
 #include "vtkRenderWindow.h"
@@ -100,6 +100,12 @@
 #include "vtkIceTSynchronizedRenderers.h"
 #endif
 
+#ifdef PARAVIEW_USE_OSPRAY
+#include "vtkOSPRayLightNode.h"
+#include "vtkOSPRayPass.h"
+#include "vtkOSPRayRendererNode.h"
+#endif
+
 #include <assert.h>
 #include <vector>
 #include <set>
@@ -116,6 +122,9 @@ public:
 #else
   vtkNew<vtkValuePasses> ValuePasses;
 #endif
+#ifdef PARAVIEW_USE_OSPRAY
+  vtkNew<vtkOSPRayPass> OSPRayPass;
+#endif
   vtkSmartPointer<vtkRenderPass> SavedRenderPass;
   int FieldAssociation;
   int FieldAttributeType;
@@ -127,6 +136,7 @@ public:
   bool SavedOrientationState;
   bool SavedAnnotationState;
   bool IsInCapture;
+  bool IsInOSPRay;
   vtkNew<vtkFloatArray> ArrayHolder;
   vtkNew<vtkWindowToImageFilter> ZGrabber;
 
@@ -194,6 +204,10 @@ public:
                       int& listLength, int& initialized)
     {
     double total_time = 0;
+    if (listLength <= 0)
+      {
+      return total_time;
+      }
     double *allocatedTimeList = new double[listLength];
     for (int propLoop = 0; propLoop < listLength; ++propLoop)
       {
@@ -298,6 +312,7 @@ vtkPVRenderView::vtkPVRenderView()
   this->Internals->ScalarRange[0] = 0.0;
   this->Internals->ScalarRange[1] = -1.0;
   this->Internals->IsInCapture = false;
+  this->Internals->IsInOSPRay = false;
 
   // non-reference counted, so no worries about reference loops.
   this->Internals->DeliveryManager->SetRenderView(this);
@@ -315,6 +330,7 @@ vtkPVRenderView::vtkPVRenderView()
   this->UseDistributedRenderingForStillRender = false;
   this->UseDistributedRenderingForInteractiveRender = false;
   this->MakingSelection = false;
+  this->PreviousSwapBuffers = 0;
   this->StillRenderImageReductionFactor = 1;
   this->InteractiveRenderImageReductionFactor = 2;
   this->RemoteRenderingThreshold = 0;
@@ -349,6 +365,7 @@ vtkPVRenderView::vtkPVRenderView()
   this->NonDistributedRenderingRequiredLOD = false;
   this->ParallelProjection = 0;
   this->Culler = vtkSmartPointer<vtkPVRendererCuller>::New();
+  this->ForceDataDistributionMode = -1;
 
   this->SynchronizedRenderers = vtkPVSynchronizedRenderer::New();
 
@@ -844,6 +861,10 @@ bool vtkPVRenderView::PrepareSelect(int fieldAssociation)
     }
 
   this->MakingSelection = true;
+  // disable buffer swapping during selection to avoid clobbering the users
+  // view (BUG #16042).
+  this->PreviousSwapBuffers = this->GetRenderWindow()->GetSwapBuffers();
+  this->GetRenderWindow()->SwapBuffersOff();
 
   // Make sure that the representations are up-to-date. This is required since
   // due to delayed-swicth-back-from-lod, the most recent render maybe a LOD
@@ -893,6 +914,7 @@ void vtkPVRenderView::PostSelect(vtkSelection* sel)
   this->SynchronizedRenderers->SetEnabled(false);
 
   this->MakingSelection = false;
+  this->GetRenderWindow()->SetSwapBuffers(this->PreviousSwapBuffers);
 }
 
 //----------------------------------------------------------------------------
@@ -1194,6 +1216,7 @@ void vtkPVRenderView::Update()
   // reset flags that representations set in REQUEST_UPDATE() pass.
   this->DistributedRenderingRequired = false;
   this->NonDistributedRenderingRequired = false;
+  this->ForceDataDistributionMode = -1;
 
   this->Superclass::Update();
 
@@ -1523,6 +1546,12 @@ void vtkPVRenderView::Deliver(int use_lod,
 //----------------------------------------------------------------------------
 int vtkPVRenderView::GetDataDistributionMode(bool use_remote_rendering)
 {
+  if (this->ForceDataDistributionMode >= 0)
+    {
+    // data-distribution mode is being overridden (experimental)
+    return this->ForceDataDistributionMode;
+    }
+
   bool in_tile_display_mode = this->InTileDisplayMode();
   bool in_cave_mode = this->InCaveDisplayMode();
   if (in_cave_mode)
@@ -1774,6 +1803,19 @@ void vtkPVRenderView::SetRequiresDistributedRendering(
 }
 
 //----------------------------------------------------------------------------
+void vtkPVRenderView::SetForceDataDistributionMode(
+  vtkInformation* info, int flag)
+{
+  vtkPVRenderView* self = vtkPVRenderView::SafeDownCast(info->Get(VIEW()));
+  if (!self)
+    {
+    vtkGenericWarningMacro("Missing VIEW().");
+    return;
+    }
+  self->ForceDataDistributionMode = flag < 0? -1 : flag;
+}
+
+//----------------------------------------------------------------------------
 bool vtkPVRenderView::ShouldUseDistributedRendering(
   double geometry_size, bool using_lod)
 {
@@ -1890,8 +1932,16 @@ bool vtkPVRenderView::GetUseOrderedCompositing()
     return false;
     }
 
-  if (!this->NeedsOrderedCompositing || this->MakingSelection)
+  if (!this->NeedsOrderedCompositing)
     {
+    return false;
+    }
+
+  if (this->ForceDataDistributionMode >= 0 &&
+    this->ForceDataDistributionMode != vtkMPIMoveData::PASS_THROUGH)
+    {
+    // for any mode where data is getting collected or cloned, we assume
+    // ordered compositing is not needed.
     return false;
     }
 
@@ -2439,7 +2489,8 @@ void vtkPVRenderView::SetCameraManipulators(vtkPVInteractorStyle* style, const i
     ZOOM=2,
     ROLL=3,
     ROTATE=4,
-    MULTI_ROTATE=5
+    MULTI_ROTATE=5,
+    ZOOM_TO_MOUSE=6
     };
 
   for (int manip=NONE; manip <=CTRL; manip++)
@@ -2464,6 +2515,9 @@ void vtkPVRenderView::SetCameraManipulators(vtkPVInteractorStyle* style, const i
         break;
       case MULTI_ROTATE:
         cameraManipulator = vtkSmartPointer<vtkPVTrackballMultiRotate>::New();
+        break;
+      case ZOOM_TO_MOUSE:
+        cameraManipulator = vtkSmartPointer<vtkPVTrackballZoomToMouse>::New();
         break;
         }
       if (cameraManipulator)
@@ -2713,4 +2767,153 @@ void vtkPVRenderView::CaptureZBuffer()
 vtkFloatArray * vtkPVRenderView::GetCapturedZBuffer()
 {
   return this->Internals->ArrayHolder.GetPointer();
+}
+
+//----------------------------------------------------------------------------
+void vtkPVRenderView::SetEnableOSPRay(bool v)
+{
+#ifdef PARAVIEW_USE_OSPRAY
+  if (this->Internals->IsInOSPRay == v)
+    {
+    return;
+    }
+  this->Internals->IsInOSPRay = v;
+  if (this->Internals->IsInOSPRay)
+    {
+    this->Internals->SavedRenderPass = this->SynchronizedRenderers->GetRenderPass();
+    this->SynchronizedRenderers->SetRenderPass(this->Internals->OSPRayPass.GetPointer());
+    }
+  else
+    {
+    this->SynchronizedRenderers->SetRenderPass(this->Internals->SavedRenderPass);
+    }
+  this->Modified();
+  this->Render(false, false);
+#else
+  if (v)
+    {
+    vtkWarningMacro("Refusing to switch to OSPRay since it is not built into this copy of ParaView");
+    }
+#endif
+}
+
+//----------------------------------------------------------------------------
+bool vtkPVRenderView::GetEnableOSPRay()
+{
+  return this->Internals->IsInOSPRay;
+}
+
+//----------------------------------------------------------------------------
+void vtkPVRenderView::SetShadows(bool v)
+{
+#ifdef PARAVIEW_USE_OSPRAY
+  vtkRenderer *ren = this->GetRenderer();
+  ren->SetUseShadows(v);
+#else
+  (void)v;
+#endif
+}
+
+//----------------------------------------------------------------------------
+bool vtkPVRenderView::GetShadows()
+{
+#ifdef PARAVIEW_USE_OSPRAY
+  vtkRenderer *ren = this->GetRenderer();
+  if (ren->GetUseShadows()==1)
+    {
+    return true;
+    }
+  else
+    {
+    return false;
+    }
+#else
+  return false;
+#endif
+}
+
+//----------------------------------------------------------------------------
+void vtkPVRenderView::SetAmbientOcclusionSamples(int v)
+{
+#ifdef PARAVIEW_USE_OSPRAY
+  vtkRenderer *ren = this->GetRenderer();
+  vtkOSPRayRendererNode::SetAmbientSamples(v, ren);
+#else
+  (void)v;
+#endif
+}
+
+//----------------------------------------------------------------------------
+int vtkPVRenderView::GetAmbientOcclusionSamples()
+{
+#ifdef PARAVIEW_USE_OSPRAY
+  vtkRenderer *ren = this->GetRenderer();
+  return vtkOSPRayRendererNode::GetAmbientSamples(ren);
+#else
+  return 0;
+#endif
+}
+
+//----------------------------------------------------------------------------
+void vtkPVRenderView::SetSamplesPerPixel(int v)
+{
+#ifdef PARAVIEW_USE_OSPRAY
+  vtkRenderer *ren = this->GetRenderer();
+  vtkOSPRayRendererNode::SetSamplesPerPixel(v, ren);
+#else
+  (void)v;
+#endif
+}
+
+//----------------------------------------------------------------------------
+int vtkPVRenderView::GetSamplesPerPixel()
+{
+#ifdef PARAVIEW_USE_OSPRAY
+  vtkRenderer *ren = this->GetRenderer();
+  return vtkOSPRayRendererNode::GetSamplesPerPixel(ren);
+#else
+  return 1;
+#endif
+}
+
+//----------------------------------------------------------------------------
+void vtkPVRenderView::SetMaxFrames(int v)
+{
+#ifdef PARAVIEW_USE_OSPRAY
+  vtkRenderer *ren = this->GetRenderer();
+  vtkOSPRayRendererNode::SetMaxFrames(v, ren);
+#else
+  (void)v;
+#endif
+}
+
+//----------------------------------------------------------------------------
+int vtkPVRenderView::GetMaxFrames()
+{
+#ifdef PARAVIEW_USE_OSPRAY
+  vtkRenderer *ren = this->GetRenderer();
+  return vtkOSPRayRendererNode::GetMaxFrames(ren);
+#else
+  return 1;
+#endif
+}
+
+//----------------------------------------------------------------------------
+void vtkPVRenderView::SetLightScale(double v)
+{
+#ifdef PARAVIEW_USE_OSPRAY
+  vtkOSPRayLightNode::SetLightScale(v);
+#else
+  (void)v;
+#endif
+}
+
+//----------------------------------------------------------------------------
+double vtkPVRenderView::GetLightScale()
+{
+#ifdef PARAVIEW_USE_OSPRAY
+  return vtkOSPRayLightNode::GetLightScale();
+#else
+  return 0.5;
+#endif
 }

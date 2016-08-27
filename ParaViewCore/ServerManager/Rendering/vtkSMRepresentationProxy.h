@@ -94,7 +94,6 @@ public:
     return self? self->SetRepresentationType(type) : false;
     }
 
-//BTX
 protected:
   vtkSMRepresentationProxy();
   ~vtkSMRepresentationProxy();
@@ -122,8 +121,8 @@ protected:
   virtual int LoadXMLState(vtkPVXMLElement* element, vtkSMProxyLocator* locator);
 
 private:
-  vtkSMRepresentationProxy(const vtkSMRepresentationProxy&); // Not implemented
-  void operator=(const vtkSMRepresentationProxy&); // Not implemented
+  vtkSMRepresentationProxy(const vtkSMRepresentationProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMRepresentationProxy&) VTK_DELETE_FUNCTION;
   
   // Description:
   // HACK: Returns true for lookuptable, piecewise function proxies which are
@@ -148,7 +147,7 @@ private:
   void ClearMarkedModified() { this->MarkedModified = false; }
   bool MarkedModified;
   bool VTKRepresentationUpdated;
-//ETX
+
 };
 
 #endif

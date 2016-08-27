@@ -50,20 +50,19 @@ public:
   virtual void SetFilterExpression(int i, const char* expression);
   virtual const char* GetFilterExpression(int i);
 
-//BTX
 protected:
   vtkPVRepresentedArrayListSettings();
   ~vtkPVRepresentedArrayListSettings();
 
 private:
-  vtkPVRepresentedArrayListSettings(const vtkPVRepresentedArrayListSettings&); // Not implemented
-  void operator=(const vtkPVRepresentedArrayListSettings&); // Not implemented
+  vtkPVRepresentedArrayListSettings(const vtkPVRepresentedArrayListSettings&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVRepresentedArrayListSettings&) VTK_DELETE_FUNCTION;
 
   static vtkSmartPointer<vtkPVRepresentedArrayListSettings> Instance;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

@@ -39,15 +39,14 @@ public:
   // source proxy object.
   void CopyData(vtkSMSourceProxy *sourceProxy);
 
-//BTX
 protected:
   vtkSMDataSourceProxy();
   ~vtkSMDataSourceProxy();
 
 private:
-  vtkSMDataSourceProxy(const vtkSMDataSourceProxy&); // Not implemented
-  void operator=(const vtkSMDataSourceProxy&); // Not implemented
-//ETX
+  vtkSMDataSourceProxy(const vtkSMDataSourceProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMDataSourceProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

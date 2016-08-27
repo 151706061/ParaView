@@ -160,14 +160,14 @@ protected:
 
   /// Information results
   //@{
-  //BTX
+
   class vtkInternalDistinctValues;
   vtkInternalDistinctValues* DistinctValues;
-  //ETX
+
   //@}
 
-  vtkPVProminentValuesInformation(const vtkPVProminentValuesInformation&); // Not implemented
-  void operator=(const vtkPVProminentValuesInformation&); // Not implemented
+  vtkPVProminentValuesInformation(const vtkPVProminentValuesInformation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVProminentValuesInformation&) VTK_DELETE_FUNCTION;
 };
 
 #endif

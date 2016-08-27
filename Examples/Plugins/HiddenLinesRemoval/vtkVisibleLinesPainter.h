@@ -37,7 +37,6 @@ public:
   // resources to release. In this case, releases the display lists.
   virtual void ReleaseGraphicsResources(vtkWindow *);
 
-//BTX
 protected:
   vtkVisibleLinesPainter();
   ~vtkVisibleLinesPainter();
@@ -60,12 +59,12 @@ protected:
   bool CanRender(vtkRenderer*, vtkActor*);
 
 private:
-  vtkVisibleLinesPainter(const vtkVisibleLinesPainter&); // Not implemented.
-  void operator=(const vtkVisibleLinesPainter&); // Not implemented.
+  vtkVisibleLinesPainter(const vtkVisibleLinesPainter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkVisibleLinesPainter&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

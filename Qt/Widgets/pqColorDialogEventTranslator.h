@@ -49,6 +49,7 @@ public:
   ~pqColorDialogEventTranslator();
 
   /// Overridden to handle events on QColorDialog.
+  using Superclass::translateEvent;
   virtual bool translateEvent(QObject* Object, QEvent* Event, bool& Error);
 
 private slots:
@@ -56,8 +57,7 @@ private slots:
   void onFinished(int);
 
 private:
-  pqColorDialogEventTranslator(const pqColorDialogEventTranslator&); // Not implemented.
-  void operator=(const pqColorDialogEventTranslator&); // Not implemented.
+  Q_DISABLE_COPY(pqColorDialogEventTranslator)
 };
 
 #endif

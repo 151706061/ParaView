@@ -36,7 +36,6 @@ public:
   // By default, this is 0.
   vtkGetMacro(PortIndex, int);
 
-//BTX
 protected:
   vtkSIInputProperty();
   ~vtkSIInputProperty();
@@ -52,9 +51,9 @@ protected:
   vtkSetMacro(PortIndex, int);
   int PortIndex;
 private:
-  vtkSIInputProperty(const vtkSIInputProperty&); // Not implemented
-  void operator=(const vtkSIInputProperty&); // Not implemented
-//ETX
+  vtkSIInputProperty(const vtkSIInputProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSIInputProperty&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -59,7 +59,6 @@ public:
   void SetScale(const double pos[3]);
   vtkGetVector3Macro(Scale, double);
 
-//BTX
 protected:
   vtkPVBox();
   ~vtkPVBox();
@@ -70,9 +69,9 @@ protected:
   double Scale[3];
 
 private:
-  vtkPVBox(const vtkPVBox&); // Not implemented
-  void operator=(const vtkPVBox&); // Not implemented
-//ETX
+  vtkPVBox(const vtkPVBox&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVBox&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -54,7 +54,6 @@ public:
   // this->GetSessionProxyManager()->GetSession() (with NULL checks).
   vtkSMSession* GetSession();
 
-//BTX
 protected:
   vtkSMDeserializer();
   ~vtkSMDeserializer();
@@ -75,9 +74,9 @@ protected:
   vtkWeakPointer<vtkSMSessionProxyManager> SessionProxyManager;
 
 private:
-  vtkSMDeserializer(const vtkSMDeserializer&); // Not implemented
-  void operator=(const vtkSMDeserializer&); // Not implemented
-//ETX
+  vtkSMDeserializer(const vtkSMDeserializer&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMDeserializer&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

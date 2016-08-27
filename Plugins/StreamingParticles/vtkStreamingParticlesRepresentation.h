@@ -117,7 +117,7 @@ public:
   void SetLookupTable(vtkScalarsToColors*);
   void SetPointSize(double val);
     
-//BTX
+
 protected:
   vtkStreamingParticlesRepresentation();
   ~vtkStreamingParticlesRepresentation();
@@ -223,8 +223,8 @@ protected:
   bool UseOutline;
 
 private:
-  vtkStreamingParticlesRepresentation(const vtkStreamingParticlesRepresentation&); // Not implemented
-  void operator=(const vtkStreamingParticlesRepresentation&); // Not implemented
+  vtkStreamingParticlesRepresentation(const vtkStreamingParticlesRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkStreamingParticlesRepresentation&) VTK_DELETE_FUNCTION;
 
   // Description:
   // This flag is set to true if the input pipeline is streaming capable in
@@ -240,7 +240,7 @@ private:
   // and we need to clear our streaming buffers since the streamed data is no
   // longer valid.
   bool InStreamingUpdate;
-//ETX
+
 };
 
 #endif

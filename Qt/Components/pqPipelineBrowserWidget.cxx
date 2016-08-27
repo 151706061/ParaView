@@ -60,22 +60,48 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 pqPipelineBrowserWidget::pqPipelineBrowserWidget(QWidget* parentObject)
   : Superclass(parentObject)
+  , PipelineModel(new pqPipelineModel(this))
+  , FilteredPipelineModel(new pqPipelineAnnotationFilterModel(this))
 {
-  this->PipelineModel = new pqPipelineModel(this);
-  this->FilteredPipelineModel = new pqPipelineAnnotationFilterModel(this);
-  this->FilteredPipelineModel->setSourceModel(this->PipelineModel);
+  this->configureModel();
 
   // Initialize pqFlatTreeView.
-  this->setModel(this->FilteredPipelineModel);
+  this->Superclass::setModel(this->FilteredPipelineModel);
   this->getHeader()->hide();
   this->getHeader()->moveSection(1, 0);
   this->installEventFilter(this);
   this->setSelectionMode(pqFlatTreeView::ExtendedSelection);
 
+  // Connect internal handlers
+  QObject::connect(this, SIGNAL(clicked(const QModelIndex &)),
+    this, SLOT(handleIndexClicked(const QModelIndex &)));
+  QObject::connect(&pqActiveObjects::instance(), SIGNAL(viewChanged(pqView*)),
+    this, SLOT(setActiveView(pqView*)));
+
+  new pqPipelineModelSelectionAdaptor(this->getSelectionModel());
+}
+
+//-----------------------------------------------------------------------------
+pqPipelineBrowserWidget::~pqPipelineBrowserWidget()
+{
+}
+
+//-----------------------------------------------------------------------------
+void pqPipelineBrowserWidget::configureModel()
+{
+  this->FilteredPipelineModel->setSourceModel(this->PipelineModel);
+
   // Connect the model to the ServerManager model.
-  pqServerManagerModel *smModel = 
+  pqServerManagerModel *smModel =
     pqApplicationCore::instance()->getServerManagerModel();
-  QObject::connect(smModel, SIGNAL(serverAdded(pqServer*)),
+
+  // We connect to `preServerAdded` instead of `serverAdded` signal.
+  // This makes it possible for the pqPipelineModel to become aware of a new
+  // server connection before the
+  // vtkSMParaViewPipelineController::InitializeSession is called by
+  // pqServerManagerModel. Thus if any proxies are created during that call, the
+  // pqPipelineModel knows which session they belong to.
+  QObject::connect(smModel, SIGNAL(preServerAdded(pqServer*)),
     this->PipelineModel, SLOT(addServer(pqServer*)));
   QObject::connect(smModel, SIGNAL(serverRemoved(pqServer*)),
     this->PipelineModel, SLOT(removeServer(pqServer*)));
@@ -92,31 +118,16 @@ pqPipelineBrowserWidget::pqPipelineBrowserWidget(QWidget* parentObject)
     this->PipelineModel,
     SLOT(removeConnection(pqPipelineSource*, pqPipelineSource*, int)));
 
-  QObject::connect(this, SIGNAL(clicked(const QModelIndex &)),
-    this, SLOT(handleIndexClicked(const QModelIndex &)));
-
   // Use the tree view's font as the base for the model's modified
   // font.
   QFont modifiedFont = this->font();
   modifiedFont.setBold(true);
   this->PipelineModel->setModifiedFont(modifiedFont);
 
-  QObject::connect(
-    &pqActiveObjects::instance(), SIGNAL(viewChanged(pqView*)),
-    this, SLOT(setActiveView(pqView*)));
-
-  new pqPipelineModelSelectionAdaptor(this->getSelectionModel());
-
-
   // Make sure the tree items get expanded when new descendents
   // are added.
   QObject::connect(this->PipelineModel, SIGNAL(firstChildAdded(const QModelIndex &)),
       this, SLOT(expandWithModelIndexTranslation(const QModelIndex &)));
-}
-
-//-----------------------------------------------------------------------------
-pqPipelineBrowserWidget::~pqPipelineBrowserWidget()
-{
 }
 
 //-----------------------------------------------------------------------------
@@ -216,11 +227,6 @@ void pqPipelineBrowserWidget::setSelectionVisibility(bool visible)
 void pqPipelineBrowserWidget::setVisibility(bool visible,
   const QModelIndexList& indexes)
 {
-  vtkNew<vtkSMParaViewPipelineControllerWithRendering> controller;
-  pqView* activeView = pqActiveObjects::instance().activeView();
-  vtkSMViewProxy* viewProxy = activeView? activeView->getViewProxy() : NULL;
-  int scalarBarMode = vtkPVGeneralSettings::GetInstance()->GetScalarBarMode();
-
   bool begun_undo_set = false;
 
   foreach (QModelIndex index_, indexes)
@@ -250,41 +256,7 @@ void pqPipelineBrowserWidget::setVisibility(bool visible,
           BEGIN_UNDO_SET(QString("%1 Selected").arg(visible? "Show" : "Hide"));
           }
         }
-      if (pqLiveInsituManager::isInsituServer(port->getServer()))
-        {
-        // we don't need to add an extract for writer parameters proxies.
-        if (! pqLiveInsituManager::isWriterParametersProxy(
-              port->getSourceProxy()))
-          {
-          pqLiveInsituVisualizationManager* mgr =
-            pqLiveInsituManager::managerFromInsitu(port->getServer());
-          if (mgr && mgr->addExtract(port))
-            {
-            // refresh the pipeline browser icon.
-            }
-          }
-        }
-      else
-        {
-        if(visible)
-          {
-          // Make sure the given port is selected specially if we are in
-          // multi-server / catalyst configuration type
-          pqActiveObjects::instance().setActivePort(port);
-          }
-        vtkSMProxy* repr = controller->SetVisibility(
-          port->getSourceProxy(), port->getPortNumber(),
-          viewProxy, visible);
-        // update scalar bars: show new ones if needed. Hiding of scalar bars is
-        // taken care of by vtkSMParaViewPipelineControllerWithRendering (I still
-        // wonder if that's the best thing to do).
-        if (repr && visible &&
-          scalarBarMode == vtkPVGeneralSettings::AUTOMATICALLY_SHOW_AND_HIDE_SCALAR_BARS &&
-          vtkSMPVRepresentationProxy::GetUsingScalarColoring(repr))
-          {
-          vtkSMPVRepresentationProxy::SetScalarBarVisibility(repr, viewProxy, true);
-          }
-        }
+      pqPipelineBrowserWidget::setVisibility(visible, port);
       }
     }
   if (begun_undo_set)
@@ -298,6 +270,54 @@ void pqPipelineBrowserWidget::setVisibility(bool visible,
       view->resetDisplay();
       }
     pqActiveObjects::instance().activeView()->render();
+    }
+}
+
+//----------------------------------------------------------------------------
+void pqPipelineBrowserWidget::setVisibility(bool visible, pqOutputPort* port)
+{
+  if (port)
+    {
+    vtkNew<vtkSMParaViewPipelineControllerWithRendering> controller;
+    pqView* activeView = pqActiveObjects::instance().activeView();
+    vtkSMViewProxy* viewProxy = activeView? activeView->getViewProxy() : NULL;
+    int scalarBarMode = vtkPVGeneralSettings::GetInstance()->GetScalarBarMode();
+
+    if (pqLiveInsituManager::isInsituServer(port->getServer()))
+      {
+      // we don't need to add an extract for writer parameters proxies.
+      if (! pqLiveInsituManager::isWriterParametersProxy(
+        port->getSourceProxy()))
+        {
+        pqLiveInsituVisualizationManager* mgr =
+          pqLiveInsituManager::managerFromInsitu(port->getServer());
+        if (mgr && mgr->addExtract(port))
+          {
+          // refresh the pipeline browser icon.
+          }
+        }
+      }
+    else
+      {
+      if(visible)
+        {
+        // Make sure the given port is selected specially if we are in
+        // multi-server / catalyst configuration type
+        pqActiveObjects::instance().setActivePort(port);
+        }
+      vtkSMProxy* repr = controller->SetVisibility(
+        port->getSourceProxy(), port->getPortNumber(),
+        viewProxy, visible);
+      // update scalar bars: show new ones if needed. Hiding of scalar bars is
+      // taken care of by vtkSMParaViewPipelineControllerWithRendering (I still
+      // wonder if that's the best thing to do).
+      if (repr && visible &&
+        scalarBarMode == vtkPVGeneralSettings::AUTOMATICALLY_SHOW_AND_HIDE_SCALAR_BARS &&
+        vtkSMPVRepresentationProxy::GetUsingScalarColoring(repr))
+        {
+        vtkSMPVRepresentationProxy::SetScalarBarVisibility(repr, viewProxy, true);
+        }
+      }
     }
 }
 
@@ -334,7 +354,7 @@ const QModelIndex pqPipelineBrowserWidget::pipelineModelIndex(const QModelIndex&
   const QSortFilterProxyModel* filterModel = qobject_cast<const QSortFilterProxyModel*>(index.model());
   assert("Invalid model used inside index" && filterModel);
 
-  // Make a recusrive call to support unknown filter depth
+  // Make a recursive call to support unknown filter depth
   return this->pipelineModelIndex(filterModel->mapToSource(index));
 }
 
@@ -357,4 +377,17 @@ const pqPipelineModel* pqPipelineBrowserWidget::getPipelineModel(const QModelInd
 void pqPipelineBrowserWidget::expandWithModelIndexTranslation(const QModelIndex &index)
 {
   this->expand(this->FilteredPipelineModel->mapFromSource(index));
+}
+
+//-----------------------------------------------------------------------------
+void pqPipelineBrowserWidget::setModel(pqPipelineModel* model)
+{
+  if (!model)
+    return;
+
+  delete this->PipelineModel;
+  this->PipelineModel = model;
+  this->PipelineModel->setParent(this);
+
+  this->configureModel();
 }

@@ -16,7 +16,7 @@
 // components available in a particular data array.
 // .SECTION Description
 // vtkSMNumberOfComponentsDomain is used for properties that allow the user to
-// choose the component number to process for the choosen array.
+// choose the component number (or associated name) to process for the choosen array.
 // It needs two required properties with following functions:
 // * Input -- input property for the filter.
 // * ArraySelection -- string vector property used to select the array.
@@ -26,16 +26,16 @@
 #define vtkSMNumberOfComponentsDomain_h
 
 #include "vtkPVServerManagerCoreModule.h" //needed for exports
-#include "vtkSMIntRangeDomain.h"
+#include "vtkSMEnumerationDomain.h"
 
 class vtkSMSourceProxy;
 class vtkSMInputArrayDomain;
 
-class VTKPVSERVERMANAGERCORE_EXPORT vtkSMNumberOfComponentsDomain : public vtkSMIntRangeDomain
+class VTKPVSERVERMANAGERCORE_EXPORT vtkSMNumberOfComponentsDomain : public vtkSMEnumerationDomain
 {
 public:
   static vtkSMNumberOfComponentsDomain* New();
-  vtkTypeMacro(vtkSMNumberOfComponentsDomain, vtkSMIntRangeDomain);
+  vtkTypeMacro(vtkSMNumberOfComponentsDomain, vtkSMEnumerationDomain);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   // Description:
@@ -45,7 +45,6 @@ public:
   // only the first component of the array.
   virtual void Update(vtkSMProperty* prop);
 
-//BTX
 protected:
   vtkSMNumberOfComponentsDomain();
   ~vtkSMNumberOfComponentsDomain();
@@ -57,9 +56,9 @@ protected:
     int outputport);
 
 private:
-  vtkSMNumberOfComponentsDomain(const vtkSMNumberOfComponentsDomain&); // Not implemented
-  void operator=(const vtkSMNumberOfComponentsDomain&); // Not implemented
-//ETX
+  vtkSMNumberOfComponentsDomain(const vtkSMNumberOfComponentsDomain&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMNumberOfComponentsDomain&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

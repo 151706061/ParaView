@@ -38,14 +38,12 @@ public:
   vtkTypeMacro(vtkPVCameraCueManipulator, vtkPVKeyFrameCueManipulator);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-  //BTX
   enum Modes
     {
     CAMERA,
     PATH,
     FOLLOW_DATA
     };
-  //ETX
 
   // Description:
   // This manipulator has three modes:
@@ -83,8 +81,8 @@ protected:
   vtkCameraInterpolator* CameraInterpolator;
   vtkSMProxy* DataSourceProxy;
 private:
-  vtkPVCameraCueManipulator(const vtkPVCameraCueManipulator&); // Not implemented.
-  void operator=(const vtkPVCameraCueManipulator&); // Not implemented.
+  vtkPVCameraCueManipulator(const vtkPVCameraCueManipulator&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVCameraCueManipulator&) VTK_DELETE_FUNCTION;
 
 };
 

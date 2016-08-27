@@ -73,12 +73,11 @@ public:
   virtual int Compress();
   virtual int Decompress();
 
-  //BTX
   // Description:
   // Serialize/Restore compressor configuration (but not the data) into the stream.
   virtual void SaveConfiguration(vtkMultiProcessStream *stream);
   virtual bool RestoreConfiguration(vtkMultiProcessStream *stream);
-  //ETX
+
   virtual const char *SaveConfiguration();
   virtual const char *RestoreConfiguration(const char *stream);
 
@@ -91,8 +90,8 @@ protected:
   int SquirtLevel;
 
 private:
-  vtkSquirtCompressor(const vtkSquirtCompressor&); // Not implemented.
-  void operator=(const vtkSquirtCompressor&); // Not implemented.
+  vtkSquirtCompressor(const vtkSquirtCompressor&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSquirtCompressor&) VTK_DELETE_FUNCTION;
 };
 
 

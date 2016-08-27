@@ -29,7 +29,6 @@ public:
   vtkTypeMacro(vtkSMInsituStateLoader, vtkSMStateLoader);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkSMInsituStateLoader();
   ~vtkSMInsituStateLoader();
@@ -39,9 +38,9 @@ protected:
   virtual vtkSMProxy* NewProxy(vtkTypeUInt32 id, vtkSMProxyLocator* locator);
 
 private:
-  vtkSMInsituStateLoader(const vtkSMInsituStateLoader&); // Not implemented
-  void operator=(const vtkSMInsituStateLoader&); // Not implemented
-//ETX
+  vtkSMInsituStateLoader(const vtkSMInsituStateLoader&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMInsituStateLoader&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

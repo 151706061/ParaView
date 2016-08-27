@@ -47,7 +47,6 @@ public:
   // user settings.
   virtual void ConfigureCompressor(const char *stream);
 
-//BTX
 protected:
   vtkPVClientServerSynchronizedRenderers();
   ~vtkPVClientServerSynchronizedRenderers();
@@ -73,9 +72,9 @@ protected:
   vtkImageCompressor* Compressor;
   bool LossLessCompression;
 private:
-  vtkPVClientServerSynchronizedRenderers(const vtkPVClientServerSynchronizedRenderers&); // Not implemented
-  void operator=(const vtkPVClientServerSynchronizedRenderers&); // Not implemented
-//ETX
+  vtkPVClientServerSynchronizedRenderers(const vtkPVClientServerSynchronizedRenderers&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVClientServerSynchronizedRenderers&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

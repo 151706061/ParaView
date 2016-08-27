@@ -112,8 +112,6 @@ set (Module_SRCS
   pqCrashRecoveryBehavior.h
   pqCreateCustomFilterReaction.cxx
   pqCreateCustomFilterReaction.h
-  pqCubeAxesPropertyWidget.cxx
-  pqCubeAxesPropertyWidget.h
   pqCylinderPropertyWidget.cxx
   pqCylinderPropertyWidget.h
   pqDataQueryReaction.cxx
@@ -138,6 +136,10 @@ set (Module_SRCS
   pqEditScalarBarReaction.h
   pqEnableWidgetDecorator.cxx
   pqEnableWidgetDecorator.h
+  pqExampleVisualizationsDialog.cxx
+  pqExampleVisualizationsDialog.h
+  pqExampleVisualizationsDialogReaction.cxx
+  pqExampleVisualizationsDialogReaction.h
   pqExportReaction.cxx
   pqExportReaction.h
   pqFileNamePropertyWidget.cxx
@@ -156,6 +158,8 @@ set (Module_SRCS
   pqHandlePropertyWidget.h
   pqHelpReaction.cxx
   pqHelpReaction.h
+  pqHideAllReaction.cxx
+  pqHideAllReaction.h
   pqIgnoreSourceTimeReaction.cxx
   pqIgnoreSourceTimeReaction.h
   pqImageCompressorWidget.cxx
@@ -182,6 +186,10 @@ set (Module_SRCS
   pqLoadRestoreWindowLayoutReaction.h
   pqLoadStateReaction.cxx
   pqLoadStateReaction.h
+  pqLockPanelsBehavior.cxx
+  pqLockPanelsBehavior.h
+  pqLockPanelsReaction.cxx
+  pqLockPanelsReaction.h
   pqMainControlsToolbar.cxx
   pqMainControlsToolbar.h
   pqManageCustomFiltersReaction.cxx
@@ -198,6 +206,8 @@ set (Module_SRCS
   pqObjectPickingBehavior.h
   pqOpacityTableModel.cxx
   pqOpacityTableModel.h
+  pqOSPRayHidingDecorator.cxx
+  pqOSPRayHidingDecorator.h
   pqPVAnimationWidget.cxx
   pqPVAnimationWidget.h
   pqPVApplicationCore.cxx
@@ -270,6 +280,8 @@ set (Module_SRCS
   pqSpherePropertyWidget.h
   pqSplinePropertyWidget.cxx
   pqSplinePropertyWidget.h
+  pqSpreadSheetViewDecorator.cxx
+  pqSpreadSheetViewDecorator.h
   pqSpreadSheetVisibilityBehavior.cxx
   pqSpreadSheetVisibilityBehavior.h
   pqStandardArrayColorMapsBehavior.cxx
@@ -308,6 +320,8 @@ set (Module_SRCS
   pqViewStreamingBehavior.h
   pqViewTypePropertyWidget.cxx
   pqViewTypePropertyWidget.h
+  pqWelcomeDialog.cxx
+  pqWelcomeDialog.h
   pqYoungsMaterialPropertyWidget.cxx
   pqYoungsMaterialPropertyWidget.h
 )
@@ -354,7 +368,6 @@ set (Module_MOC_HDRS
   pqCopyReaction.h
   pqCrashRecoveryBehavior.h
   pqCreateCustomFilterReaction.h
-  pqCubeAxesPropertyWidget.h
   pqCylinderPropertyWidget.h
   pqDataQueryReaction.h
   pqDataTimeStepBehavior.h
@@ -367,6 +380,8 @@ set (Module_MOC_HDRS
   pqEditColorMapReaction.h
   pqEditScalarBarReaction.h
   pqEnableWidgetDecorator.h
+  pqExampleVisualizationsDialog.h
+  pqExampleVisualizationsDialogReaction.h
   pqExportReaction.h
   pqFileNamePropertyWidget.h
   pqFiltersMenuReaction.h
@@ -376,6 +391,7 @@ set (Module_MOC_HDRS
   pqGlyphScaleFactorPropertyWidget.h
   pqHandlePropertyWidget.h
   pqHelpReaction.h
+  pqHideAllReaction.h
   pqIgnoreSourceTimeReaction.h
   pqImageCompressorWidget.h
   pqImplicitPlanePropertyWidget.h
@@ -389,6 +405,8 @@ set (Module_MOC_HDRS
   pqLoadPaletteReaction.h
   pqLoadRestoreWindowLayoutReaction.h
   pqLoadStateReaction.h
+  pqLockPanelsBehavior.h
+  pqLockPanelsReaction.h
   pqMainControlsToolbar.h
   pqManageCustomFiltersReaction.h
   pqManageLinksReaction.h
@@ -397,6 +415,7 @@ set (Module_MOC_HDRS
   pqModelTransformSupportBehavior.h
   pqObjectPickingBehavior.h
   pqOpacityTableModel.h
+  pqOSPRayHidingDecorator.h
   pqPVAnimationWidget.h
   pqPVApplicationCore.h
   pqParaViewBehaviors.h
@@ -432,6 +451,7 @@ set (Module_MOC_HDRS
   pqSourcesMenuReaction.h
   pqSpherePropertyWidget.h
   pqSplinePropertyWidget.h
+  pqSpreadSheetViewDecorator.h
   pqSpreadSheetVisibilityBehavior.h
   pqStandardArrayColorMapsBehavior.h
   pqStandardPropertyWidgetInterface.h
@@ -451,6 +471,7 @@ set (Module_MOC_HDRS
   pqViewMenuManager.h
   pqViewStreamingBehavior.h
   pqViewTypePropertyWidget.h
+  pqWelcomeDialog.h
   pqYoungsMaterialPropertyWidget.h
 )
 
@@ -484,6 +505,7 @@ set (Module_UI_FILES
   Resources/UI/pqDefaultMainWindow.ui
   Resources/UI/pqDoubleRangeSliderPropertyWidget.ui
   Resources/UI/pqEditMenuBuilder.ui
+  Resources/UI/pqExampleVisualizationsDialog.ui
   Resources/UI/pqFileMenuBuilder.ui
   Resources/UI/pqFontPropertyWidget.ui
   Resources/UI/pqHandlePropertyWidget.ui
@@ -497,10 +519,12 @@ set (Module_UI_FILES
   Resources/UI/pqSeriesEditorPropertyWidget.ui
   Resources/UI/pqSpherePropertyWidget.ui
   Resources/UI/pqSplinePropertyWidget.ui
+  Resources/UI/pqSpreadSheetViewDecorator.ui
   Resources/UI/pqTextLocationWidget.ui
   Resources/UI/pqTimeInspectorWidget.ui
   Resources/UI/pqTransferFunctionWidgetPropertyWidgetDialog.ui
   Resources/UI/pqVCRToolbar.ui
+  Resources/UI/pqWelcomeDialog.ui
   Resources/UI/pqYoungsMaterialPropertyWidget.ui
 )
 
@@ -508,25 +532,18 @@ set (Module_RESOURCE_FILES
   Resources/pqApplicationComponents.qrc
 )
 
+include(ParaViewQt)
+pv_find_package_qt(qt_private_targets REQUIRED QUIET
+  QT4_COMPONENTS QtHelp
+  QT5_COMPONENTS Widgets Help)
+
 # not sure this is the best way, but "moc" is complaining about
 # interfaces defined under Components and this seems like the only way to fix
 # that issue.
-if (PARAVIEW_QT_VERSION VERSION_GREATER "4")
-  qt5_wrap_cpp(__Module_MOC_SRCS ${Module_MOC_HDRS}
-    OPTIONS -I ${CMAKE_CURRENT_SOURCE_DIR}/../Components)
-else ()
-  qt4_wrap_cpp(__Module_MOC_SRCS ${Module_MOC_HDRS}
-    OPTIONS -I ${CMAKE_CURRENT_SOURCE_DIR}/../Components)
-endif()
-
-
-if (PARAVIEW_QT_VERSION VERSION_GREATER "4")
-  qt5_wrap_ui(__Module_UI_SRCS ${Module_UI_FILES})
-  qt5_add_resources(__Module_RESOURCE_SRCS ${Module_RESOURCE_FILES})
-else ()
-  qt4_wrap_ui(__Module_UI_SRCS ${Module_UI_FILES})
-  qt4_add_resources(__Module_RESOURCE_SRCS ${Module_RESOURCE_FILES})
-endif()
+pv_qt_wrap_cpp(__Module_MOC_SRCS ${Module_MOC_HDRS}
+  OPTIONS -I ${CMAKE_CURRENT_SOURCE_DIR}/../Components)
+pv_qt_wrap_ui(__Module_UI_SRCS ${Module_UI_FILES})
+pv_qt_add_resources(__Module_RESOURCE_SRCS ${Module_RESOURCE_FILES})
 
 SOURCE_GROUP("Resources" FILES
   ${Module_UI_FILES}
@@ -545,6 +562,8 @@ vtk_module_library(pqApplicationComponents
   ${__Module_RESOURCE_SRCS}
   ${__Module_MOC_SRCS}
   ${__Module_UI_SRCS})
+target_link_libraries(pqApplicationComponents
+  LINK_PRIVATE ${qt_private_targets})
 
 #IF (NOT PV_INSTALL_NO_DEVELOPMENT)
 #  # Headers

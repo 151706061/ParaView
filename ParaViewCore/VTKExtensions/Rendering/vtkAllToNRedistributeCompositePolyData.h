@@ -39,7 +39,6 @@ public:
   vtkSetMacro(NumberOfProcesses, int);
   vtkGetMacro(NumberOfProcesses, int);
 
-//BTX
 protected:
   vtkAllToNRedistributeCompositePolyData();
   ~vtkAllToNRedistributeCompositePolyData();
@@ -62,9 +61,9 @@ protected:
   int NumberOfProcesses;
   vtkMultiProcessController* Controller;
 private:
-  vtkAllToNRedistributeCompositePolyData(const vtkAllToNRedistributeCompositePolyData&); // Not implemented
-  void operator=(const vtkAllToNRedistributeCompositePolyData&); // Not implemented
-//ETX
+  vtkAllToNRedistributeCompositePolyData(const vtkAllToNRedistributeCompositePolyData&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkAllToNRedistributeCompositePolyData&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

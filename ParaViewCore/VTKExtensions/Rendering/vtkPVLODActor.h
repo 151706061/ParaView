@@ -29,6 +29,7 @@
 #include "vtkPVVTKExtensionsRenderingModule.h" // needed for export macro
 
 class vtkMapper;
+class vtkPiecewiseFunction;
 
 class VTKPVVTKEXTENSIONSRENDERING_EXPORT vtkPVLODActor : public vtkActor
 {
@@ -78,9 +79,17 @@ public:
 
   // Description:
   // When set, LODMapper, if present it used, otherwise the regular mapper is
-  // used.
-  vtkSetMacro(EnableLOD, int);
+  // used. We deliberately don't change the MTime of the actor when toggling
+  // EnableLOD state to avoid rebuilding of rendering data structures.
+  void SetEnableLOD(int val) { this->EnableLOD = val; }
   vtkGetMacro(EnableLOD, int);
+
+  // Description:
+  // For OSPRay controls sizing of implicit spheres (points) and
+  // cylinders (lines)
+  virtual void SetEnableScaling(int v);
+  virtual void SetScalingArrayName(const char*);
+  virtual void SetScalingFunction(vtkPiecewiseFunction *pwf);
 
 protected:
   vtkPVLODActor();
@@ -93,8 +102,8 @@ protected:
   int EnableLOD;
 
 private:
-  vtkPVLODActor(const vtkPVLODActor&); // Not implemented.
-  void operator=(const vtkPVLODActor&); // Not implemented.
+  vtkPVLODActor(const vtkPVLODActor&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVLODActor&) VTK_DELETE_FUNCTION;
 };
 
 #endif

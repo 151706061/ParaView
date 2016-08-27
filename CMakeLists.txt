@@ -28,19 +28,7 @@
 #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 #==========================================================================
-cmake_minimum_required(VERSION 2.8.8 FATAL_ERROR)
-
-# Link to Qt5's WinMain automatically (in executables).
-if (POLICY CMP0020)
-  cmake_policy(SET CMP0020 NEW)
-endif ()
-
-# Set a consistent MACOSX_RPATH default across all CMake versions.
-# When CMake 2.8.12 is required, change this default to 1.
-# When CMake 3.0.0 is required, remove this block (see CMP0042).
-if(NOT DEFINED CMAKE_MACOSX_RPATH)
-  set(CMAKE_MACOSX_RPATH 0)
-endif()
+cmake_minimum_required(VERSION 3.3)
 
 project(ParaView)
 
@@ -93,13 +81,10 @@ include(CMakeDependentOption)
 # Setup ParaView Environment
 #------------------------------------------------------------------------------
 # Determine ParaView Source Version
-set (PARAVIEW_VERSION_MAJOR 5)
-set (PARAVIEW_VERSION_MINOR 0)
-set (PARAVIEW_VERSION_PATCH 1)
-set (PARAVIEW_VERSION_PATCH_EXTRA "RC1")
-set (PARAVIEW_VERSION "5.0")
-set (PARAVIEW_VERSION_FULL "5.0.1-RC1")
-
+# Hardcoded version variables are readin from a separate file. This makes it
+# easier to have a script to update version numbers automatically.
+file(STRINGS version.txt version_txt)
+extract_version_components("${version_txt}" "PARAVIEW")
 determine_version(${ParaView_SOURCE_DIR} ${GIT_EXECUTABLE} "PARAVIEW")
 
 # Setup some cross compiling related things.
@@ -213,6 +198,7 @@ option(PARAVIEW_BUILD_QT_GUI "Enable ParaView Qt-based client" ON)
 option(PARAVIEW_USE_DAX "Build ParaView with Dax many-core filters" OFF)
 option(PARAVIEW_USE_MPI "Enable MPI support for parallel computing" OFF)
 option(PARAVIEW_USE_PISTON "Build ParaView with Piston GPGPU filters" OFF)
+option(PARAVIEW_USE_OSPRAY "Build ParaView with OSPRay Ray Traced rendering" OFF)
 option(PARAVIEW_USE_VISITBRIDGE "Build ParaView with VisIt readers." OFF)
 
 # Xdmf3 is not ON by default since it depends on Boost.
@@ -260,7 +246,7 @@ mark_as_advanced(PARAVIEW_USE_QTWEBKIT)
 
 # This option controls the behavior of the build_help_project function.  If it is
 # on then the .qch file will be generated, if not then the function does nothing.
-cmake_dependent_option(PARAVIEW_ENABLE_EMBEDDED_DOCUMENTATION 
+cmake_dependent_option(PARAVIEW_ENABLE_EMBEDDED_DOCUMENTATION
        "Build the ParaView help menu documentation for ParaView and its plugins" ON
        "PARAVIEW_BUILD_QT_GUI" ON)
 mark_as_advanced(PARAVIEW_ENABLE_EMBEDDED_DOCUMENTATION)
@@ -396,27 +382,19 @@ if (UNIX AND NOT APPLE)
   set(VTK_BUILD_FORWARDING_EXECUTABLES TRUE)
 endif()
 
-# ParaViewWeb on Windows needs win32api which is not provided by default
-# For now the default behavior would be to disable it on Windows build
+set(paraview_web_default ON)
 if (WIN32)
-  set(PARAVIEW_ENABLE_WEB OFF CACHE BOOL "" FORCE)
-else()
-  cmake_dependent_option(PARAVIEW_ENABLE_WEB "Enable/Disable web support" ON
-    "PARAVIEW_ENABLE_PYTHON" OFF)
-endif()
+  include(VTK/CMake/FindPythonModules.cmake)
+  find_python_module(win32api have_pywin32)
+  set(paraview_web_default "${have_pywin32}")
+endif ()
+cmake_dependent_option(PARAVIEW_ENABLE_WEB "Enable/Disable web support" "${paraview_web_default}"
+  "PARAVIEW_ENABLE_PYTHON" OFF)
 mark_as_advanced(PARAVIEW_ENABLE_WEB)
 
 if (PARAVIEW_ENABLE_WEB)
   # Request vtkParaViewWeb module
   list(APPEND vtkParaViewWeb_REQUEST_BY "Option PARAVIEW_ENABLE_WEB")
-endif()
-
-option(PARAVIEW_BUILD_WEB_DOCUMENTATION "Enable/Disable web documentation" OFF)
-mark_as_advanced(PARAVIEW_BUILD_WEB_DOCUMENTATION)
-
-if (PARAVIEW_BUILD_WEB_DOCUMENTATION)
-  # Request vtkParaViewWebDocumentation module.
-  list(APPEND vtkParaViewWebDocumentation_REQUEST_BY "Option PARAVIEW_BUILD_WEB_DOCUMENTATION")
 endif()
 
 option(PARAVIEW_ENABLE_CATALYST "Enable Catalyst CoProcessing modules" ON)
@@ -465,53 +443,15 @@ if (NOT PARAVIEW_INSTALL_DEVELOPMENT_FILES)
   set (VTK_INSTALL_NO_DEVELOPMENT TRUE)
 endif()
 
-# Setup Qt state
-if (PARAVIEW_ENABLE_QT_SUPPORT)
-  # need to set up Qt stuff here because there are Qt dependencies before
-  # ParaView requires this minimum version of Qt, and let's do it here before
-  # our first call to FindQt4.cmake
-  set (QT_REQUIRED TRUE)
-
-  include (ParaViewQtVersion)
-  if (PARAVIEW_QT_VERSION VERSION_GREATER "4")
-    set (Qt5_FIND_COMPONENTS
-      Help
-      Network
-      UiTools
-      Widgets)
-    if(PARAVIEW_USE_QTWEBKIT)
-      list(APPEND Qt5_FIND_COMPONENTS WebKitWidgets)
-    endif()
-    include (ParaViewQt5)
-    if (NOT QT5_FOUND)
-      message( SEND_ERROR "Qt ${QT_MIN_VERSION} or greater not found. "
-        "Please set the Qt5Core_DIR variable." )
-    endif ()
-  else ()
-    find_package (Qt4)
-    if (NOT QT4_FOUND)
-      message (SEND_ERROR "Qt ${QT_MIN_VERSION} or greater not found. "
-        "Please set the QT_QMAKE_EXECUTABLE variable.")
-    else ()
-      # check is Qtversion  is 4.8.*. If so, we are good. Otherwise we will post a
-      # warning of versions (>= 4.7 && < 4.8). However we report errors for any
-      # version less than 4.7
-      string(REGEX MATCH "^4\\.[8]\\.[0-9]+" qt_version_match "${QTVERSION}")
-      if (NOT qt_version_match)
-        string(REGEX MATCH "^4\\.[0-6]+\\.[0-9]+" qt_version46_x_tmp "${QTVERSION}")
-        if (qt_version46_x_tmp)
-          message(SEND_ERROR "Qt ${QTVERSION} not supported. "
-            "Please use ${QT_OFFICIAL_VERSION} (you may need to clean your dirtied cache)."
-            "Minium required version is ${QT_MIN_VERSION}.")
-        else ()
-          message(WARNING "Warning: You are using Qt ${QTVERSION}. "
-            "Officially supported version is Qt ${QT_OFFICIAL_VERSION}")
-        endif ()
-      endif ()
-    endif ()
-  endif ()
-endif ()
-SET(PARAVIEW_QT_QMAKE_EXECUTABLE ${QT_QMAKE_EXECUTABLE})
+# Setup Qt state. We just do a quick top level check for Qt's exisiting here.
+# We let individual modules find_package(Qt..) as needed.
+if(PARAVIEW_ENABLE_QT_SUPPORT)
+  set(PARAVIEW_QT_VERSION "4" CACHE STRING  "Select Qt verision to use 4 or 5")
+  set_property(CACHE PARAVIEW_QT_VERSION PROPERTY STRINGS 4 5)
+  # Force VTK to use the same Qt version as ParaView.
+  set(VTK_QT_VERSION "${PARAVIEW_QT_VERSION}" CACHE INTERNAL "")
+  set(VTK_BUILD_QT_DESIGNER_PLUGIN OFF CACHE INTERNAL "")
+endif()
 
 # Setup testing.
 if (BUILD_TESTING)
@@ -647,20 +587,6 @@ add_custom_target(ParaViewDoc)
 
 if (PARAVIEW_ENABLE_WEB)
   list (APPEND PARAVIEW_MODULE_ROOTS Web)
-
-  set (vtkWeb_WWW_DEST ${PARAVIEW_WWW_DIR})
-
-  if (PARAVIEW_BUILD_WEB_DOCUMENTATION)
-    list (APPEND ParaViewModulesDirs Web/Documentation)
-  endif()
-
-  # Setup install rules for Web Applications
-  install(
-     DIRECTORY "${PARAVIEW_WWW_DIR}"
-     DESTINATION "${VTK_INSTALL_DATA_DIR}"
-     USE_SOURCE_PERMISSIONS
-     COMPONENT Runtime
-  )
 endif()
 
 include(ParaViewModuleTop)

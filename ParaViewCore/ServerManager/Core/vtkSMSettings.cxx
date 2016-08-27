@@ -510,7 +510,7 @@ public:
       if (jsonValue.isArray())
         {
         // Reset to null so that we aren't setting a value on a Json::Value array
-        jsonValue = Json::Value::null;
+        jsonValue = Json::Value::nullRef;
         this->Modified();
         }
 
@@ -525,7 +525,7 @@ public:
       if (!jsonValue.isArray() && !jsonValue.isNull())
         {
         // Reset to null so that the jsonValue.resize() operation works
-        jsonValue = Json::Value::null;
+        jsonValue = Json::Value::nullRef;
         this->Modified();
         }
 
@@ -554,7 +554,7 @@ public:
       if (jsonValue.isArray())
         {
         // Reset to null so that we aren't setting a value on a Json::Value array
-        jsonValue = Json::Value::null;
+        jsonValue = Json::Value::nullRef;
         this->Modified();
         }
 
@@ -569,7 +569,7 @@ public:
       if (!jsonValue.isArray() && !jsonValue.isNull())
         {
         // Reset to null so that the jsonValue.resize() operation works
-        jsonValue = Json::Value::null;
+        jsonValue = Json::Value::nullRef;
         this->Modified();
         }
 
@@ -598,7 +598,7 @@ public:
       if (jsonValue.isArray())
         {
         // Reset to null so that we aren't setting a value on a Json::Value array
-        jsonValue = Json::Value::null;
+        jsonValue = Json::Value::nullRef;
         this->Modified();
         }
 
@@ -613,7 +613,7 @@ public:
       if (!jsonValue.isArray() && !jsonValue.isNull())
         {
         // Reset to null so that the jsonValue.resize() operation works
-        jsonValue = Json::Value::null;
+        jsonValue = Json::Value::nullRef;
         this->Modified();
         }
 

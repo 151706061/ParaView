@@ -44,7 +44,6 @@ public:
 
   void SetController(vtkMultiProcessController *controller);
 
-//BTX
 protected:
   vtkIntegrateAttributes();
   ~vtkIntegrateAttributes();
@@ -113,8 +112,8 @@ protected:
   void ReceivePiece (vtkUnstructuredGrid *mergeTo, int fromId);
 
 private:
-  vtkIntegrateAttributes(const vtkIntegrateAttributes&);  // Not implemented.
-  void operator=(const vtkIntegrateAttributes&);  // Not implemented.
+  vtkIntegrateAttributes(const vtkIntegrateAttributes&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkIntegrateAttributes&) VTK_DELETE_FUNCTION;
 
   class vtkFieldList;
   vtkFieldList* CellFieldList;
@@ -153,7 +152,7 @@ public:
      IntegrateAttrInfo=2000,
      IntegrateAttrData
    };
-//ETX
+
 };
 
 #endif

@@ -70,8 +70,6 @@ public:
   bool IsPrototype() {return this->Prototype;}
   vtkSetMacro(Prototype, bool);
 
-//BTX
-
   // Description:
   // This method return the full object state that can be used to create that
   // object from scratch.
@@ -157,11 +155,11 @@ protected:
   vtkTypeUInt32 GetFilteredLocation();
 
 private:
-  vtkSMRemoteObject(const vtkSMRemoteObject&); // Not implemented
-  void operator=(const vtkSMRemoteObject&);       // Not implemented
+  vtkSMRemoteObject(const vtkSMRemoteObject&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMRemoteObject&) VTK_DELETE_FUNCTION;
 
   char* GlobalIDString;
-//ETX
+
 };
 
 /// This defines a manipulator for the vtkClientServerStream that can be used

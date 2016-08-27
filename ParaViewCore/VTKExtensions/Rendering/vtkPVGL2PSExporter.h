@@ -47,7 +47,6 @@ public:
   vtkGetMacro(ExcludeCubeAxesActorsFromRasterization, int)
   vtkBooleanMacro(ExcludeCubeAxesActorsFromRasterization, int)
 
-//BTX
 protected:
   vtkPVGL2PSExporter();
   ~vtkPVGL2PSExporter();
@@ -58,9 +57,9 @@ protected:
   int ExcludeCubeAxesActorsFromRasterization;
 
 private:
-  vtkPVGL2PSExporter(const vtkPVGL2PSExporter&); // Not implemented
-  void operator=(const vtkPVGL2PSExporter&); // Not implemented
-//ETX
+  vtkPVGL2PSExporter(const vtkPVGL2PSExporter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVGL2PSExporter&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

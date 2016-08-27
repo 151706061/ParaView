@@ -49,15 +49,12 @@ public:
   vtkGetMacro(VolumeFractionSurfaceValue, double);
   vtkSetMacro(VolumeFractionSurfaceValue, double);
 
-  //BTX
   virtual int RequestData(vtkInformation*, vtkInformationVector**,
                           vtkInformationVector*);
 
 private:
-  vtkPVAMRDualClip(const vtkPVAMRDualClip&);  // Not implemented.
-  void operator=(const vtkPVAMRDualClip&);    // Not implemented.
-
-  //ETX
+  vtkPVAMRDualClip(const vtkPVAMRDualClip&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVAMRDualClip&) VTK_DELETE_FUNCTION;
 
 protected:
 

@@ -77,7 +77,6 @@ public:
   // Add/Remove series names to hide by default. These are regular expressions.
   static void AddSeriesVisibilityDefault(const char* regex, bool value);
 
-//BTX
 protected:
   vtkSMChartSeriesSelectionDomain();
   ~vtkSMChartSeriesSelectionDomain();
@@ -137,8 +136,8 @@ protected:
   bool FlattenTable;
 
 private:
-  vtkSMChartSeriesSelectionDomain(const vtkSMChartSeriesSelectionDomain&); // Not implemented
-  void operator=(const vtkSMChartSeriesSelectionDomain&); // Not implemented
+  vtkSMChartSeriesSelectionDomain(const vtkSMChartSeriesSelectionDomain&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMChartSeriesSelectionDomain&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
@@ -148,7 +147,6 @@ private:
   void OnDomainModified();
   void UpdateDefaultValues(vtkSMProperty*, bool preserve_previous_values);
 
-//ETX
 };
 
 #endif

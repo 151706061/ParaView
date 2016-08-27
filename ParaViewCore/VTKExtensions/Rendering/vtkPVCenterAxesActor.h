@@ -41,7 +41,6 @@ public:
   // Option for computing normals.  By default they are computed.
   void SetComputeNormals(int);
 
-//BTX
 protected:
   vtkPVCenterAxesActor();
   ~vtkPVCenterAxesActor();
@@ -51,9 +50,9 @@ protected:
 
 
 private:
-  vtkPVCenterAxesActor(const vtkPVCenterAxesActor&); // Not implemented
-  void operator=(const vtkPVCenterAxesActor&); // Not implemented
-//ETX
+  vtkPVCenterAxesActor(const vtkPVCenterAxesActor&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVCenterAxesActor&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

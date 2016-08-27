@@ -63,7 +63,7 @@ public:
   // HACK: Get source's input data bounds (or BoundingBoxInModelCoordinates if
   // present).
   static bool GetDataBounds(vtkSMSourceProxy* source, int opport, double bounds[6]);
-//BTX
+
 protected:
   vtkSMMultiSliceViewProxy();
   ~vtkSMMultiSliceViewProxy();
@@ -75,12 +75,12 @@ protected:
     vtkSMRepresentationProxy* repr);
 
 private:
-  vtkSMMultiSliceViewProxy(const vtkSMMultiSliceViewProxy&); // Not implemented
-  void operator=(const vtkSMMultiSliceViewProxy&); // Not implemented
+  vtkSMMultiSliceViewProxy(const vtkSMMultiSliceViewProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMMultiSliceViewProxy&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

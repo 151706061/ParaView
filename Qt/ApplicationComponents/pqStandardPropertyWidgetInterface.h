@@ -82,7 +82,6 @@ public:
   /// \li \c BackgroundEditor : pqBackgroundPropertyWidget
   /// \li \c ColorEditor : pqColorEditorPropertyWidget
   /// \li \c ColorOpacityEditor : pqColorOpacityEditorWidget
-  /// \li \c CubeAxes : pqCubeAxesPropertyWidget
   /// \li \c FontEditor : pqFontPropertyWidget
   /// \li \c LightsEditor : pqLightsPropertyGroup
   /// \li \c SeriesEditor : pqSeriesEditorPropertyWidget
@@ -109,6 +108,7 @@ public:
   /// \li \c ShowWidgetDecorator : pqShowWidgetDecorator
   /// \li \c InputDataTypeDecorator : pqInputDataTypeDecorator
   /// \li \c GenericDecorator: pqGenericPropertyWidgetDecorator
+  /// \li \c OSPRayHidingDecorator: pqOSPRayHidingDecorator
   virtual pqPropertyWidgetDecorator* createWidgetDecorator(
     const QString& type, vtkPVXMLElement* config, pqPropertyWidget* widget);
 };

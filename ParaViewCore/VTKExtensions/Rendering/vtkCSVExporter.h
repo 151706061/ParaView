@@ -58,6 +58,12 @@ public:
   vtkSetStringMacro(FieldDelimiter);
   vtkGetStringMacro(FieldDelimiter);
 
+  // Description:
+  // Get/Set to filter by column or not
+  vtkSetMacro(FilterColumnsByVisibility, bool);
+  vtkGetMacro(FilterColumnsByVisibility, bool);
+
+
   enum ExporterModes
     {
     STREAM_ROWS,
@@ -93,23 +99,23 @@ public:
   // The final output will have empty cells for missing values.
   void AddColumn(vtkAbstractArray* yarray, const char* yarrayname=NULL, vtkDataArray* xarray=NULL);
 
-//BTX
 protected:
   vtkCSVExporter();
   ~vtkCSVExporter();
 
   char* FileName;
   char* FieldDelimiter;
+  bool FilterColumnsByVisibility;
   ofstream *FileStream;
   ExporterModes Mode;
 
 private:
-  vtkCSVExporter(const vtkCSVExporter&); // Not implemented
-  void operator=(const vtkCSVExporter&); // Not implemented
+  vtkCSVExporter(const vtkCSVExporter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkCSVExporter&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

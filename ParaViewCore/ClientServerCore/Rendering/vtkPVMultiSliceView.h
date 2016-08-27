@@ -69,7 +69,6 @@ public:
 
   void SetModelTransformationMatrix(vtkMatrix4x4*);
 
-//BTX
 protected:
   vtkPVMultiSliceView();
   ~vtkPVMultiSliceView();
@@ -84,12 +83,12 @@ protected:
   vtkTimeStamp ModelTransformationMatrixUpdateTime;
 
 private:
-  vtkPVMultiSliceView(const vtkPVMultiSliceView&); // Not implemented
-  void operator=(const vtkPVMultiSliceView&); // Not implemented
+  vtkPVMultiSliceView(const vtkPVMultiSliceView&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVMultiSliceView&) VTK_DELETE_FUNCTION;
 
   class vtkSliceInternal;
   vtkSliceInternal* Internal;
-//ETX
+
 };
 
 #endif

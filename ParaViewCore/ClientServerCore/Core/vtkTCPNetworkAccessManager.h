@@ -89,7 +89,6 @@ public:
   // Returns true is the manager is currently waiting for any connections.
   virtual bool GetPendingConnectionsPresent();
 
-//BTX
 protected:
   vtkTCPNetworkAccessManager();
   ~vtkTCPNetworkAccessManager();
@@ -112,12 +111,12 @@ protected:
 
   bool AbortPendingConnectionFlag;
 private:
-  vtkTCPNetworkAccessManager(const vtkTCPNetworkAccessManager&); // Not implemented
-  void operator=(const vtkTCPNetworkAccessManager&); // Not implemented
+  vtkTCPNetworkAccessManager(const vtkTCPNetworkAccessManager&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkTCPNetworkAccessManager&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

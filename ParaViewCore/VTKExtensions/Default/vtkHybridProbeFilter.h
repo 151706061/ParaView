@@ -57,7 +57,6 @@ public:
   vtkSetVector3Macro(Location, double);
   vtkGetVector3Macro(Location, double);
 
-//BTX
 protected:
   vtkHybridProbeFilter();
   ~vtkHybridProbeFilter();
@@ -74,9 +73,9 @@ protected:
   int Mode;
 
 private:
-  vtkHybridProbeFilter(const vtkHybridProbeFilter&); // Not implemented
-  void operator=(const vtkHybridProbeFilter&); // Not implemented
-//ETX
+  vtkHybridProbeFilter(const vtkHybridProbeFilter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkHybridProbeFilter&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

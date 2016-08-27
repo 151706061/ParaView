@@ -103,11 +103,16 @@ int pqTabbedMultiViewWidget::pqTabWidget::addAsTab(pqMultiViewWidget* wdg, pqTab
   pqServerManagerModel* smmodel =
     pqApplicationCore::instance()->getServerManagerModel();
   pqProxy* item = smmodel->findItem<pqProxy*>(proxy);
+  QString name = QString("Layout #%1").arg(tab_count);
   if (item->getSMName().startsWith("ViewLayout"))
     {
-    item->rename(QString("Layout #%1").arg(tab_count));
+    item->rename(name);
     }
   int tab_index = this->insertTab(tab_count-1, wdg, item->getSMName());
+
+  SM_SCOPED_TRACE(CallFunction)
+    .arg("CreateLayout")
+    .arg(name.toUtf8().data());
 
   this->connect(item, SIGNAL(nameChanged(pqServerManagerModelItem*)),
     self, SLOT(onLayoutNameChanged(pqServerManagerModelItem*)));
@@ -346,11 +351,15 @@ void pqTabbedMultiViewWidget::proxyAdded(pqProxy* proxy)
         }
       }
 
-    // FIXME: we may want to give server-manager the opportunity to place the
-    // view after creation, if it wants. The GUI should try to find a place for
-    // it, only if the server-manager (through undo-redo, or loading state or
-    // Python or collaborative-client).
-    this->assignToFrame(view, true);
+    if (!(proxy->getProxy()->HasAnnotation("ParaView::DetachedFromLayout") &&
+        strcmp(proxy->getProxy()->GetAnnotation("ParaView::DetachedFromLayout"),"true") == 0))
+      {
+      // FIXME: we may want to give server-manager the opportunity to place the
+      // view after creation, if it wants. The GUI should try to find a place for
+      // it, only if the server-manager (through undo-redo, or loading state or
+      // Python or collaborative-client).
+      this->assignToFrame(view, true);
+      }
     }
 }
 
@@ -474,6 +483,10 @@ void pqTabbedMultiViewWidget::closeTab(int index)
     BEGIN_UNDO_SET("Remove View Tab");
     // first remove each of the views in the tab layout.
     widget->destroyAllViews();
+
+    SM_SCOPED_TRACE(CallFunction)
+      .arg("RemoveLayout")
+      .arg(vlayout);
 
     builder->destroy(smmodel->findItem<pqProxy*>(vlayout));
     END_UNDO_SET();

@@ -55,7 +55,6 @@ public:
   virtual int ProcessViewRequest(vtkInformationRequestKey* request_type,
     vtkInformation* inInfo, vtkInformation* outInfo);
 
-//BTX
 protected:
   vtkStructuredGridVolumeRepresentation();
   ~vtkStructuredGridVolumeRepresentation();
@@ -71,9 +70,9 @@ protected:
   bool UseDataParititions;
   vtkTableExtentTranslator* TableExtentTranslator;
 private:
-  vtkStructuredGridVolumeRepresentation(const vtkStructuredGridVolumeRepresentation&); // Not implemented
-  void operator=(const vtkStructuredGridVolumeRepresentation&); // Not implemented
-//ETX
+  vtkStructuredGridVolumeRepresentation(const vtkStructuredGridVolumeRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkStructuredGridVolumeRepresentation&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

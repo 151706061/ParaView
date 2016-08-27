@@ -50,7 +50,6 @@ public:
                      const char* globalpropname,
                      vtkSMProxy* proxy, const char* propname, bool isAddAction);
 
-//BTX
 protected:
   vtkSMGlobalPropertiesLinkUndoElement();
   ~vtkSMGlobalPropertiesLinkUndoElement();
@@ -69,9 +68,9 @@ protected:
 
   int UndoRedoInternal(bool undo);
 private:
-  vtkSMGlobalPropertiesLinkUndoElement(const vtkSMGlobalPropertiesLinkUndoElement&); // Not implemented
-  void operator=(const vtkSMGlobalPropertiesLinkUndoElement&); // Not implemented
-//ETX
+  vtkSMGlobalPropertiesLinkUndoElement(const vtkSMGlobalPropertiesLinkUndoElement&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMGlobalPropertiesLinkUndoElement&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -37,15 +37,14 @@ public:
   vtkTypeMacro(vtkSIDoubleVectorProperty, vtkSIVectorProperty);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkSIDoubleVectorProperty();
   ~vtkSIDoubleVectorProperty();
 
 private:
-  vtkSIDoubleVectorProperty(const vtkSIDoubleVectorProperty&); // Not implemented
-  void operator=(const vtkSIDoubleVectorProperty&); // Not implemented
-//ETX
+  vtkSIDoubleVectorProperty(const vtkSIDoubleVectorProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSIDoubleVectorProperty&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -69,11 +69,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "vtkMantaModule.h"
 #include "vtkLight.h"
 
-//BTX
 namespace Manta {
 class Light;
 }
-//ETX
 
 class vtkMantaRenderer;
 class vtkTimeStamp;
@@ -106,14 +104,13 @@ protected:
   ~vtkMantaLight();
 
 private:
-  vtkMantaLight(const vtkMantaLight&); // Not implemented.
-  void operator=(const vtkMantaLight&); // Not implemented.
+  vtkMantaLight(const vtkMantaLight&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkMantaLight&) VTK_DELETE_FUNCTION;
 
   void CreateMantaLight(vtkRenderer *);
   void UpdateMantaLight(vtkRenderer *ren);
-  //BTX
+
   Manta::Light *MantaLight;
-  //ETX
 
   vtkMantaManager *MantaManager;
 

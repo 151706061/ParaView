@@ -44,7 +44,6 @@ protected:
   vtkAMRFragmentIntegration();
   virtual ~vtkAMRFragmentIntegration();
 
-  //BTX
   virtual int FillInputPortInformation(int port, vtkInformation *info);
   virtual int FillOutputPortInformation(int port, vtkInformation *info);
 
@@ -59,9 +58,9 @@ protected:
                           std::vector<std::string> massWeightedNames);
 
 private:
-  vtkAMRFragmentIntegration(const vtkAMRFragmentIntegration&);  // Not implemented.
-  void operator=(const vtkAMRFragmentIntegration&);  // Not implemented.
-  //ETX
+  vtkAMRFragmentIntegration(const vtkAMRFragmentIntegration&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkAMRFragmentIntegration&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif /* vtkAMRFragmentIntegration_h */

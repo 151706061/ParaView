@@ -44,7 +44,6 @@ public:
   vtkGetMacro(UseAMRDualClipForAMR, bool);
   vtkBooleanMacro(UseAMRDualClipForAMR, bool);
 
-//BTX
 protected:
   vtkPVClipDataSet(vtkImplicitFunction *cf=NULL);
   ~vtkPVClipDataSet();
@@ -73,9 +72,9 @@ protected:
 
   bool UseAMRDualClipForAMR;
 private:
-  vtkPVClipDataSet(const vtkPVClipDataSet&);  // Not implemented.
-  void operator=(const vtkPVClipDataSet&);  // Not implemented.
-//ETX
+  vtkPVClipDataSet(const vtkPVClipDataSet&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVClipDataSet&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

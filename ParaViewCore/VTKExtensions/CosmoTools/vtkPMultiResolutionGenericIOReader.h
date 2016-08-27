@@ -90,7 +90,6 @@ public:
   // Sets the status of the array corresponding to the given name.
   void SetPointArrayStatus(const char* name, int status);
 
-//BTX
 protected:
   vtkPMultiResolutionGenericIOReader();
   ~vtkPMultiResolutionGenericIOReader();
@@ -119,9 +118,9 @@ private:
   class vtkInternal;
   vtkInternal* Internal;
 
-  vtkPMultiResolutionGenericIOReader(const vtkPMultiResolutionGenericIOReader&); // Not implemented.
-  void operator=(const vtkPMultiResolutionGenericIOReader&); // Not implemented.
-//ETX
+  vtkPMultiResolutionGenericIOReader(const vtkPMultiResolutionGenericIOReader&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPMultiResolutionGenericIOReader&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

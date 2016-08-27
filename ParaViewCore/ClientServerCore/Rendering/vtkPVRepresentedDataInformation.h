@@ -34,15 +34,14 @@ public:
   // Transfer information about a single object into this object.
   virtual void CopyFromObject(vtkObject*);
 
-//BTX
 protected:
   vtkPVRepresentedDataInformation();
   ~vtkPVRepresentedDataInformation();
 
 private:
-  vtkPVRepresentedDataInformation(const vtkPVRepresentedDataInformation&); // Not implemented
-  void operator=(const vtkPVRepresentedDataInformation&); // Not implemented
-//ETX
+  vtkPVRepresentedDataInformation(const vtkPVRepresentedDataInformation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVRepresentedDataInformation&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

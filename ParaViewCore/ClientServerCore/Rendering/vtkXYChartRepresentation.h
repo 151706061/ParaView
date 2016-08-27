@@ -104,12 +104,16 @@ public:
   vtkGetVector3Macro(SelectionColor, double);
 
   // Description:
+  // Get/Set the series label prefix.
+  vtkSetStringMacro(SeriesLabelPrefix);
+  vtkGetStringMacro(SeriesLabelPrefix);
+
+  // Description:
   // Called by vtkPVContextView::Export() to export the representation's data to
   // a CSV file. Return false on failure which will call the exporting process
   // to abort and raise an error. Default implementation simply returns false.
   virtual bool Export(vtkCSVExporter* exporter);
 
-//BTX
 protected:
   vtkXYChartRepresentation();
   ~vtkXYChartRepresentation();
@@ -128,15 +132,16 @@ protected:
   vtkInternals* Internals;
 
 private:
-  vtkXYChartRepresentation(const vtkXYChartRepresentation&); // Not implemented
-  void operator=(const vtkXYChartRepresentation&); // Not implemented
+  vtkXYChartRepresentation(const vtkXYChartRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkXYChartRepresentation&) VTK_DELETE_FUNCTION;
 
   int ChartType;
   char* XAxisSeriesName;
   bool UseIndexForXAxis;
   bool PlotDataHasChanged;
   double SelectionColor[3];
-//ETX
+  char* SeriesLabelPrefix;
+
 };
 
 #endif

@@ -36,18 +36,15 @@ public:
   // Transfer information about a single object into this object.
   virtual void CopyFromObject(vtkObject*);
 
-  //BTX
   // Description:
   // Manage a serialized version of the information.
   virtual void CopyToStream(vtkClientServerStream*);
   virtual void CopyFromStream(const vtkClientServerStream*);
-  //ETX
 
   // Description:
   // Returns the SIL.
   vtkGetObjectMacro(SIL, vtkGraph);
 
-//BTX
 protected:
   vtkPVSILInformation();
   ~vtkPVSILInformation();
@@ -55,9 +52,9 @@ protected:
   void SetSIL(vtkGraph*);
   vtkGraph* SIL;
 private:
-  vtkPVSILInformation(const vtkPVSILInformation&); // Not implemented
-  void operator=(const vtkPVSILInformation&); // Not implemented
-//ETX
+  vtkPVSILInformation(const vtkPVSILInformation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVSILInformation&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

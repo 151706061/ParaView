@@ -69,19 +69,24 @@ public:
   vtkSetMacro(PointPickingRadius, int);
   vtkGetMacro(PointPickingRadius, int);
 
-//BTX
+  // Description:
+  // EXPERIMENTAL: Add ability to disable IceT.
+  vtkSetMacro(DisableIceT, bool);
+  vtkGetMacro(DisableIceT, bool);
+
 protected:
   vtkPVRenderViewSettings();
   ~vtkPVRenderViewSettings();
 
   vtkIdType OutlineThreshold;
   int PointPickingRadius;
+  bool DisableIceT;
 private:
-  vtkPVRenderViewSettings(const vtkPVRenderViewSettings&); // Not implemented
-  void operator=(const vtkPVRenderViewSettings&); // Not implemented
+  vtkPVRenderViewSettings(const vtkPVRenderViewSettings&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVRenderViewSettings&) VTK_DELETE_FUNCTION;
 
   static vtkSmartPointer<vtkPVRenderViewSettings> Instance;
-//ETX
+
 };
 
 #endif

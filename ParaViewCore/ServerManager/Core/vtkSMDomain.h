@@ -39,9 +39,8 @@ class vtkPVDataInformation;
 class vtkPVXMLElement;
 class vtkSMProperty;
 class vtkSMProxyLocator;
-//BTX
+
 struct vtkSMDomainInternals;
-//ETX
 
 class VTKPVSERVERMANAGERCORE_EXPORT vtkSMDomain : public vtkSMSessionObject
 {
@@ -132,9 +131,7 @@ protected:
   // be overwritten by subclass if adding ivars.
   virtual int ReadXMLAttributes(vtkSMProperty* prop, vtkPVXMLElement* elem);
 
-//BTX
   friend class vtkSMProperty;
-//ETX
 
   // Description:
   // Returns a given required property of the given function.
@@ -193,8 +190,8 @@ protected:
   bool IsOptional;
   vtkSMDomainInternals* Internals;
 private:
-  vtkSMDomain(const vtkSMDomain&); // Not implemented
-  void operator=(const vtkSMDomain&); // Not implemented
+  vtkSMDomain(const vtkSMDomain&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMDomain&) VTK_DELETE_FUNCTION;
 };
 
 #endif

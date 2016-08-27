@@ -130,7 +130,7 @@ public:
   // Provides access to the internal vtkIceTCompositePass. Only use this if you
   // know what you're doing.
   vtkGetObjectMacro(IceTCompositePass, vtkIceTCompositePass);
-//BTX
+
 protected:
   vtkIceTSynchronizedRenderers();
   ~vtkIceTSynchronizedRenderers();
@@ -153,9 +153,9 @@ protected:
   vtkImageProcessingPass *ImageProcessingPass;
 
 private:
-  vtkIceTSynchronizedRenderers(const vtkIceTSynchronizedRenderers&); // Not implemented
-  void operator=(const vtkIceTSynchronizedRenderers&); // Not implemented
-//ETX
+  vtkIceTSynchronizedRenderers(const vtkIceTSynchronizedRenderers&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkIceTSynchronizedRenderers&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -43,7 +43,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "pqCommandButtonPropertyWidget.h"
 #include "pqCylinderPropertyWidget.h"
 #include "pqCTHArraySelectionDecorator.h"
-#include "pqCubeAxesPropertyWidget.h"
 #include "pqDisplayRepresentationWidget.h"
 #include "pqDoubleRangeSliderPropertyWidget.h"
 #include "pqEnableWidgetDecorator.h"
@@ -77,6 +76,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef PARAVIEW_ENABLE_PYTHON
 #include "pqCinemaConfiguration.h"
 #endif
+#include "pqOSPRayHidingDecorator.h"
 
 #include <QtDebug>
 
@@ -198,7 +198,7 @@ pqStandardPropertyWidgetInterface::createWidgetForPropertyGroup(
     }
   else if(panelWidget == "CubeAxes")
     {
-    return new pqCubeAxesPropertyWidget(proxy);
+    qWarning("`CubeAxes` is no longer supported. Please update your ServerManager XML configuration.");
     }
   else if(panelWidget == "BackgroundEditor")
     {
@@ -308,6 +308,10 @@ pqStandardPropertyWidgetInterface::createWidgetDecorator(
   if (type == "GenericDecorator")
     {
     return new pqGenericPropertyWidgetDecorator(config, widget);
+    }
+  if (type == "OSPRayHidingDecorator")
+    {
+    return new pqOSPRayHidingDecorator(config, widget);
     }
 
   // *** NOTE: When adding new types, please update the header documentation ***

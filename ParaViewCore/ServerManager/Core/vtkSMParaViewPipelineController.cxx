@@ -17,6 +17,7 @@
 #include "vtkCommand.h"
 #include "vtkNew.h"
 #include "vtkObjectFactory.h"
+#include "vtkPVInstantiator.h"
 #include "vtkPVProxyDefinitionIterator.h"
 #include "vtkPVXMLElement.h"
 #include "vtkSmartPointer.h"
@@ -26,6 +27,7 @@
 #include "vtkSMPropertyIterator.h"
 #include "vtkSMPropertyLink.h"
 #include "vtkSMProxyDefinitionManager.h"
+#include "vtkSMProxyInitializationHelper.h"
 #include "vtkSMProxyIterator.h"
 #include "vtkSMProxyListDomain.h"
 #include "vtkSMProxyProperty.h"
@@ -188,7 +190,13 @@ bool vtkSMParaViewPipelineController::CreateProxiesForProxyListDomains(
       pld->CreateProxies(proxy->GetSessionProxyManager());
       for (unsigned int cc=0, max=pld->GetNumberOfProxies(); cc < max; cc++)
         {
-        this->PreInitializeProxy(pld->GetProxy(cc));
+        if (vtkSMProxy* dproxy = pld->GetProxy(cc))
+          {
+          // it makes sense to have all proxies in the ProxyListDomain have the
+          // same location as the parent proxy.
+          dproxy->SetLocation(proxy->GetLocation());
+          this->PreInitializeProxy(dproxy);
+          }
         }
       // this is unnecessary here. only done for CompoundSourceProxy instances.
       // those proxies, we generally skip calling "reset" on in
@@ -1002,6 +1010,10 @@ bool vtkSMParaViewPipelineController::PostInitializeProxy(vtkSMProxy* proxy)
   // ensure everything is up-to-date.
   proxy->UpdateVTKObjects();
 
+  // If InitializationHelper is specified for the proxy. Use it
+  // for extra initialization.
+  this->ProcessInitializationHelper(proxy, ts);
+
   // FIXME: need to figure out how we should really deal with this.
   // We don't reset properties on custom filter.
   if (!proxy->IsA("vtkSMCompoundSourceProxy"))
@@ -1266,6 +1278,29 @@ void vtkSMParaViewPipelineController::HandleLZ4Issue(vtkSMProxy* renderViewSetti
     "Remote rendering that uses translucent surfaces or volumes will have artifacts "
     "with SQUIRT. Switch to zlib or no compression to avoid those, if needed.");
   renderViewSettings->UpdateVTKObjects();
+}
+
+//----------------------------------------------------------------------------
+void vtkSMParaViewPipelineController::ProcessInitializationHelper(
+  vtkSMProxy* proxy, unsigned long initializationTimeStamp)
+{
+  vtkPVXMLElement* hints = proxy->GetHints();
+  for (unsigned int cc=0, max=(hints?hints->GetNumberOfNestedElements():0); cc < max; ++cc)
+    {
+    vtkPVXMLElement* child = hints->GetNestedElement(cc);
+    if (child &&
+        strcmp(child->GetName(), "InitializationHelper") == 0 &&
+        child->GetAttribute("class") != NULL)
+      {
+      const char* className = child->GetAttribute("class");
+      vtkSmartPointer<vtkObject> obj;
+      obj.TakeReference(vtkPVInstantiator::CreateInstance(className));
+      if (vtkSMProxyInitializationHelper* helper = vtkSMProxyInitializationHelper::SafeDownCast(obj))
+        {
+        helper->PostInitializeProxy(proxy, child, initializationTimeStamp);
+        }
+      }
+    }
 }
 
 //----------------------------------------------------------------------------

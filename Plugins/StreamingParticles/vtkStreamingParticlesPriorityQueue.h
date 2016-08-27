@@ -117,7 +117,6 @@ public:
   vtkGetMacro(DetailLevelToLoad,double)
   vtkSetMacro(DetailLevelToLoad,double)
 
-//BTX
 protected:
   vtkStreamingParticlesPriorityQueue();
   ~vtkStreamingParticlesPriorityQueue();
@@ -133,12 +132,12 @@ protected:
   double DetailLevelToLoad;
 
 private:
-  vtkStreamingParticlesPriorityQueue(const vtkStreamingParticlesPriorityQueue&); // Not implemented
-  void operator=(const vtkStreamingParticlesPriorityQueue&); // Not implemented
+  vtkStreamingParticlesPriorityQueue(const vtkStreamingParticlesPriorityQueue&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkStreamingParticlesPriorityQueue&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

@@ -68,11 +68,9 @@ public:
   // Removes all manipulators.
   void RemoveAllManipulators();
 
-  //BTX
   // Description:
   // Accessor for the collection of camera manipulators.
   vtkGetObjectMacro(CameraManipulators, vtkCollection);
-  //ETX
 
   // Description:
   // Propagates the center to the manipulators.
@@ -101,9 +99,21 @@ public:
   // Returns the chosen manipulator based on the modifiers.
   virtual vtkCameraManipulator* FindManipulator(int button, int shift, int control);
 
+  // Description
+  // Dolly the renderer's camera to a specific point
+  static void DollyToPosition(double fact, int* position, vtkRenderer* renderer);
+
+  // Description
+  // Translate the renderer's camera
+  static void TranslateCamera(vtkRenderer* renderer, int toX, int toY, int fromX, int fromY);
+
+  using vtkInteractorStyleTrackballCamera::Dolly;
+
 protected:
   vtkPVInteractorStyle();
   ~vtkPVInteractorStyle();
+
+  virtual void Dolly(double factor);
 
   vtkCameraManipulator *CurrentManipulator;
   double CenterOfRotation[3];
@@ -116,8 +126,8 @@ protected:
   void OnButtonUp(int button);
   void ResetLights();
 
-  vtkPVInteractorStyle(const vtkPVInteractorStyle&); // Not implemented
-  void operator=(const vtkPVInteractorStyle&); // Not implemented
+  vtkPVInteractorStyle(const vtkPVInteractorStyle&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVInteractorStyle&) VTK_DELETE_FUNCTION;
 };
 
 #endif

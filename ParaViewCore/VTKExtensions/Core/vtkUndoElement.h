@@ -78,7 +78,6 @@ public:
     this->UndoSetWorkingContext = workCTX;
     }
 
-//BTX
 protected:
   vtkUndoElement();
   ~vtkUndoElement();
@@ -91,9 +90,9 @@ protected:
   vtkCollection *UndoSetWorkingContext;
 
 private:
-  vtkUndoElement(const vtkUndoElement&); // Not implemented.
-  void operator=(const vtkUndoElement&); // Not implemented.
-//ETX
+  vtkUndoElement(const vtkUndoElement&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkUndoElement&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

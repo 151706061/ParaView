@@ -176,7 +176,6 @@ public:
     vtkPVXMLElement* StateChangeElement;
     };
 
-//BTX
 protected:
   vtkSMProxyManager();
   ~vtkSMProxyManager();
@@ -201,9 +200,9 @@ private:
 
   static vtkSmartPointer<vtkSMProxyManager> Singleton;
 
-  vtkSMProxyManager(const vtkSMProxyManager&); // Not implemented
-  void operator=(const vtkSMProxyManager&); // Not implemented
-//ETX
+  vtkSMProxyManager(const vtkSMProxyManager&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMProxyManager&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -273,13 +273,13 @@ protected:
   int ReadXMLAttributes(vtkSMSessionProxyManager* pm, vtkPVXMLElement* element);
 
 private:
-  vtkSMPVRepresentationProxy(const vtkSMPVRepresentationProxy&); // Not implemented
-  void operator=(const vtkSMPVRepresentationProxy&); // Not implemented
+  vtkSMPVRepresentationProxy(const vtkSMPVRepresentationProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMPVRepresentationProxy&) VTK_DELETE_FUNCTION;
 
   bool InReadXMLAttributes;
   class vtkStringSet;
   vtkStringSet* RepresentationSubProxies;
-//ETX
+
 };
 
 #endif

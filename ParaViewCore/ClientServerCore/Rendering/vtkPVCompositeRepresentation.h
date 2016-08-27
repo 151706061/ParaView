@@ -29,7 +29,6 @@
 #include "vtkCompositeRepresentation.h"
 
 class vtkSelectionRepresentation;
-class vtkCubeAxesRepresentation;
 
 class VTKPVCLIENTSERVERCORERENDERING_EXPORT vtkPVCompositeRepresentation : public vtkCompositeRepresentation
 {
@@ -41,19 +40,7 @@ public:
   // Description:
   // These must only be set during initialization before adding the
   // representation to any views or calling Update().
-  void SetCubeAxesRepresentation(vtkCubeAxesRepresentation*);
   void SetSelectionRepresentation(vtkSelectionRepresentation*);
-
-  // Description:
-  // Overridden to simply pass the input to the internal representations. We
-  // won't need this if vtkDataRepresentation correctly respected in the
-  // arguments passed to it during ProcessRequest() etc.
-  virtual void SetInputConnection(int port, vtkAlgorithmOutput* input);
-  virtual void SetInputConnection(vtkAlgorithmOutput* input);
-  virtual void AddInputConnection(int port, vtkAlgorithmOutput* input);
-  virtual void AddInputConnection(vtkAlgorithmOutput* input);
-  virtual void RemoveInputConnection(int port, vtkAlgorithmOutput* input);
-  virtual void RemoveInputConnection(int port, int index);
 
   // Description:
   // Propagate the modification to all internal representations.
@@ -63,10 +50,6 @@ public:
   // Set visibility of the representation.
   // Overridden to update the cube-axes and selection visibilities.
   virtual void SetVisibility(bool visible);
-
-  // Description:
-  // Set the visibility for the cube-axis.
-  virtual void SetCubeAxesVisibility(bool visible);
 
   // Description:
   // Set the selection visibility.
@@ -88,7 +71,6 @@ public:
   // initilized as well.
   virtual unsigned int Initialize(unsigned int minIdAvailable, unsigned int maxIdAvailable);
 
-//BTX
 protected:
   vtkPVCompositeRepresentation();
   ~vtkPVCompositeRepresentation();
@@ -105,16 +87,13 @@ protected:
   // Returns true if the removal succeeds.
   virtual bool RemoveFromView(vtkView* view);
 
-  vtkCubeAxesRepresentation* CubeAxesRepresentation;
   vtkSelectionRepresentation* SelectionRepresentation;
-
-  bool CubeAxesVisibility;
   bool SelectionVisibility;
 
 private:
-  vtkPVCompositeRepresentation(const vtkPVCompositeRepresentation&); // Not implemented
-  void operator=(const vtkPVCompositeRepresentation&); // Not implemented
-//ETX
+  vtkPVCompositeRepresentation(const vtkPVCompositeRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVCompositeRepresentation&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -61,7 +61,6 @@ protected:
   vtkRedistributePolyData();
   ~vtkRedistributePolyData();
 
-//BTX
   enum {
     CELL_ID_TAG        = 10,
     POINT_COORDS_TAG   = 20,
@@ -100,11 +99,9 @@ protected:
     vtkIdType** KeepCellList;
    
   private:
-    vtkCommSched(const vtkCommSched&); // Not implemented
-    void operator=(const vtkCommSched&); // Not implemented
+    vtkCommSched(const vtkCommSched&) VTK_DELETE_FUNCTION;
+    void operator=(const vtkCommSched&) VTK_DELETE_FUNCTION;
   };
-
-//ETX
 
   virtual void MakeSchedule (vtkPolyData* input, vtkCommSched*);
   void OrderSchedule (vtkCommSched*);
@@ -173,8 +170,8 @@ protected:
   int ColorProc; // Set to 1 to color data according to processor
 
 private:
-  vtkRedistributePolyData(const vtkRedistributePolyData&); // Not implemented
-  void operator=(const vtkRedistributePolyData&); // Not implemented
+  vtkRedistributePolyData(const vtkRedistributePolyData&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkRedistributePolyData&) VTK_DELETE_FUNCTION;
   
 };
 

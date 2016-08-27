@@ -47,17 +47,16 @@ public:
   // as current output.
   virtual void UpdateFromGlobal(const char* key);
 
-//BTX
 protected:
   vtkDistributedTrivialProducer();
   ~vtkDistributedTrivialProducer();
 
 private:
-  vtkDistributedTrivialProducer(const vtkDistributedTrivialProducer&); // Not implemented
-  void operator=(const vtkDistributedTrivialProducer&); // Not implemented
+  vtkDistributedTrivialProducer(const vtkDistributedTrivialProducer&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkDistributedTrivialProducer&) VTK_DELETE_FUNCTION;
 
   static vtkPVTrivialProducerStaticInternal* InternalStatic;
-//ETX
+
 };
 
 #endif

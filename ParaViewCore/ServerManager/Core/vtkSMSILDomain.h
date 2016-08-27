@@ -56,7 +56,6 @@ public:
   // Overridden to leave defaults unchanged.
   virtual int SetDefaultValues(vtkSMProperty*, bool){ return 1; }
 
-//BTX
 protected:
 
   // Description:
@@ -75,9 +74,9 @@ protected:
   vtkIdType SILTimeStamp;
 
 private:
-  vtkSMSILDomain(const vtkSMSILDomain&); // Not implemented
-  void operator=(const vtkSMSILDomain&); // Not implemented
-//ETX
+  vtkSMSILDomain(const vtkSMSILDomain&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMSILDomain&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

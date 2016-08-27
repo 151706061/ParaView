@@ -61,7 +61,6 @@ public:
   void RemoveAllTimeSteps();
   void SetFramesPerTimestep(int val);
 
-//BTX
 protected:
   vtkCompositeAnimationPlayer();
   ~vtkCompositeAnimationPlayer();
@@ -84,13 +83,12 @@ protected:
   int PlayMode;
 
 private:
-  vtkCompositeAnimationPlayer(const vtkCompositeAnimationPlayer&); // Not implemented
-  void operator=(const vtkCompositeAnimationPlayer&); // Not implemented
+  vtkCompositeAnimationPlayer(const vtkCompositeAnimationPlayer&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkCompositeAnimationPlayer&) VTK_DELETE_FUNCTION;
 
   class vtkInternal;
   vtkInternal* Internal;
 
-//ETX
 };
 
 #endif

@@ -56,7 +56,6 @@ public:
   // is being updated between mouse-press/release events.
   int GetActiveSliceIndex();
 
-//BTX
   // Description:
   // Return true if the supplied x, y coordinate is inside the item.
   virtual bool Hit(const vtkContextMouseEvent &mouse);
@@ -124,12 +123,12 @@ protected:
   virtual ~vtkMultiSliceContextItem();
 
 private:
-  vtkMultiSliceContextItem(const vtkMultiSliceContextItem &); // Not implemented.
-  void operator=(const vtkMultiSliceContextItem &);   // Not implemented.
+  vtkMultiSliceContextItem(const vtkMultiSliceContextItem &) VTK_DELETE_FUNCTION;
+  void operator=(const vtkMultiSliceContextItem &) VTK_DELETE_FUNCTION;
 
   struct vtkInternal;
   vtkInternal* Internal;
-//ETX
+
 };
 
 #endif

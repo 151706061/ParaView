@@ -31,10 +31,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ========================================================================*/
 #include "pqDesktopServicesReaction.h"
 
+#include "pqCoreUtilities.h"
+
 #include <QDesktopServices>
 #include <QFileInfo>
+#include <QMessageBox>
 #include <QtDebug>
 
+#include <iostream>
 //-----------------------------------------------------------------------------
 pqDesktopServicesReaction::pqDesktopServicesReaction(
   const QUrl& url, QAction* parentObject)
@@ -49,14 +53,23 @@ pqDesktopServicesReaction::~pqDesktopServicesReaction()
 }
 
 //-----------------------------------------------------------------------------
-void pqDesktopServicesReaction::openUrl(const QUrl& url)
+bool pqDesktopServicesReaction::openUrl(const QUrl& url)
 {
   if (url.isLocalFile() && !QFileInfo(url.toLocalFile()).exists())
     {
-    qCritical() << "File (" << url.toLocalFile() << ") does not exist on your installation.";
+    QString filename = QFileInfo(url.toLocalFile()).absoluteFilePath();
+    QString msg = QString("The requested file is not available in your installation. "
+      "You can manually obtain and place the file (or ask your administrators) at the "
+      "following location for this to work.\n\n'%1'").arg(filename);
+    // dump to cout for easy copy/paste.
+    std::cout << msg.toUtf8().data() << std::endl;
+    QMessageBox::warning(pqCoreUtilities::mainWidget(), "Missing file", msg, QMessageBox::Ok);
+    return false;
     }
-  else if (!QDesktopServices::openUrl(url))
+  if (!QDesktopServices::openUrl(url))
     {
     qCritical() << "Failed to open '" << url << "'";
+    return false;
     }
+  return true;
 }

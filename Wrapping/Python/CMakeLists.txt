@@ -51,8 +51,13 @@ endif()
 #------------------------------------------------------------------------------
 # List ParaView *.py files.
 set(PV_PYTHON_SOURCE_FILES
+  paraview/_backwardscompatibilityhelper.py
   paraview/annotation.py
-  paraview/benchmark.py
+  paraview/benchmark/__init__.py
+  paraview/benchmark/logbase.py
+  paraview/benchmark/logparser.py
+  paraview/benchmark/manyspheres.py
+  paraview/benchmark/basic.py
   paraview/calculator.py
   paraview/cinemaIO/cinema_store.py
   paraview/cinemaIO/explorers.py

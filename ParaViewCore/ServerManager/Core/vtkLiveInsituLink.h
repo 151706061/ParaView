@@ -160,7 +160,6 @@ public:
   // Return true if something has been removed
   static bool FilterXMLState(vtkPVXMLElement* xmlState);
 
-//BTX
   // ***************************************************************
   // Internal methods, public for callbacks.
   void InsituConnect(vtkMultiProcessController* controller);
@@ -220,8 +219,8 @@ protected:
   vtkSmartPointer<vtkExtractsDeliveryHelper> ExtractsDeliveryHelper;
 
 private:
-  vtkLiveInsituLink(const vtkLiveInsituLink&); // Not implemented
-  void operator=(const vtkLiveInsituLink&); // Not implemented
+  vtkLiveInsituLink(const vtkLiveInsituLink&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkLiveInsituLink&) VTK_DELETE_FUNCTION;
 
   vtkWeakPointer<vtkSMSessionProxyManager> InsituProxyManager;
 
@@ -232,7 +231,7 @@ private:
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

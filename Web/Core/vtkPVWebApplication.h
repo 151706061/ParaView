@@ -98,7 +98,6 @@ public:
   // Return the size of the last image exported.
   vtkGetVector2Macro(LastStillRenderImageSize, int);
 
-//BTX
 protected:
   vtkPVWebApplication();
   ~vtkPVWebApplication();
@@ -109,13 +108,12 @@ protected:
   int LastStillRenderImageSize[3];
 
 private:
-  vtkPVWebApplication(const vtkPVWebApplication&); // Not implemented
-  void operator=(const vtkPVWebApplication&); // Not implemented
+  vtkPVWebApplication(const vtkPVWebApplication&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVWebApplication&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
 
-//ETX
 };
 
 #endif

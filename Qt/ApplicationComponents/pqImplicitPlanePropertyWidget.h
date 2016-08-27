@@ -74,11 +74,8 @@ public slots:
   /// Set the widget normal to be along the Z axis.
   void useZNormal() { this->setNormal(0, 0, 1); }
 
-  /// Update the widget's origin and normal using current data bounds.
-  void resetBounds();
-
-  /// Update the widget's origin (but not the normal) using current data bounds.
-  void centerOnBounds();
+  /// Update the widget's origin and bounds using current data bounds.
+  void resetToDataBounds();
 
   /// Reset the camera to be down the plane normal.
   void resetCameraToNormal();
@@ -94,7 +91,7 @@ private slots:
   void setOrigin(double x, double y, double z);
 
 private:
-  Q_DISABLE_COPY(pqImplicitPlanePropertyWidget);
+  Q_DISABLE_COPY(pqImplicitPlanePropertyWidget)
 
   void setNormal(double x, double y, double z);
 };

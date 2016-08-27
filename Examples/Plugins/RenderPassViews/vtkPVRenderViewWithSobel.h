@@ -36,15 +36,14 @@ public:
   // @CallOnAllProcessess
   virtual void Initialize(unsigned int id);
 
-//BTX
 protected:
   vtkPVRenderViewWithSobel();
   ~vtkPVRenderViewWithSobel();
 
 private:
-  vtkPVRenderViewWithSobel(const vtkPVRenderViewWithSobel&); // Not implemented
-  void operator=(const vtkPVRenderViewWithSobel&); // Not implemented
-//ETX
+  vtkPVRenderViewWithSobel(const vtkPVRenderViewWithSobel&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVRenderViewWithSobel&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

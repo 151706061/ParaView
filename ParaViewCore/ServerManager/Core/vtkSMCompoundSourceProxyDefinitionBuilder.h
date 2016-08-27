@@ -102,14 +102,13 @@ public:
   // the returned element will be a top level element.
   vtkPVXMLElement* SaveDefinition(vtkPVXMLElement* root);
 
-//BTX
 protected:
   vtkSMCompoundSourceProxyDefinitionBuilder();
   ~vtkSMCompoundSourceProxyDefinitionBuilder();
 
 private:
-  vtkSMCompoundSourceProxyDefinitionBuilder(const vtkSMCompoundSourceProxyDefinitionBuilder&); // Not implemented
-  void operator=(const vtkSMCompoundSourceProxyDefinitionBuilder&); // Not implemented
+  vtkSMCompoundSourceProxyDefinitionBuilder(const vtkSMCompoundSourceProxyDefinitionBuilder&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMCompoundSourceProxyDefinitionBuilder&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
@@ -121,7 +120,6 @@ private:
   void TraverseForProperties(vtkPVXMLElement* root);
   void StripValues(vtkPVXMLElement* propertyElem);
 
-//ETX
 };
 
 #endif

@@ -56,13 +56,12 @@ protected:
   virtual void Reduce(vtkTable *table);
 
 private:
-  vtkPTemporalRanges(const vtkPTemporalRanges &);       // Not implemented
-  void operator=(const vtkPTemporalRanges &);           // Not implemented
+  vtkPTemporalRanges(const vtkPTemporalRanges &) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPTemporalRanges &) VTK_DELETE_FUNCTION;
 
-//BTX
   class vtkRangeTableReduction;
   friend class vtkRangeTableReduction;
-//ETX
+
 };
 
 #endif //vtkPTemporalRanges_h

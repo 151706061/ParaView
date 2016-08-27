@@ -70,7 +70,6 @@ public:
   static int GetCacheMisses();
   static int GetCacheSkips();
 
-//BTX
 protected:
   vtkPVCacheKeeper();
   ~vtkPVCacheKeeper();
@@ -97,8 +96,8 @@ protected:
   vtkCacheSizeKeeper* CacheSizeKeeper;
 
 private:
-  vtkPVCacheKeeper(const vtkPVCacheKeeper&); // Not implemented
-  void operator=(const vtkPVCacheKeeper&); // Not implemented
+  vtkPVCacheKeeper(const vtkPVCacheKeeper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVCacheKeeper&) VTK_DELETE_FUNCTION;
 
   class vtkCacheMap;
   vtkCacheMap* Cache;
@@ -106,7 +105,7 @@ private:
   static int CacheHit;
   static int CacheMiss;
   static int CacheSkips;
-//ETX
+
 };
 
 #endif

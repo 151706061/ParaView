@@ -62,7 +62,6 @@ public:
   // the last entry in this array will be NULL.
   static const char** GetKnownSeriesNames();
 
-//BTX
 protected:
   vtkSMChartSeriesListDomain();
   ~vtkSMChartSeriesListDomain();
@@ -78,9 +77,9 @@ protected:
 
   bool HidePartialArrays;
 private:
-  vtkSMChartSeriesListDomain(const vtkSMChartSeriesListDomain&); // Not implemented
-  void operator=(const vtkSMChartSeriesListDomain&); // Not implemented
-//ETX
+  vtkSMChartSeriesListDomain(const vtkSMChartSeriesListDomain&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMChartSeriesListDomain&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -124,6 +124,11 @@ public:
   vtkGetMacro(AnimationGeometryCacheLimit, unsigned long);
 
   // Description:
+  // Set the precision of the animation time toolbar.
+  vtkSetMacro(AnimationTimePrecision, int);
+  vtkGetMacro(AnimationTimePrecision, int);
+
+  // Description:
   // Forwarded for vtkSMParaViewPipelineControllerWithRendering.
   void SetInheritRepresentationProperties(bool val);
 
@@ -140,6 +145,11 @@ public:
   vtkGetMacro(PropertiesPanelMode, int);
 
   // Description:
+  // Set whether to dock widgets into place.
+  vtkSetMacro(LockPanels, bool);
+  vtkGetMacro(LockPanels, bool);
+
+  // Description:
   // Forwarded to vtkSMViewLayoutProxy.
   void SetMultiViewImageBorderColor(double r, double g, double b);
   void SetMultiViewImageBorderWidth(int width);
@@ -148,7 +158,11 @@ public:
   // Forwarded to vtkSMViewProxy.
   void SetTransparentBackground(bool val);
 
-//BTX
+  // Description:
+  // Load all variables when loading a data set.
+  void SetLoadAllVariables(bool val);
+  bool GetLoadAllVariables();
+
 protected:
   vtkPVGeneralSettings();
   ~vtkPVGeneralSettings();
@@ -161,14 +175,16 @@ protected:
   int ScalarBarMode;
   bool CacheGeometryForAnimation;
   unsigned long AnimationGeometryCacheLimit;
+  int AnimationTimePrecision;
   int PropertiesPanelMode;
+  bool LockPanels;
 
 private:
-  vtkPVGeneralSettings(const vtkPVGeneralSettings&); // Not implemented
-  void operator=(const vtkPVGeneralSettings&); // Not implemented
+  vtkPVGeneralSettings(const vtkPVGeneralSettings&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVGeneralSettings&) VTK_DELETE_FUNCTION;
 
   static vtkSmartPointer<vtkPVGeneralSettings> Instance;
-//ETX
+
 };
 
 #endif

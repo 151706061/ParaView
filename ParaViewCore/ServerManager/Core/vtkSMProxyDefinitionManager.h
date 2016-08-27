@@ -128,11 +128,13 @@ public:
   // ALL_DEFINITIONS=0 / CORE_DEFINITIONS=1 / CUSTOM_DEFINITIONS=2
   // Some extra restriction can be set directly on the iterator itself
   // by setting a set of GroupName...
+  VTK_NEWINSTANCE
   vtkPVProxyDefinitionIterator* NewIterator()
     {
     return this->ProxyDefinitionManager?
       this->ProxyDefinitionManager->NewIterator() : NULL;
     }
+  VTK_NEWINSTANCE
   vtkPVProxyDefinitionIterator* NewIterator(int scope)
     {
     return this->ProxyDefinitionManager?
@@ -177,8 +179,6 @@ public:
   bool LoadConfigurationXML(vtkPVXMLElement* root);
   bool LoadConfigurationXMLFromString(const char* xmlContent);
 
-//BTX
-
   // Description:
   // This method is used to initialise the object to the given state
   // If the definitionOnly Flag is set to True the proxy won't load the
@@ -195,9 +195,9 @@ protected:
   vtkWeakPointer<vtkSIProxyDefinitionManager> ProxyDefinitionManager;
 
 private:
-  vtkSMProxyDefinitionManager(const vtkSMProxyDefinitionManager&); // Not implemented
-  void operator=(const vtkSMProxyDefinitionManager&); // Not implemented
-//ETX
+  vtkSMProxyDefinitionManager(const vtkSMProxyDefinitionManager&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMProxyDefinitionManager&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

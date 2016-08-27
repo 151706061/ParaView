@@ -73,7 +73,6 @@ public:
   vtkRenderWindowInteractor* GetInteractor();
   void CleanupInteractor() { this->SetupInteractor(NULL); }
 
-//BTX
 protected:
   vtkSMViewProxyInteractorHelper();
   ~vtkSMViewProxyInteractorHelper();
@@ -92,9 +91,9 @@ protected:
   bool Interacted;
 
 private:
-  vtkSMViewProxyInteractorHelper(const vtkSMViewProxyInteractorHelper&); // Not implemented
-  void operator=(const vtkSMViewProxyInteractorHelper&); // Not implemented
-//ETX
+  vtkSMViewProxyInteractorHelper(const vtkSMViewProxyInteractorHelper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMViewProxyInteractorHelper&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

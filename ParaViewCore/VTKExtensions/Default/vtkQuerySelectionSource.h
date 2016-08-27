@@ -71,7 +71,6 @@ public:
   vtkSetMacro(Inverse, int);
   vtkGetMacro(Inverse, int);
 
-//BTX
 protected:
   vtkQuerySelectionSource();
   ~vtkQuerySelectionSource();
@@ -94,14 +93,14 @@ protected:
   int ProcessID;
 
 private:
-  vtkQuerySelectionSource(const vtkQuerySelectionSource&); // Not implemented
-  void operator=(const vtkQuerySelectionSource&); // Not implemented
+  vtkQuerySelectionSource(const vtkQuerySelectionSource&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkQuerySelectionSource&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
 
   int Inverse;
-//ETX
+
 };
 
 #endif

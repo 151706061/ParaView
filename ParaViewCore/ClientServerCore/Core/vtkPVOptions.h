@@ -30,9 +30,9 @@ class vtkPVOptionsInternal;
 class VTKPVCLIENTSERVERCORECORE_EXPORT vtkPVOptions : public vtkCommandOptions
 {
 protected:
-//BTX
+
   friend class vtkPVOptionsXMLParser;
-//ETX
+
 public:
   static vtkPVOptions* New();
   vtkTypeMacro(vtkPVOptions,vtkCommandOptions);
@@ -172,7 +172,7 @@ public:
     };
 
 protected:
-//BTX
+
   // Description:
   // Default constructor.
   vtkPVOptions();
@@ -246,10 +246,9 @@ private:
   // inline setters
   vtkSetStringMacro(StereoType);
 
-//ETX
 private:
-  vtkPVOptions(const vtkPVOptions&); // Not implemented
-  void operator=(const vtkPVOptions&); // Not implemented
+  vtkPVOptions(const vtkPVOptions&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVOptions&) VTK_DELETE_FUNCTION;
 
   vtkSetStringMacro(HostName);
   char* HostName;

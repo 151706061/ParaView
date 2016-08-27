@@ -56,7 +56,6 @@ public:
   vtkSetMacro(DisplayDate, bool);
   vtkGetMacro(DisplayDate, bool);
 
-//BTX
 protected:
   vtkEnvironmentAnnotationFilter();
   ~vtkEnvironmentAnnotationFilter();
@@ -70,8 +69,8 @@ protected:
   std::string FileName;
 
 private:
-  vtkEnvironmentAnnotationFilter(const vtkEnvironmentAnnotationFilter&); // Not implemented
-  void operator=(const vtkEnvironmentAnnotationFilter&); // Not implemented
+  vtkEnvironmentAnnotationFilter(const vtkEnvironmentAnnotationFilter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkEnvironmentAnnotationFilter&) VTK_DELETE_FUNCTION;
 
   void UpdateAnnotationValue();
 
@@ -80,7 +79,6 @@ private:
   bool DisplayFileName;
   bool DisplayDate;
 
-//ETX
 };
 
 #endif

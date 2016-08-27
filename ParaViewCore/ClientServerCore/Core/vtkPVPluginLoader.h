@@ -109,6 +109,12 @@ public:
   // Sets the function used to load static plugins.
   static void SetStaticPluginLoadFunction(vtkPluginLoadFunction function);
 
+  // Description:
+  // Internal method used in pqParaViewPlugin.cxx.in to tell the
+  // vtkPVPluginLoader that a library was unloaded so it doesn't try to unload
+  // it again.
+  static void PluginLibraryUnloaded(const char* pluginname);
+
 protected:
   vtkPVPluginLoader();
   ~vtkPVPluginLoader();
@@ -134,13 +140,12 @@ protected:
   bool DebugPlugin;
   bool Loaded;
 private:
-  vtkPVPluginLoader(const vtkPVPluginLoader&); // Not implemented.
-  void operator=(const vtkPVPluginLoader&); // Not implemented.
+  vtkPVPluginLoader(const vtkPVPluginLoader&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVPluginLoader&) VTK_DELETE_FUNCTION;
 
   static vtkPluginLoadFunction StaticPluginLoadFunction;
 };
 
-//BTX
 // Implementation of Schwartz counter idiom to ensure that the plugin library
 // unloading doesn't happen before the ParaView application is finalized.
 static class VTKPVCLIENTSERVERCORECORE_EXPORT vtkPVPluginLoaderCleanerInitializer
@@ -149,5 +154,5 @@ public:
   vtkPVPluginLoaderCleanerInitializer();
   ~vtkPVPluginLoaderCleanerInitializer();
 } vtkPVPluginLoaderCleanerInitializerInstance; // object here in header.
-//ETX
+
 #endif

@@ -110,7 +110,6 @@ protected:
 private:
   // CartesianExtent Grow(const CartesianExtent &inputExt);
 
-  //BTX
   void ExecuteTransactions(
       vtkDataSetAttributes *inDsa,
       vtkDataSetAttributes *outDsa,
@@ -118,7 +117,6 @@ private:
       CartesianExtent outputExt,
       std::vector<GhostTransaction> &transactions,
       bool pointData);
-  //ETX
 
 private:
   int WorldSize;
@@ -132,8 +130,8 @@ private:
   int LogLevel;
 
 private:
-  vtkSQImageGhosts(const vtkSQImageGhosts &); // Not implemented
-  void operator=(const vtkSQImageGhosts &); // Not implemented
+  vtkSQImageGhosts(const vtkSQImageGhosts &) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSQImageGhosts &) VTK_DELETE_FUNCTION;
 };
 
 #endif

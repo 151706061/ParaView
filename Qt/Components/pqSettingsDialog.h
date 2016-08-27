@@ -75,10 +75,7 @@ signals:
   void filterWidgets(bool showAdvanced, const QString& text);
 
 private:
-  void saveInQSettings(const char* key, vtkSMProperty* smproperty);
-
-private:
-  Q_DISABLE_COPY(pqSettingsDialog);
+  Q_DISABLE_COPY(pqSettingsDialog)
   class pqInternals;
   pqInternals* Internals;
 

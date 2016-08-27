@@ -35,7 +35,6 @@ public:
   virtual void UpdatePropertyInformation(vtkSMProperty* prop)
     { this->Superclass::UpdatePropertyInformation(prop); }
 
-//BTX
 protected:
   vtkSMBoxRepresentationProxy();
   ~vtkSMBoxRepresentationProxy();
@@ -44,9 +43,9 @@ protected:
   virtual void CreateVTKObjects();
 
 private:
-  vtkSMBoxRepresentationProxy(const vtkSMBoxRepresentationProxy&); // Not implemented
-  void operator=(const vtkSMBoxRepresentationProxy&); // Not implemented
-//ETX
+  vtkSMBoxRepresentationProxy(const vtkSMBoxRepresentationProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMBoxRepresentationProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

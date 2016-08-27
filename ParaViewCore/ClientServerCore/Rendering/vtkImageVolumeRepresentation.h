@@ -104,7 +104,6 @@ public:
     static void PassOrderedCompositingInformation(
       vtkPVDataRepresentation* self, vtkInformation* inInfo));
 
-//BTX
 protected:
   vtkImageVolumeRepresentation();
   ~vtkImageVolumeRepresentation();
@@ -137,6 +136,11 @@ protected:
   // Passes on parameters to the active volume mapper
   virtual void UpdateMapperParameters();
 
+  // Description:
+  // Used in ConvertSelection to locate the rendered prop.
+  virtual vtkPVLODVolume* GetRenderedProp()
+    { return this->Actor; };
+
   vtkImageData* Cache;
   vtkPVCacheKeeper* CacheKeeper;
   vtkSmartVolumeMapper* VolumeMapper;
@@ -156,10 +160,9 @@ protected:
   double Spacing[3];
   int WholeExtent[6];
 private:
-  vtkImageVolumeRepresentation(const vtkImageVolumeRepresentation&); // Not implemented
-  void operator=(const vtkImageVolumeRepresentation&); // Not implemented
+  vtkImageVolumeRepresentation(const vtkImageVolumeRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkImageVolumeRepresentation&) VTK_DELETE_FUNCTION;
 
-//ETX
 };
 
 #endif

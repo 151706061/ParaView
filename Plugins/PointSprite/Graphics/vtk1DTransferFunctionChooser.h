@@ -46,12 +46,11 @@ public:
   vtkTypeMacro(vtk1DTransferFunctionChooser, vtk1DTransferFunction);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-  //BTX
   enum
   {
   LookupTable = 0, Gaussian = 1
   };
-  //ETX
+
   // 0 : LookupTable
   // 1 : Gaussian
   vtkSetMacro(TransferFunctionMode, int);
@@ -99,8 +98,8 @@ protected:
   vtk1DGaussianTransferFunction* GaussianTransferFunction;
 
 private:
-  vtk1DTransferFunctionChooser(const vtk1DTransferFunctionChooser&); // Not implemented.
-  void operator=(const vtk1DTransferFunctionChooser&); // Not implemented.
+  vtk1DTransferFunctionChooser(const vtk1DTransferFunctionChooser&) VTK_DELETE_FUNCTION;
+  void operator=(const vtk1DTransferFunctionChooser&) VTK_DELETE_FUNCTION;
 };
 
 #endif

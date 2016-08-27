@@ -38,7 +38,6 @@ public:
   // Returns the vtkAlgorithmOutput for an output port, if valid.
   virtual vtkAlgorithmOutput* GetOutputPort(int port);
 
-//BTX
 protected:
   vtkSICompoundSourceProxy();
   ~vtkSICompoundSourceProxy();
@@ -52,12 +51,12 @@ protected:
   virtual bool CreateOutputPorts();
 
 private:
-  vtkSICompoundSourceProxy(const vtkSICompoundSourceProxy&); // Not implemented
-  void operator=(const vtkSICompoundSourceProxy&); // Not implemented
+  vtkSICompoundSourceProxy(const vtkSICompoundSourceProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSICompoundSourceProxy&) VTK_DELETE_FUNCTION;
 
   class vtkInternals;
   vtkInternals* Internals;
-//ETX
+
 };
 
 #endif

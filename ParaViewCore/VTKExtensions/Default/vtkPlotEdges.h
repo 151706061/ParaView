@@ -22,13 +22,11 @@
 #include "vtkPVVTKExtensionsDefaultModule.h" //needed for exports
 #include "vtkMultiBlockDataSetAlgorithm.h"
 
-//BTX
 class Node;
 class Segment;
 class vtkPolyData;
 class vtkCollection;
 class vtkMultiBlockDataSet;
-//ETX
 
 class VTKPVVTKEXTENSIONSDEFAULT_EXPORT vtkPlotEdges : public vtkMultiBlockDataSetAlgorithm
 {
@@ -37,7 +35,7 @@ public:
   void PrintSelf(ostream& os, vtkIndent indent);
   
   static vtkPlotEdges *New();
-//BTX
+
 protected:
   vtkPlotEdges();
   virtual ~vtkPlotEdges();
@@ -71,9 +69,9 @@ protected:
   static void PrintSegments(vtkCollection* segments);
 
 private:
-  vtkPlotEdges(const vtkPlotEdges&);  // Not implemented.
-  void operator=(const vtkPlotEdges&);  // Not implemented.
-//ETX
+  vtkPlotEdges(const vtkPlotEdges&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPlotEdges&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

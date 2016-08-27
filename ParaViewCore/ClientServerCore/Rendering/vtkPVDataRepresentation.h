@@ -157,7 +157,6 @@ public:
   // Provides access to the view.
   vtkView* GetView() const;
 
-//BTX
 protected:
   vtkPVDataRepresentation();
   ~vtkPVDataRepresentation();
@@ -189,8 +188,8 @@ protected:
   bool UpdateTimeValid;
   unsigned int UniqueIdentifier;
 private:
-  vtkPVDataRepresentation(const vtkPVDataRepresentation&); // Not implemented
-  void operator=(const vtkPVDataRepresentation&); // Not implemented
+  vtkPVDataRepresentation(const vtkPVDataRepresentation&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVDataRepresentation&) VTK_DELETE_FUNCTION;
 
   bool Visibility;
   bool ForceUseCache;
@@ -200,7 +199,7 @@ private:
   class Internals;
   Internals* Implementation;
   vtkWeakPointer<vtkView> View;
-//ETX
+
 };
 
 #endif

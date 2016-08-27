@@ -125,6 +125,7 @@ set(Module_SRCS
   vtkPVMetaSliceDataSet.cxx
   vtkPVNullSource.cxx
   vtkPVPlane.cxx
+  vtkPVPLYWriter.cxx
   vtkPVSelectionSource.cxx
   vtkPVTextSource.cxx
   vtkPVTransform.cxx
@@ -141,6 +142,7 @@ set(Module_SRCS
   vtkSpyPlotReaderMap.cxx
   vtkSpyPlotUniReader.cxx
   vtkSurfaceVectors.cxx
+  vtkTimeStepProgressFilter.cxx
   vtkTimeToTextConvertor.cxx
   vtkUnstructuredPOPReader.cxx
   vtkVRMLSource.cxx

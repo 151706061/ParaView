@@ -76,7 +76,6 @@ public:
   void AddSuppressedTimeSource(vtkSMSourceProxy*);
   void RemoveSuppressedTimeSource(vtkSMSourceProxy*);
 
-//BTX
 protected:
   vtkSMTimeKeeper();
   ~vtkSMTimeKeeper();
@@ -94,12 +93,12 @@ protected:
   double Time;
 
 private:
-  vtkSMTimeKeeper(const vtkSMTimeKeeper&); // Not implemented
-  void operator=(const vtkSMTimeKeeper&); // Not implemented
+  vtkSMTimeKeeper(const vtkSMTimeKeeper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMTimeKeeper&) VTK_DELETE_FUNCTION;
 
   class vtkInternal;
   vtkInternal* Internal;
-//ETX
+
 };
 
 #endif

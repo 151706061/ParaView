@@ -40,11 +40,8 @@
 #include "vtkSciberQuestModule.h" // for export macro
 #include "vtkPolyDataAlgorithm.h"
 
-
-//BTX
 #undef vtkGetVector2Macro
 #define vtkGetVector2Macro(a,b) /*noop*/
-//ETX
 
 class VTKSCIBERQUEST_EXPORT vtkSQSeedPointLatice : public vtkPolyDataAlgorithm
 {
@@ -103,19 +100,18 @@ private:
   double Bounds[6];
   double IBounds[2];
 
-  //BTX
   enum
     {
     TRANSFORM_NONE=0,
     TRANSFORM_LOG=1
     };
-  //ETX
+
   int Transform[3];
   double Power[3];
 
 private:
-  vtkSQSeedPointLatice(const vtkSQSeedPointLatice&);  // Not implemented.
-  void operator=(const vtkSQSeedPointLatice&);  // Not implemented.
+  vtkSQSeedPointLatice(const vtkSQSeedPointLatice&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSQSeedPointLatice&) VTK_DELETE_FUNCTION;
 };
 
 #endif

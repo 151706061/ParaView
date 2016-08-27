@@ -69,7 +69,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "vtkMantaModule.h"
 #include "vtkOpenGLRenderer.h"
 
-//BTX
 namespace Manta {
 class MantaInterface;
 class Scene;
@@ -80,7 +79,6 @@ class Camera;
 class SyncDisplay;
 class Light;
 }
-//ETX
 
 class vtkMantaManager;
 class vtkMantaTexture;
@@ -183,7 +181,6 @@ public:
     return this->MantaManager;
   }
 
-  //BTX
   //Description:
   //Convenience read accessors to Manta structures
   Manta::MantaInterface* GetMantaEngine()    
@@ -214,7 +211,6 @@ public:
   {
     return this->SyncDisplay;
   }
-  //ETX
 
   //Description:
   //Internal callbacks for manta thread use.
@@ -252,8 +248,8 @@ protected:
   vtkGetObjectMacro(MantaTexture, vtkMantaTexture);
 
 private:
-  vtkMantaRenderer(const vtkMantaRenderer&); // Not implemented.
-  void operator=(const vtkMantaRenderer&); // Not implemented.
+  vtkMantaRenderer(const vtkMantaRenderer&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkMantaRenderer&) VTK_DELETE_FUNCTION;
 
   void InitEngine();
   void LayerRender();
@@ -270,7 +266,6 @@ private:
   float *ColorBuffer;
   float *DepthBuffer;
 
-  //BTX
   Manta::MantaInterface * MantaEngine;
   Manta::Factory * MantaFactory;
   Manta::Scene * MantaScene;
@@ -279,7 +274,6 @@ private:
   Manta::Camera * MantaCamera;
   Manta::SyncDisplay * SyncDisplay;
   Manta::Light * DefaultLight;
-  //ETX
 
   int ChannelId;
 

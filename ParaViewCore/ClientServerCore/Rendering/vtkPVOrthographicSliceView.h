@@ -95,8 +95,6 @@ public:
   virtual void SetGradientBackground(int val);
   virtual void SetTexturedBackground(int val);
 
-
-//BTX
 protected:
   vtkPVOrthographicSliceView();
   ~vtkPVOrthographicSliceView();
@@ -141,8 +139,8 @@ protected:
   double SlicePosition[3];
   bool SliceAnnotationsVisibility;
 private:
-  vtkPVOrthographicSliceView(const vtkPVOrthographicSliceView&); // Not implemented
-  void operator=(const vtkPVOrthographicSliceView&); // Not implemented
+  vtkPVOrthographicSliceView(const vtkPVOrthographicSliceView&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVOrthographicSliceView&) VTK_DELETE_FUNCTION;
 
   void OnMouseWheelForwardEvent();
   void OnMouseWheelBackwardEvent();
@@ -156,7 +154,7 @@ private:
   bool GridAxes3DActorsNeedShallowCopy;
   unsigned long GridAxes3DActorObserverId;
   void OnGridAxes3DActorModified();
-//ETX
+
 };
 
 #endif

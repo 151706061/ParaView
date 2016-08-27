@@ -70,7 +70,6 @@ public:
   vtkSetMacro(GenerateCellConnectivity, bool);
   vtkGetMacro(GenerateCellConnectivity, bool);
 
-//BTX
 protected:
   vtkAttributeDataToTableFilter();
   ~vtkAttributeDataToTableFilter();
@@ -107,9 +106,9 @@ protected:
   bool GenerateOriginalIds;
   bool GenerateCellConnectivity;
 private:
-  vtkAttributeDataToTableFilter(const vtkAttributeDataToTableFilter&); // Not implemented
-  void operator=(const vtkAttributeDataToTableFilter&); // Not implemented
-//ETX
+  vtkAttributeDataToTableFilter(const vtkAttributeDataToTableFilter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkAttributeDataToTableFilter&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

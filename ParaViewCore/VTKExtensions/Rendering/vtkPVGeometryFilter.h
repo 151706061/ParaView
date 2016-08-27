@@ -162,7 +162,7 @@ public:
   static vtkInformationIntegerVectorKey* LINES_OFFSETS();
   static vtkInformationIntegerVectorKey* POLYS_OFFSETS();
   static vtkInformationIntegerVectorKey* STRIPS_OFFSETS();
-//BTX
+
 protected:
   vtkPVGeometryFilter();
   ~vtkPVGeometryFilter();
@@ -310,8 +310,8 @@ protected:
   bool UseNonOverlappingAMRMetaDataForOutlines;
 
 private:
-  vtkPVGeometryFilter(const vtkPVGeometryFilter&); // Not implemented
-  void operator=(const vtkPVGeometryFilter&); // Not implemented
+  vtkPVGeometryFilter(const vtkPVGeometryFilter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVGeometryFilter&) VTK_DELETE_FUNCTION;
 
   void AddCompositeIndex(vtkPolyData* pd, unsigned int index);
   // Description:
@@ -322,7 +322,7 @@ private:
   void AddBlockColors(vtkPolyData* pd, unsigned int index);
   void AddHierarchicalIndex(vtkPolyData* pd, unsigned int level, unsigned int index);
   class BoundsReductionOperation;
-//ETX
+
 };
 
 #endif

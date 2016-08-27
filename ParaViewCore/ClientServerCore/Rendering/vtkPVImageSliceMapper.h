@@ -69,14 +69,12 @@ public:
   vtkSetMacro(Slice,int);
   vtkGetMacro(Slice,int);
 
-  //BTX
   enum
     {
     XY_PLANE = VTK_XY_PLANE,
     YZ_PLANE = VTK_YZ_PLANE,
     XZ_PLANE = VTK_XZ_PLANE,
     };
-  //ETX
 
   vtkSetClampMacro(SliceMode, int, XY_PLANE, XZ_PLANE);
   vtkGetMacro(SliceMode, int);
@@ -172,8 +170,8 @@ protected:
   int UseXYPlane;
 
 private:
-  vtkPVImageSliceMapper(const vtkPVImageSliceMapper&); // Not implemented
-  void operator=(const vtkPVImageSliceMapper&); // Not implemented
+  vtkPVImageSliceMapper(const vtkPVImageSliceMapper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVImageSliceMapper&) VTK_DELETE_FUNCTION;
 
 };
 

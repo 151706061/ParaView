@@ -56,7 +56,6 @@ public:
   // Update all the views linked with an OUTPUT direction.
   // \c interactive indicates if the render is interactive or not.
   virtual void UpdateViews(vtkSMProxy* caller, bool interactive);
-//BTX
 
   // Description:
   // This method is used to initialise the object to the given state
@@ -112,9 +111,9 @@ private:
   vtkInternals* Internals;
   friend class vtkInternals;
 
-  vtkSMCameraLink(const vtkSMCameraLink&); // Not implemented
-  void operator=(const vtkSMCameraLink&); // Not implemented
-//ETX
+  vtkSMCameraLink(const vtkSMCameraLink&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMCameraLink&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -30,7 +30,6 @@ public:
   vtkTypeMacro(vtkPVCacheKeeperPipeline, vtkCompositeDataPipeline);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkPVCacheKeeperPipeline();
   ~vtkPVCacheKeeperPipeline();
@@ -38,9 +37,9 @@ protected:
   virtual int ForwardUpstream(int i, int j, vtkInformation* request);
   virtual int ForwardUpstream(vtkInformation* request);
 private:
-  vtkPVCacheKeeperPipeline(const vtkPVCacheKeeperPipeline&); // Not implemented
-  void operator=(const vtkPVCacheKeeperPipeline&); // Not implemented
-//ETX
+  vtkPVCacheKeeperPipeline(const vtkPVCacheKeeperPipeline&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVCacheKeeperPipeline&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

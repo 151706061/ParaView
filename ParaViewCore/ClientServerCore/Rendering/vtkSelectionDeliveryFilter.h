@@ -35,7 +35,6 @@ public:
   vtkTypeMacro(vtkSelectionDeliveryFilter, vtkSelectionAlgorithm);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkSelectionDeliveryFilter();
   ~vtkSelectionDeliveryFilter();
@@ -48,9 +47,9 @@ protected:
   vtkClientServerMoveData* DeliveryFilter;
 
 private:
-  vtkSelectionDeliveryFilter(const vtkSelectionDeliveryFilter&); // Not implemented
-  void operator=(const vtkSelectionDeliveryFilter&); // Not implemented
-//ETX
+  vtkSelectionDeliveryFilter(const vtkSelectionDeliveryFilter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSelectionDeliveryFilter&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

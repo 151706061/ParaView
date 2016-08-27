@@ -48,7 +48,7 @@ public:
   // Description:
   // Returns the suggested file extension for this exporter.
   vtkGetStringMacro(FileExtension);
-//BTX
+
 protected:
   vtkSMExporterProxy();
   ~vtkSMExporterProxy();
@@ -60,9 +60,9 @@ protected:
   vtkSMViewProxy* View;
   char* FileExtension;
 private:
-  vtkSMExporterProxy(const vtkSMExporterProxy&); // Not implemented
-  void operator=(const vtkSMExporterProxy&); // Not implemented
-//ETX
+  vtkSMExporterProxy(const vtkSMExporterProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMExporterProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

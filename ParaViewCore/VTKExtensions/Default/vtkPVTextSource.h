@@ -35,7 +35,7 @@ public:
   vtkSetStringMacro(Text);
   vtkGetStringMacro(Text);
   
-// BTX
+
 protected:
   vtkPVTextSource();
   ~vtkPVTextSource();
@@ -49,9 +49,9 @@ protected:
                                  vtkInformationVector* outputVector);
   char* Text;
 private:
-  vtkPVTextSource(const vtkPVTextSource&); // Not implemented
-  void operator=(const vtkPVTextSource&); // Not implemented
-//ETX
+  vtkPVTextSource(const vtkPVTextSource&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVTextSource&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -123,7 +123,7 @@ protected:
 private:
   // topological classes
   int ClassSelection[15];
-  //BTX
+
   enum {
     DD=0,
     ND=1,
@@ -141,11 +141,10 @@ private:
     IO=13,
     II=14
     };
-  //ETX
 
 private:
-  vtkSQFieldTopologySelect(const vtkSQFieldTopologySelect&);  // Not implemented.
-  void operator=(const vtkSQFieldTopologySelect&);  // Not implemented.
+  vtkSQFieldTopologySelect(const vtkSQFieldTopologySelect&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSQFieldTopologySelect&) VTK_DELETE_FUNCTION;
 };
 
 #endif

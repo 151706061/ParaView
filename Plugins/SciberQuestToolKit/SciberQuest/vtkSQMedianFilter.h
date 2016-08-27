@@ -54,27 +54,25 @@ public:
   // Initialize the filter from an xml document.
   int Initialize(vtkPVXMLElement *root);
 
-  //BTX
   enum {
     MODE_3D=0,
     MODE_2D_XY,
     MODE_2D_XZ,
     MODE_2D_YZ
     };
-  //ETX
+
   // Description:
   // Set the mode to 2 or 3D.
   void SetMode(int mode);
   vtkGetMacro(Mode,int);
 
-  //BTX
   enum {
     KERNEL_TYPE_MIN=0,
     KERNEL_TYPE_MEDIAN,
     KERNEL_TYPE_MAX,
     KERNEL_TYPE_MAX_DIFF
     };
-  //ETX
+
   // Description:
   // Select a kernel for the convolution.
   void SetKernelType(int type);
@@ -199,8 +197,8 @@ private:
   int LogLevel;
 
 private:
-  vtkSQMedianFilter(const vtkSQMedianFilter &); // Not implemented
-  void operator=(const vtkSQMedianFilter &); // Not implemented
+  vtkSQMedianFilter(const vtkSQMedianFilter &) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSQMedianFilter &) VTK_DELETE_FUNCTION;
 };
 
 #endif

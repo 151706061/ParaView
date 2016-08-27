@@ -68,6 +68,7 @@
     <Proxy group="filters" name="TemporalSnapToTimeStep" />
     <Proxy group="filters" name="TemporalShiftScale" />
     <Proxy group="filters" name="TemporalStatistics" />
+    <Proxy group="filters" name="TimeStepProgressFilter" />
     <Proxy group="filters" name="TimeToTextConvertor" />
   </Category>
 
@@ -114,8 +115,18 @@
     <Proxy group="filters" name="AnnotateAttributeData" />
     <Proxy group="filters" name="PythonAnnotation" />
     <Proxy group="filters" name="TimeToTextConvertor" />
+    <Proxy group="filters" name="TimeStepProgressFilter" />
     <Proxy group="filters" name="DataSetRegionSurfaceFilter" />
     <Proxy group="filters" name="EnvironmentAnnotation" />
+  </Category>
+
+  <Category name="Point Interpolation" menu_label="Point Interpolation">
+    <Proxy group="filters" name="PointLineInterpolator" />
+    <Proxy group="filters" name="PointPlaneInterpolator" />
+    <Proxy group="filters" name="PointVolumeInterpolator" />
+    <Proxy group="filters" name="SPHLineInterpolator" />
+    <Proxy group="filters" name="SPHPlaneInterpolator" />
+    <Proxy group="filters" name="SPHVolumeInterpolator" />
   </Category>
 
   <Proxy group="filters" name="AddFieldArrays" />
@@ -193,7 +204,6 @@
   <Proxy group="filters" name="PointDataToCellData" />
   <Proxy group="filters" name="PolyDataNormals" />
   <Proxy group="filters" name="Probe" />
-  <Proxy group="filters" name="ImageResampling" />
   <Proxy group="filters" name="ProbeLine" />
   <Proxy group="filters" name="ProbePoint" />
   <Proxy group="filters" name="ProcessIdScalars" />

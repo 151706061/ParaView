@@ -31,7 +31,6 @@ public:
   vtkTypeMacro(vtkSIXMLAnimationWriterRepresentationProperty, vtkSIInputProperty);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkSIXMLAnimationWriterRepresentationProperty();
   ~vtkSIXMLAnimationWriterRepresentationProperty();
@@ -42,9 +41,9 @@ protected:
   virtual bool Push(vtkSMMessage*, int);
 
 private:
-  vtkSIXMLAnimationWriterRepresentationProperty(const vtkSIXMLAnimationWriterRepresentationProperty&); // Not implemented
-  void operator=(const vtkSIXMLAnimationWriterRepresentationProperty&); // Not implemented
-//ETX
+  vtkSIXMLAnimationWriterRepresentationProperty(const vtkSIXMLAnimationWriterRepresentationProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSIXMLAnimationWriterRepresentationProperty&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

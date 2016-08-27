@@ -53,19 +53,15 @@ public :
   // and add OpenGL calls for the point parameters.
   virtual void Render(vtkActor *a, vtkRenderer *ren);
 
-  //BTX
   // Description:
   // Restore point parameters and call Superclass PostRender method.
   virtual void PostRender(vtkActor *a,
                           vtkRenderer *r);
-  //ETX
 
-  //BTX
   enum
   {
     FixedRadius = 0, AttributeRadius = 1
   };
-  //ETX
 
   // Description:
   // The radius is always given in World coordinates.
@@ -103,12 +99,10 @@ public :
   vtkGetVector2Macro(RadiusRange, float);
   vtkSetVector2Macro(RadiusRange, float);
 
-  //BTX
   enum eRenderMode
   {
   Quadrics=0, TexturedSprite = 1, SimplePoint = 2
   };
-  //ETX
 
   // Description:
   // Set/Get the RenderMode for this mapper.
@@ -184,13 +178,12 @@ protected :
   char* RadiusArrayName;
 
 private:
-  vtkPointSpriteProperty(const vtkPointSpriteProperty&); // Not implemented.
-  void operator=(const vtkPointSpriteProperty&); // Not implemented.
+  vtkPointSpriteProperty(const vtkPointSpriteProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPointSpriteProperty&) VTK_DELETE_FUNCTION;
 
-  //BTX
   class vtkInternal;
   vtkInternal* Internal;
-  //ETX
+
 };
 
 #endif// vtkPointSpriteFilter_h

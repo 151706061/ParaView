@@ -48,7 +48,6 @@ public:
   // This must be called before the shader program is bound.
   void PrepareForRendering();
 
-//BTX
 protected:
   vtkPVLightingHelper();
   ~vtkPVLightingHelper();
@@ -57,9 +56,9 @@ protected:
   vtkShaderProgram2 *Shader;
 
 private:
-  vtkPVLightingHelper(const vtkPVLightingHelper&); // Not implemented.
-  void operator=(const vtkPVLightingHelper&); // Not implemented.
-//ETX
+  vtkPVLightingHelper(const vtkPVLightingHelper&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVLightingHelper&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

@@ -48,7 +48,6 @@ public:
   // required properties. 
   virtual void Update(vtkSMProperty*);
 
-//BTX
 protected:
   vtkSMDimensionsDomain();
   ~vtkSMDimensionsDomain();
@@ -59,9 +58,9 @@ protected:
 
 
 private:
-  vtkSMDimensionsDomain(const vtkSMDimensionsDomain&); // Not implemented
-  void operator=(const vtkSMDimensionsDomain&); // Not implemented
-//ETX
+  vtkSMDimensionsDomain(const vtkSMDimensionsDomain&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMDimensionsDomain&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

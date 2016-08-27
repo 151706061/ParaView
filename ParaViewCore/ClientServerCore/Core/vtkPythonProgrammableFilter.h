@@ -99,6 +99,12 @@ public:
   vtkSetStringMacro(PythonPath);
   vtkGetStringMacro(PythonPath);
 
+  // Description:
+  // Set the number of input ports
+  // This function is explicitly exposed to enable a vtkClientServerInterpreter to call it
+  void SetNumberOfInputPorts(int numberOfInputPorts)
+    { this->Superclass::SetNumberOfInputPorts(numberOfInputPorts); }
+
 protected:
   vtkPythonProgrammableFilter();
   ~vtkPythonProgrammableFilter();
@@ -141,8 +147,8 @@ protected:
   int OutputDataSetType;
 
 private:
-  vtkPythonProgrammableFilter(const vtkPythonProgrammableFilter&);  // Not implemented.
-  void operator=(const vtkPythonProgrammableFilter&);  // Not implemented.
+  vtkPythonProgrammableFilter(const vtkPythonProgrammableFilter&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPythonProgrammableFilter&) VTK_DELETE_FUNCTION;
 
   // Description:
   // When there is a request, cache it so that we can use it inside the Python
@@ -150,9 +156,8 @@ private:
   // and removed at the end of that method.
   vtkInformation* Request;
 
-//BTX
   vtkPythonProgrammableFilterImplementation* const Implementation;
-//ETX
+
 };
 
 #endif

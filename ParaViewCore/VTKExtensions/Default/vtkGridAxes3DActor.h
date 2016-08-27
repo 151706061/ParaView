@@ -232,7 +232,7 @@ public:
   virtual int RenderOverlay(vtkViewport* viewport);
   virtual int HasTranslucentPolygonalGeometry();
   virtual void ReleaseGraphicsResources(vtkWindow *);
-//BTX
+
 protected:
   vtkGridAxes3DActor();
   ~vtkGridAxes3DActor();
@@ -249,11 +249,11 @@ protected:
 
   vtkTuple<vtkNew<vtkGridAxes2DActor>, 6> GridAxes2DActors;
 private:
-  vtkGridAxes3DActor(const vtkGridAxes3DActor&); // Not implemented.
-  void operator=(const vtkGridAxes3DActor&); // Not implemented.
+  vtkGridAxes3DActor(const vtkGridAxes3DActor&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkGridAxes3DActor&) VTK_DELETE_FUNCTION;
 
   unsigned long GetBoundsMTime;
-//ETX
+
 };
 
 

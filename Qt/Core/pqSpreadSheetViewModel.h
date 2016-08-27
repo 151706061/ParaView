@@ -112,6 +112,9 @@ public:
   /// Set the visibility of a given column
   void setVisible(int section, bool visible);
 
+  /// Clear visibility list, all column considered visible
+  void clearVisible();
+
   /// Returns the field type for the data currently shown by this model.
   int getFieldType() const;
 
@@ -174,8 +177,7 @@ protected:
 
   vtkSpreadSheetView* GetView() const;
 private:
-  pqSpreadSheetViewModel(const pqSpreadSheetViewModel&); // Not implemented.
-  void operator=(const pqSpreadSheetViewModel&); // Not implemented.
+  Q_DISABLE_COPY(pqSpreadSheetViewModel)
 
   class pqInternal;
   pqInternal* Internal;

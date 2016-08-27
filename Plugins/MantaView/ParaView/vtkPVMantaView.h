@@ -68,7 +68,6 @@ public:
   //Make a particular light the active one. Add it to the renderer if new.
   void SetCurrentLight(vtkMantaLight*);
 
-//BTX
 protected:
   vtkPVMantaView();
   ~vtkPVMantaView();
@@ -79,9 +78,9 @@ protected:
   int MaxDepth;
 
 private:
-  vtkPVMantaView(const vtkPVMantaView&); // Not implemented
-  void operator=(const vtkPVMantaView&); // Not implemented
-//ETX
+  vtkPVMantaView(const vtkPVMantaView&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVMantaView&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

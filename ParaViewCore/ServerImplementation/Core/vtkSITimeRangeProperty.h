@@ -29,7 +29,6 @@ public:
   vtkTypeMacro(vtkSITimeRangeProperty, vtkSIProperty);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-//BTX
 protected:
   vtkSITimeRangeProperty();
   ~vtkSITimeRangeProperty();
@@ -41,9 +40,9 @@ protected:
   virtual bool Pull(vtkSMMessage*);
 
 private:
-  vtkSITimeRangeProperty(const vtkSITimeRangeProperty&); // Not implemented
-  void operator=(const vtkSITimeRangeProperty&); // Not implemented
-//ETX
+  vtkSITimeRangeProperty(const vtkSITimeRangeProperty&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSITimeRangeProperty&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

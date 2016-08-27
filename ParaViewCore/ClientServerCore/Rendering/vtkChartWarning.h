@@ -38,16 +38,13 @@ public:
   // Paint event for the item.
   virtual bool Paint(vtkContext2D* painter);
 
-//BTX
   // Description:
   // Returns true if the supplied x, y coordinate is inside the item.
   virtual bool Hit(const vtkContextMouseEvent& mouse);
-//ETX
 
   vtkSetMacro(TextPad,double);
   vtkGetMacro(TextPad,double);
 
-//BTX
 protected:
   vtkChartWarning();
   ~vtkChartWarning();
@@ -57,9 +54,9 @@ protected:
   double TextPad;
 
 private:
-  vtkChartWarning(const vtkChartWarning&); // Not implemented.
-  void operator = (const vtkChartWarning&); // Not implemented.
-//ETX
+  vtkChartWarning(const vtkChartWarning&) VTK_DELETE_FUNCTION;
+  void operator = (const vtkChartWarning&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif //vtkChartWarning_h

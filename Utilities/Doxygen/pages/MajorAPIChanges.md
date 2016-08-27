@@ -4,8 +4,68 @@ Major API Changes             {#MajorAPIChanges}
 This page documents major API/design changes between different versions since we
 started tracking these (starting after version 4.2).
 
+Changes in 5.2
+--------------
+
+###Qt dependencies###
+
+Starting with 5.2, ParaView natively supports Qt 4 and Qt 5. To simplify writing
+code with either dependency, we now have a new CMake file `ParaViewQt.cmake`
+that gets included by `PARAVIEW_USE_FILE`. This provides new macros that be used
+to find qt (`pv_find_package_qt`), wrap cpp (`pv_qt_wrap_cpp`), ui
+(`pv_qt_wrap_ui`), or add resources (`pv_qt_add_resources`) instead of using
+`qt4_` or `qt4_` specific versions based on whether the app is being built with
+Qt4 or Qt5. `pv_find_package_qt` accepts optional `QT5_COMPONENTS` and
+`QT4_COMPONENTS` which can be used to list the Qt component dependencies for
+each of the versions. e.g.
+
+    include(ParaViewQt) # generally not needed, since auto-included
+    pv_find_package_qt(qt_targets
+      QT4_COMPONENTS QtGui
+      QT5_COMPONENTS Widgets)
+
+    pv_qt_wrap_cpp(moc_files ${headers})
+    pv_qt_wrap_ui(ui_files ${uis})
+
+    ...
+    target_link_libraries(${target} LINK_PRIVATE ${qt_targets})
+
+###Multiple input ports with vtkPythonProgrammableFilter###
+
+vtkPythonProgrammableFilter can now accept multiple input ports if the number
+of input ports is defined in the XML plugin file with the *input_ports* attribute.
+The different input ports are then defined with InputProperty having each a
+different *port_index*:
+
+   <SourceProxy name="Name" class="vtkPythonProgrammableFilter" label="label" input_ports="2">
+      <InputProperty name="Source" command="SetInputConnection" port_index="0">
+        [...]
+      </InputProperty>
+      <InputProperty name="Target" command="SetInputConnection" port_index="1">
+        [...]
+      </InputProperty>
+   </SourceProxy>
+
 Changes in 5.1
 --------------
+
+###Removed Cube Axes###
+
+Cube axes, including support in UI, Python as well as the related ParaView
+specific classes e.g. `vtkCubeAxesRepresentation`, `pqCubeAxesEditorDialog`, and
+`pqCubeAxesPropertyWidget` have been removed. The cube
+axes was replaced by a generally preferred axes annotation implementation called
+**Axes Grid**. While the two are not compatible (API-wise or visually), using
+Axes Grid generates a more pleasing visualization.
+
+###Removed `pqWriterDialog`###
+
+`pqWriterDialog` was used by `pqSaveDataReaction` to show a dialog for the user to
+change the writer's properties. However, since the class was added, we have
+created a new, more generic, pqProxyWidgetDialog that also allows the user to
+save his choices to the application settings. `pqSaveDataReaction` now simply
+uses `pqProxyWidgetDialog` instead of `pqWriterDialog`. `pqWriterDialog` class
+has been removed.
 
 ###Refactored 3DWidget panels###
 

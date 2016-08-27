@@ -42,6 +42,7 @@ public:
   // Description:
   // Set this flag to true before calling Initialize() to disable using
   // vtkIceTSynchronizedRenderers for parallel rendering.
+  // Default value is setup using vtkPVRenderViewSettings::GetDisableIceT.
   vtkSetMacro(DisableIceT, bool);
   vtkGetMacro(DisableIceT, bool);
 
@@ -113,7 +114,6 @@ public:
   // Enable/Disable empty images optimization.
   void SetRenderEmptyImages(bool);
 
-//BTX
   // Description:
   // Not for the faint hearted. This internal vtkSynchronizedRenderers instances
   // are exposed for advanced users that want to do advanced tricks with
@@ -161,9 +161,9 @@ protected:
   bool RenderEmptyImages;
   bool DataReplicatedOnAllProcesses;
 private:
-  vtkPVSynchronizedRenderer(const vtkPVSynchronizedRenderer&); // Not implemented
-  void operator=(const vtkPVSynchronizedRenderer&); // Not implemented
-//ETX
+  vtkPVSynchronizedRenderer(const vtkPVSynchronizedRenderer&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVSynchronizedRenderer&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

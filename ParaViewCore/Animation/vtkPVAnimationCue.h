@@ -90,9 +90,7 @@ protected:
     double clocktime);
   virtual void EndCueInternal();
 
-//BTX
   friend class vtkSMAnimationSceneProxy;
-//ETX
 
   unsigned long ObserverID;
   bool UseAnimationTime;
@@ -102,8 +100,8 @@ protected:
   vtkAnimationCue *AnimationCue;
   vtkPVCueManipulator* Manipulator;
 private:
-  vtkPVAnimationCue(const vtkPVAnimationCue&); // Not implemented
-  void operator=(const vtkPVAnimationCue&); // Not implemented
+  vtkPVAnimationCue(const vtkPVAnimationCue&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkPVAnimationCue&) VTK_DELETE_FUNCTION;
 };
 
 #endif

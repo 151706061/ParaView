@@ -48,7 +48,6 @@ public:
   // necessary components.
   virtual void Initialize(vtkPVSessionCore* session);
 
-//BTX
   // Description:
   // Push a new state to the underneath implementation
   // The provided implementation just store the message
@@ -60,9 +59,6 @@ public:
   // The provided implementation update the given message with the one
   // that has been previously pushed
   virtual void Pull(vtkSMMessage* msg);
-//ETX
-
-//BTX
 
   // Description:
   // Provides access to the Interpreter.
@@ -93,9 +89,9 @@ protected:
 
   vtkTypeUInt32 GlobalID;
 private:
-  vtkSIObject(const vtkSIObject&);    // Not implemented
-  void operator=(const vtkSIObject&); // Not implemented
-//ETX
+  vtkSIObject(const vtkSIObject&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSIObject&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif // #ifndef vtkSIObject_h

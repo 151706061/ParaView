@@ -51,10 +51,12 @@ protected:
     const char* arrayName, int fieldAssociation,
     vtkSMSourceProxy* producer, int producerPort);
 
+  friend class vtkSMBoundsDomain;
+
 private:
 
-  vtkSMArrayRangeDomain(const vtkSMArrayRangeDomain&); // Not implemented
-  void operator=(const vtkSMArrayRangeDomain&); // Not implemented
+  vtkSMArrayRangeDomain(const vtkSMArrayRangeDomain&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMArrayRangeDomain&) VTK_DELETE_FUNCTION;
 };
 
 #endif

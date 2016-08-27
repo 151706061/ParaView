@@ -17,6 +17,7 @@
 #include "vtkDynamicLoader.h"
 #include "vtkNew.h"
 #include "vtkObjectFactory.h"
+#include "vtkPDirectory.h"
 #include "vtkProcessModule.h"
 #include "vtkPVConfig.h"
 #include "vtkPVOptions.h"
@@ -28,7 +29,6 @@
 
 #include <string>
 #include <vtksys/SystemTools.hxx>
-#include <vtksys/Directory.hxx>
 #include <sstream>
 
 #include <cstdlib>
@@ -137,12 +137,13 @@ public:
   // BUG # 10293
   class vtkPVPluginLoaderCleaner
     {
-    std::vector<vtkLibHandle> Handles;
+    typedef std::map<std::string, vtkLibHandle> HandlesType;
+    HandlesType Handles;
     std::vector<vtkPVXMLOnlyPlugin*> XMLPlugins;
   public:
-    void Register(vtkLibHandle &handle)
+    void Register(const char* pname, vtkLibHandle &handle)
       {
-      this->Handles.push_back(handle);
+      this->Handles[pname] = handle;
       }
     void Register(vtkPVXMLOnlyPlugin* plugin)
       {
@@ -151,12 +152,11 @@ public:
 
     ~vtkPVPluginLoaderCleaner()
       {
-      for (std::vector<vtkLibHandle>::iterator iter = this->Handles.begin();
+      for (HandlesType::const_iterator iter = this->Handles.begin();
         iter != this->Handles.end(); ++iter)
         {
-        vtkDynamicLoader::CloseLibrary(*iter);
+        vtkDynamicLoader::CloseLibrary(iter->second);
         }
-
       for (std::vector<vtkPVXMLOnlyPlugin*>::iterator iter =
         this->XMLPlugins.begin();
         iter != this->XMLPlugins.end(); ++iter)
@@ -176,8 +176,16 @@ public:
       {
       if (vtkPVPluginLoaderCleaner::LibCleaner)
         {
-        delete vtkPVPluginLoaderCleaner::LibCleaner;
+        vtkPVPluginLoaderCleaner* cleaner = vtkPVPluginLoaderCleaner::LibCleaner;
         vtkPVPluginLoaderCleaner::LibCleaner = NULL;
+        delete cleaner;
+        }
+      }
+    static void PluginLibraryUnloaded(const char* pname)
+      {
+      if (vtkPVPluginLoaderCleaner::LibCleaner && pname)
+        {
+        vtkPVPluginLoaderCleaner::LibCleaner->Handles.erase(pname);
         }
       }
   private:
@@ -239,8 +247,7 @@ vtkPVPluginLoader::vtkPVPluginLoader()
   vtkPVOptions* opt = pm ? pm->GetOptions() : NULL;
   if(opt)
     {
-    const char* path = opt->GetApplicationPath();
-    vtksys::String appDir = vtksys::SystemTools::GetProgramPath(path);
+    std::string appDir = vtkProcessModule::GetProcessModule()->GetSelfDir();
     if(appDir.size())
       {
       appDir += "/plugins";
@@ -327,23 +334,23 @@ void vtkPVPluginLoader::LoadPluginsFromPluginConfigFile()
 void vtkPVPluginLoader::LoadPluginsFromPath(const char* path)
 {
   vtkPVPluginLoaderDebugMacro("Loading plugins in Path: " << path);
-  vtksys::Directory dir;
-  if (dir.Load(path) == false)
+  vtkNew<vtkPDirectory> dir;
+  if (dir->Load(path) == false)
     {
     vtkPVPluginLoaderDebugMacro("Invalid directory: " << path);
     return;
     }
 
-  for (unsigned int cc=0; cc < dir.GetNumberOfFiles(); cc++)
+  for (vtkIdType cc=0; cc < dir->GetNumberOfFiles(); cc++)
     {
     std::string ext =
-      vtksys::SystemTools::GetFilenameLastExtension(dir.GetFile(cc));
+      vtksys::SystemTools::GetFilenameLastExtension(dir->GetFile(cc));
     if (ext == ".so" || ext == ".dll" || ext == ".xml" || ext == ".dylib" ||
         ext == ".xml" || ext == ".sl")
       {
-      std::string file = dir.GetPath();
+      std::string file = dir->GetPath();
       file += "/";
-      file += dir.GetFile(cc);
+      file += dir->GetFile(cc);
       this->LoadPluginSilently(file.c_str());
       }
     }
@@ -515,11 +522,14 @@ bool vtkPVPluginLoader::LoadPluginInternal(const char* file, bool no_errors)
       ldLibPath.c_str());
     }
 
-  // So that the lib is closed when the application quits.
-  // BUGS #10293, #15608.
-  vtkPVPluginLoaderCleaner::GetInstance()->Register(lib);
-
   vtkPVPlugin* plugin = pv_plugin_query_instance();
+//  if (plugin->UnloadOnExit())
+    {
+    // So that the lib is closed when the application quits.
+    // BUGS #10293, #15608.
+    vtkPVPluginLoaderCleaner::GetInstance()->Register(plugin->GetPluginName(), lib);
+    }
+
   return this->LoadPlugin(file, plugin);
 #endif // ifndef BUILD_SHARED_LIBS else
 }
@@ -619,4 +629,10 @@ void vtkPVPluginLoader::SetStaticPluginLoadFunction(vtkPluginLoadFunction functi
     {
     StaticPluginLoadFunction = function;
     }
+}
+
+//-----------------------------------------------------------------------------
+void vtkPVPluginLoader::PluginLibraryUnloaded(const char* pluginname)
+{
+  vtkPVPluginLoaderCleaner::PluginLibraryUnloaded(pluginname);
 }

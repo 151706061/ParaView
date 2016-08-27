@@ -91,8 +91,6 @@ public:
     return self? self->GetLowerBoundTimeStepIndex(value) : 0;
     }
 
-
-//BTX
 protected:
   vtkSMTimeKeeperProxy();
   ~vtkSMTimeKeeperProxy();
@@ -100,9 +98,9 @@ protected:
   virtual void CreateVTKObjects();
 
 private:
-  vtkSMTimeKeeperProxy(const vtkSMTimeKeeperProxy&); // Not implemented
-  void operator=(const vtkSMTimeKeeperProxy&); // Not implemented
-//ETX
+  vtkSMTimeKeeperProxy(const vtkSMTimeKeeperProxy&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMTimeKeeperProxy&) VTK_DELETE_FUNCTION;
+
 };
 
 #endif

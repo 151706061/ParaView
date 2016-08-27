@@ -24,11 +24,9 @@
 #include "vtkPVServerManagerCoreModule.h" //needed for exports
 #include "vtkSMLink.h"
 
-//BTX
 class vtkSMSourceProxy;
 class vtkSMSelectionLinkInternals;
 class vtkSMSelectionLinkObserver;
-//ETX
 
 class VTKPVSERVERMANAGERCORE_EXPORT vtkSMSelectionLink : public vtkSMLink
 {
@@ -111,7 +109,7 @@ private:
   // lock flag to prevent multiple selection modification at the same time
   bool ModifyingSelection;
 
-  vtkSMSelectionLink(const vtkSMSelectionLink&); // Not implemented.
-  void operator=(const vtkSMSelectionLink&); // Not implemented.
+  vtkSMSelectionLink(const vtkSMSelectionLink&) VTK_DELETE_FUNCTION;
+  void operator=(const vtkSMSelectionLink&) VTK_DELETE_FUNCTION;
 };
 #endif

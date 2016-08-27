@@ -49,7 +49,6 @@ public:
   static vtkTemporalRanges *New();
   virtual void PrintSelf(ostream &os, vtkIndent indent);
 
-//BTX
   enum {
     AVERAGE_ROW,
     MINIMUM_ROW,
@@ -57,7 +56,6 @@ public:
     COUNT_ROW,
     NUMBER_OF_ROWS
   };
-//ETX
 
 protected:
   vtkTemporalRanges();
@@ -94,8 +92,8 @@ protected:
   virtual vtkDoubleArray *GetColumn(vtkTable *table, const char *name);
 
 private:
-  vtkTemporalRanges(const vtkTemporalRanges &); // Not implemented
-  void operator=(const vtkTemporalRanges &);    // Not implemented
+  vtkTemporalRanges(const vtkTemporalRanges &) VTK_DELETE_FUNCTION;
+  void operator=(const vtkTemporalRanges &) VTK_DELETE_FUNCTION;
 };
 
 #endif //vtkTemporalRanges_h
