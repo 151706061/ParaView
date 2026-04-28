@@ -1850,7 +1850,8 @@ int vtkCDIReader::CheckForMaskData()
         {
           int i = j * this->MaximumNVertLevels;
           this->CellMask[i + levelNum] =
-            (dataTmpMask[j + (std::min(levelNum, maskLevels) * this->NumberLocalCells)] == maskVal);
+            (dataTmpMask[j + (std::min(levelNum, maskLevels - 1) * this->NumberLocalCells)] ==
+              maskVal);
         }
       }
 
